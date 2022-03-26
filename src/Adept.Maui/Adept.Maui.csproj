@@ -58,31 +58,6 @@
 		<RuntimeIdentifier>win10-x64</RuntimeIdentifier>
 	</PropertyGroup>
 
-	<ItemGroup>
-	  <AndroidResource Remove="Data\**" />
-	  <AndroidResource Remove="Pages\**" />
-	  <AndroidResource Remove="Shared\**" />
-	  <AndroidResource Remove="wwwroot\**" />
-	  <Compile Remove="Data\**" />
-	  <Compile Remove="Pages\**" />
-	  <Compile Remove="Shared\**" />
-	  <Compile Remove="wwwroot\**" />
-	  <Content Remove="Data\**" />
-	  <Content Remove="Pages\**" />
-	  <Content Remove="Shared\**" />
-	  <Content Remove="wwwroot\**" />
-	  <EmbeddedResource Remove="Data\**" />
-	  <EmbeddedResource Remove="Pages\**" />
-	  <EmbeddedResource Remove="Shared\**" />
-	  <EmbeddedResource Remove="wwwroot\**" />
-	  <MauiXaml Remove="Data\**" />
-	  <MauiXaml Remove="Pages\**" />
-	  <MauiXaml Remove="Shared\**" />
-	  <None Remove="Data\**" />
-	  <None Remove="Pages\**" />
-	  <None Remove="Shared\**" />
-	  <None Remove="wwwroot\**" />
-	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Adept.Blazor\Adept.Blazor.csproj" />

@@ -1,6 +1,6 @@
 {
-  "name": "Adept.Blazor",
-  "short_name": "Adept.Blazor",
+  "name": "Adept.Blazor.WASM",
+  "short_name": "Adept.Blazor.WASM",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",

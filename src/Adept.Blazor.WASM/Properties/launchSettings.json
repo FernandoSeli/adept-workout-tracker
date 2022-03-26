@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "Adept.Blazor": {
+    "Adept.Blazor.WASM": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
