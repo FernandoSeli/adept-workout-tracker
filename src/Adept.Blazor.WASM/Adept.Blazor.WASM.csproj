@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
@@ -25,9 +25,9 @@
 		<NativeFileReference Include="e_sqlite3.o" />
 	</ItemGroup>
 
-	<!--<ItemGroup>
-	  <None Update="e_sqlite3.o">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	</ItemGroup>-->
+	<ItemGroup>
+		<None Update="e_sqlite3.o">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
 </Project>
