@@ -1,14 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Adept.Data.Model
 {
-    [Index(nameof(Name),  IsUnique = true)]
+    [Index(nameof(Name), IsUnique = true)]
     public class Routine
     {
         [Key]

@@ -1,14 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Adept.Data.Model
 {
-
     public class WorkoutLog
     {
         [Key]
@@ -16,6 +9,7 @@ namespace Adept.Data.Model
 
         [Required]
         public DateTime Date { get; set; }
+
         public string Note { get; set; }
 
         public int WorkoutTemplateId { get; set; }
