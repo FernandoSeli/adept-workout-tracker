@@ -21,4 +21,13 @@
 	  <ProjectReference Include="..\Adept.Blazor\Adept.Blazor.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<NativeFileReference Include="e_sqlite3.o" />
+	</ItemGroup>
+
+	<!--<ItemGroup>
+	  <None Update="e_sqlite3.o">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>-->
 </Project>

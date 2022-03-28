@@ -12,7 +12,7 @@ namespace Adept.Data.Model
         [Key]
         public int Id { get; set; }
 
-        [Required]
+        //[Required]
         public string Name { get; set; }
 
         public List<WorkoutTemplate> WorkoutTemplates { get; set; }

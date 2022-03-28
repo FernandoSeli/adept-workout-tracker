@@ -19,6 +19,7 @@ namespace Adept.Data
         public AdeptDatabaseContext(DbContextOptions<AdeptDatabaseContext> options)
             : base(options)
         {
+            base.Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

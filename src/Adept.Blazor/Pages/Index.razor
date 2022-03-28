@@ -1,7 +1,49 @@
 ﻿@page "/"
+@using Adept.Data
+@using Adept.Data.Model
+@using Microsoft.EntityFrameworkCore
+@using System.Text.Json
+@inject AdeptDatabaseContext context
 
 <PageTitle>Index</PageTitle>
 
 <MudText Typo="Typo.h3" GutterBottom="true">Hello, world!</MudText>
 <MudText Class="mb-8">Welcome to your new app, powered by MudBlazor!</MudText>
 <MudAlert Severity="Severity.Normal">You can find documentation and examples on our website here: <MudLink Href="https://mudblazor.com" Typo="Typo.body2" Color="Color.Inherit"><b>www.mudblazor.com</b></MudLink></MudAlert>
+
+
+
+<button @onclick="SaveData">Save</button>
+<button @onclick="LoadData">Load</button>
+
+<MudText Typo="Typo.h3" GutterBottom="true">@Routine.Name</MudText>
+
+@code{
+    //internal IDbContextFactory<ClientSideDbContext> DbContextFactory { get; set; }
+
+    //[Inject]
+    //private AdeptDatabaseContext context;
+
+    internal Routine Routine { get; set; } = new Routine();
+    protected override async Task OnInitializedAsync()
+    {
+        base.OnInitialized();
+
+        //context = await DbContextFactory.CreateDbContextAsync();
+    }
+
+    private async Task SaveData()
+    {
+        var routine = new Routine{ Name = "Test" };
+        context.Routines.Add(routine);
+
+        await context.SaveChangesAsync();
+    }
+
+    private async Task LoadData()
+    {
+        var routines = await context.Routines.ToListAsync();
+        Console.WriteLine(JsonSerializer.Serialize(routines));
+        Routine = routines.First();
+    }
+}
