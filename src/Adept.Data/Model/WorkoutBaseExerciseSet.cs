@@ -11,12 +11,9 @@ namespace Adept.Data.Model
     {
         [Key]
         public int Id { get; set; }
-        
         public int Repetition { get; set; }
         public int Rest { get; set; }
         public int Weight { get; set; }
-
-        [Required]
         public int Order { get; set; }
         public string Note { get; set; }
 

@@ -15,13 +15,10 @@ namespace Adept.Data.Model
         
         public string Note { get; set; }
 
-        [Required]
         public int Order { get; set; }
 
         public bool IsMultiExercise { get; set; }
 
-        //public int WorkoutTemplateMultiExerciseId { get; set; }
-        //public WorkoutTemplateMultiExercise WorkoutTemplateMultiExercise { get; set; }
     }
 
 
