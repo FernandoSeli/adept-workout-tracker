@@ -30,7 +30,10 @@ jobs:
         with:
           dotnet-version: '6.0.x'
           include-prerelease: true
-          
+      
+      - name: install dotnet workload wasm-tools
+        run: dotnet workload install wasm-tools
+        
       # publishes Blazor project to the release-folder
       - name: Publish .NET Project
         run: dotnet publish src/Adept.Blazor.WASM/Adept.Blazor.WASM.csproj -c Release -o release --nologo

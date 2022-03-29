@@ -3,7 +3,7 @@
 @using Adept.Data.Model
 @using Microsoft.EntityFrameworkCore
 @using System.Text.Json
-@inject AdeptDatabaseContext context
+@*@inject AdeptDatabaseContext context*@
 
 <PageTitle>Index</PageTitle>
 
@@ -19,17 +19,18 @@
 <MudText Typo="Typo.h3" GutterBottom="true">@Routine.Name</MudText>
 
 @code{
-    //internal IDbContextFactory<ClientSideDbContext> DbContextFactory { get; set; }
+    [Inject]
+    internal IDbContextFactory<AdeptDatabaseContext> DbContextFactory { get; set; }
 
     //[Inject]
-    //private AdeptDatabaseContext context;
+    private AdeptDatabaseContext context;
 
     internal Routine Routine { get; set; } = new Routine();
     protected override async Task OnInitializedAsync()
     {
         base.OnInitialized();
 
-        //context = await DbContextFactory.CreateDbContextAsync();
+        context = await DbContextFactory.CreateDbContextAsync();
     }
 
     private async Task SaveData()
