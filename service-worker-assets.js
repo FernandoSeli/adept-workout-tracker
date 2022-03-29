@@ -1,11 +1,11 @@
 ﻿self.assetsManifest = {
   "assets": [
     {
-      "hash": "sha256-KniiRWptkvnPE8agjWHctxPZTlXZPAwzhaTkXGlZsnY=",
+      "hash": "sha256-9nExxIfkb0WstUukYqFBih3oskBR2qkwep7BEbonUAE=",
       "url": "index.html"
     },
     {
-      "hash": "sha256-9XtcfnfjeMVnJzr7TnZz2kXzSr\/UrKTx0XVjJV0zhQs=",
+      "hash": "sha256-LCyzz6O1TtMlkDsHuOKI8Td4MylH1Pg+xq0E3Q2iLus=",
       "url": "manifest.json"
     },
     {
@@ -13,16 +13,8 @@
       "url": "_framework\/blazor.webassembly.js"
     },
     {
-      "hash": "sha256-pRmcHKZN4T\/YbX9dj6ITT4sNtkJ9w07OLcwl4645nPg=",
-      "url": "_framework\/dotnet.6.0.3.0uxbbys9vm.js"
-    },
-    {
       "hash": "sha256-scXGarUHqfFWPq0d6kt1FgrQvd1\/ndIwUTFptznHbsc=",
       "url": "_framework\/dotnet.timezones.blat"
-    },
-    {
-      "hash": "sha256-AW7xegLOO5MgfdWQ5okeetFKzb4byQc4c+tkQjAO8+0=",
-      "url": "_framework\/dotnet.wasm"
     },
     {
       "hash": "sha256-WPyI4hWDPnOw62Nr27FkzGjdbucZnQD+Ph+GOPhAedw=",
@@ -41,15 +33,15 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-r33YqZM\/OjBusWXrA7idLDQe0LDBuems6T+6P9AjXrg=",
+      "hash": "sha256-v2aadPnu3knXn\/QECOggkbdsAD4tvC8C1AoJDIJfV8A=",
       "url": "_framework\/blazor.boot.json"
     },
     {
-      "hash": "sha256-D6j9V8V7bQB2Hoe6M42mIlQwhHqrfPqaLhgAYpnw8BY=",
+      "hash": "sha256-aTkwcAMEfspjSvj\/1fHTwx\/HQ9uxjktXo\/iOFzZf6XI=",
       "url": "_framework\/Adept.Blazor.dll"
     },
     {
-      "hash": "sha256-GDLtimfE1sOPOj1PCF3qEN+6nxLtww7I3B7ILQogiek=",
+      "hash": "sha256-sKN3V1\/fcWmvstfOAsmWW2rGE\/ZM+X1IPqj7Gf3PrVc=",
       "url": "_framework\/Adept.Blazor.WASM.dll"
     },
     {
@@ -181,15 +173,15 @@
       "url": "_framework\/Radzen.Blazor.dll"
     },
     {
-      "hash": "sha256-wJ5nHeY8UXCNEG2VtR2nxYx9vlWnMsH7XYlYR89n94w=",
+      "hash": "sha256-2QeGG\/\/WYKByIDzfutVzVUIdJQlHIlsXQwuQbTEOHoo=",
       "url": "_framework\/SQLitePCLRaw.batteries_v2.dll"
     },
     {
-      "hash": "sha256-a+XWEoMJkPQYXepmtLqr4ZHWQaOpfggaL2L7rfKvWw8=",
+      "hash": "sha256-2FeknlBhJjPV1l5KbRBUXq1SNikSYFuSNXNmUSJQCOM=",
       "url": "_framework\/SQLitePCLRaw.core.dll"
     },
     {
-      "hash": "sha256-VjoXxnyrb2YHeadsn5YK\/kRAYlYNgv5jjRURNWbupKg=",
+      "hash": "sha256-liT7Qp0A3+\/bLUGJS9pNaH05jhO1mPcdTQTRoT8\/OdU=",
       "url": "_framework\/SQLitePCLRaw.provider.e_sqlite3.dll"
     },
     {
@@ -305,7 +297,7 @@
       "url": "_framework\/System.ObjectModel.dll"
     },
     {
-      "hash": "sha256-VBBG6MiKkyZsJ00sL4hb6hfwj5lImMxHZkGpbuOysg0=",
+      "hash": "sha256-eRxMeNm0ruMSWdank5Ym88Y\/SvgSsjMJbHfI\/0v4jH0=",
       "url": "_framework\/System.Private.CoreLib.dll"
     },
     {
@@ -345,11 +337,11 @@
       "url": "_framework\/System.Runtime.dll"
     },
     {
-      "hash": "sha256-z9hUUg7BXf2gr+Rh5SWnZ4Ep9LfZGIyD5NTjc1wc1sc=",
+      "hash": "sha256-hXc5XnkxGt8cuaw04pwUSngbPG1KAuZ+vUqqg80bHow=",
       "url": "_framework\/System.Runtime.InteropServices.dll"
     },
     {
-      "hash": "sha256-3OqhfRrjmOI77c4EVkue4VhNjXEGHV0xiYJeb\/xSPvI=",
+      "hash": "sha256-Y3+55y4OwYMmcAeT7qhAl9yCyZDholNN8BzGCcQOp9o=",
       "url": "_framework\/System.Runtime.InteropServices.RuntimeInformation.dll"
     },
     {
@@ -403,6 +395,14 @@
     {
       "hash": "sha256-RP9kKIbRrfoWHJYafIxeeHR0p5BFnoenQfgkTy6Yar8=",
       "url": "_framework\/System.Xml.XDocument.dll"
+    },
+    {
+      "hash": "sha256-fhkUhPpimN8+JOOEn6QJAYfaKcZE46IF4beL0zl2nE4=",
+      "url": "_framework\/dotnet.6.0.3.5wwuv1jxx2.js"
+    },
+    {
+      "hash": "sha256-mNKBJapeAG+ixeRGE5ElOUBhGWFrrr9lqy3haKDWZZQ=",
+      "url": "_framework\/dotnet.wasm"
     },
     {
       "hash": "sha256-Wn02IHGVHYWQvpPDhVA\/vA\/ICx8Xfh4I6vjapn2Wbxk=",
@@ -589,5 +589,5 @@
       "url": "_content\/Adept.Blazor\/sample-data\/weather.json"
     }
   ],
-  "version": "QBwFXuc4"
+  "version": "KzPjiA3Z"
 };
