@@ -1,0 +1,96 @@
+﻿
+@using System.Text.Json
+@inject IRoutineService RoutineService;
+
+<MudTextField  @bind-Value="@Routine.Name" Label="Name"/>
+
+<MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="@AddNewTemplate">add new template</MudButton>
+<MudList Clickable="true">
+@foreach (var workoutTemplate in Routine.WorkoutTemplates.OrderBy(x=> x.Order).ToList())
+{
+
+    <MudExpansionPanel Text="@workoutTemplate.Name">
+        <MudList Clickable="true">
+        @foreach (var templateExercise in workoutTemplate.WorkoutTemplateExercises.OrderBy(x=> x.Order).ToList())
+        {
+            <MudListItem Text="@templateExercise?.Note" />
+        }
+        </MudList>
+        <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => ModifyTemplate(workoutTemplate))">Modify Template</MudButton>
+    </MudExpansionPanel>
+}
+</MudList>
+
+<MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="@SaveChanges">save changes</MudButton>
+
+
+<MudDrawer @bind-Open="@open" Anchor="@Anchor.Right" Elevation="2" Variant="@DrawerVariant.Temporary">
+    <MudDrawerHeader>
+        <MudIconButton OnClick="@CloseDrawer" Icon="@Icons.Material.Filled.ArrowBack" aria-label="delete"></MudIconButton>
+        <MudText Typo="Typo.h6">@_drawerTitle</MudText>
+    </MudDrawerHeader>
+    <WorkoutTemplateForm WorkoutTemplate="@NewTemplate" SaveTemplateCallback="SaveTemplateHandler"/>
+</MudDrawer>
+@code {
+
+    [Parameter]
+    public Routine Routine { get; set; }
+
+    [Parameter] 
+    public EventCallback<(Routine routine, bool newRoutine)> SaveRoutineCallback { get; set; }
+
+
+    public WorkoutTemplate NewTemplate { get; set; } = new WorkoutTemplate();
+
+    private bool _isNew => Routine.Id == 0;
+
+    private string _drawerTitle => (NewTemplate.Id == 0 ? "Create new" : "Modify") + " WorkoutTemplate";
+    private bool open;
+    protected override async Task OnInitializedAsync()
+    {
+        //
+        //    await Http.GetFromJsonAsync<Routine>("_content/Adept.Blazor/sample-data/Routine.json"));
+
+        base.OnInitializedAsync();
+        //if (!_isNew)
+        //{
+        //    _routine = (await routineService.GetRoutineAsync(RoutineId));
+        //}
+    }
+
+    private async Task AddNewTemplate()
+    {
+        NewTemplate = new WorkoutTemplate();
+        open = true;
+    }
+
+    private void CloseDrawer()
+    {
+        open = false;
+    }
+
+    private async Task ModifyTemplate(WorkoutTemplate workoutTemplate)
+    {
+        NewTemplate = workoutTemplate;
+        open = true;
+    }
+
+    private async Task SaveTemplateHandler((WorkoutTemplate workoutTemplate, bool newTemplate) result)
+    {
+        
+    }
+    private async Task SaveChanges()
+    {
+        if (_isNew)
+        {
+            await RoutineService.AddRoutineAsync(Routine);
+            await SaveRoutineCallback.InvokeAsync((Routine, true));
+        }
+        else
+        {
+            //todo
+            await RoutineService.UpdateRoutineAsync(Routine);
+            await SaveRoutineCallback.InvokeAsync((Routine, false));
+        }
+    }
+}

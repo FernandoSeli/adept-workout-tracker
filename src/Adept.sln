@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adept.Maui", "Adept.Maui\Ad
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adept.Blazor.WASM", "Adept.Blazor.WASM\Adept.Blazor.WASM.csproj", "{37BB1ACA-21AC-43F4-81F6-CF6D5E927ADE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adept.Data", "Adept.Data\Adept.Data.csproj", "{E605AD0F-7D8B-4EE9-AFCE-96B7744CF80F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adept.Data", "Adept.Data\Adept.Data.csproj", "{E605AD0F-7D8B-4EE9-AFCE-96B7744CF80F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
