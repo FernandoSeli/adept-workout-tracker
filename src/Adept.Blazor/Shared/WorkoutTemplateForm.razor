@@ -1,0 +1,79 @@
+﻿@inject IWorkoutTemplateService WorkoutTemplateService
+
+<MudTextField  @bind-Value="@WorkoutTemplate.Name" Label="Name"/>
+<MudNumericField   @bind-Value="@WorkoutTemplate.Order" Label="Order"/>
+<MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="@AddTemplateExercise">Add Exercise</MudButton>
+<MudExpansionPanels MultiExpansion="true">
+@foreach (var templateExercise in WorkoutTemplate.WorkoutTemplateExercises.OrderBy(x=> x.Order).ToList())
+{
+    <MudExpansionPanel Text="@templateExercise.Name">
+        <MudNumericField   @bind-Value="@templateExercise.Order" Label="Order"/>
+        <MudTextField  @bind-Value="@templateExercise.Note" Label="Note"/>
+        <ExerciseAutocomplete Exercise="@templateExercise.Exercise"></ExerciseAutocomplete>
+        <MudExpansionPanels MultiExpansion="true">
+        @foreach (var exerciseSet in templateExercise.ExerciseSets)
+        {
+            <MudExpansionPanel Text="@exerciseSet.Name">
+                <MudNumericField   @bind-Value="@exerciseSet.Order" Label="Order"/>
+                <MudNumericField   @bind-Value="@exerciseSet.Repetition" Label="Reps"/>
+                <MudNumericField   @bind-Value="@exerciseSet.Rest" Label="Rest"/>
+                <MudNumericField   @bind-Value="@exerciseSet.Weight" Label="Weight"/>
+                <MudTextField   @bind-Value="@exerciseSet.Note" Label="Note"/>
+                <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => DeleteSet(templateExercise, exerciseSet))">Delete Sets</MudButton>
+            </MudExpansionPanel>
+        }
+        </MudExpansionPanels>
+        <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => AddTemplateExerciseSet(templateExercise))">Add Sets</MudButton>
+        <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => DeleteTemplateExercise(templateExercise))">Delete Exercise</MudButton>
+    
+    </MudExpansionPanel>
+}
+</MudExpansionPanels>
+<MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="@SaveChanges">Save Changes</MudButton>
+@code {
+    private bool _isNew => WorkoutTemplate.Id == 0;
+
+
+    [Parameter]
+    public WorkoutTemplate WorkoutTemplate { get; set; }
+
+
+    [Parameter]
+    public EventCallback<(WorkoutTemplate workoutTemplate, bool newTemplate)> SaveTemplateCallback { get; set; }
+
+    private async Task SaveChanges()
+    {
+        if (_isNew)
+        {
+            await WorkoutTemplateService.AddWorkoutTemplateAsync(WorkoutTemplate);
+            await SaveTemplateCallback.InvokeAsync((WorkoutTemplate, true));
+        }
+        else
+        {
+            await WorkoutTemplateService.UpdateWorkoutTemplateAsync(WorkoutTemplate);
+            await SaveTemplateCallback.InvokeAsync((WorkoutTemplate, false));
+
+        }
+    }
+
+    private void AddTemplateExercise()
+    {
+        WorkoutTemplate.WorkoutTemplateExercises.Add(new WorkoutTemplateExercise());
+    }
+
+    private void AddTemplateExerciseSet(WorkoutTemplateExercise workoutTemplateExercise)
+    {
+        workoutTemplateExercise.ExerciseSets.Add(new WorkoutTemplateExerciseSet());
+    }
+
+
+    private void DeleteTemplateExercise(WorkoutTemplateExercise workoutTemplateExercise)
+    {
+        WorkoutTemplate.WorkoutTemplateExercises.Remove(workoutTemplateExercise);
+    }
+
+    private void DeleteSet(WorkoutTemplateExercise workoutTemplateExercise, WorkoutTemplateExerciseSet exerciseSet)
+    {
+        workoutTemplateExercise.ExerciseSets.Remove(exerciseSet);
+    }
+}

@@ -1,0 +1,25 @@
+﻿@inject IExerciseService ExerciseService;
+
+<MudAutocomplete T="Exercise" Label="Exercise" @bind-Value="Exercise" 
+                        SearchFunc="@GetExercisesAsync"
+                        ToStringFunc="@(e=> e==null?null : $"{e.Name}")"
+                        CoerceText="@true" 
+                        AdornmentIcon="@Icons.Material.Filled.Search" AdornmentColor="Color.Primary" />
+@code {
+    private List<Exercise> _exercises { get; set; }
+
+    [Parameter]
+    public Exercise Exercise {get; set;}
+
+    protected override async Task OnInitializedAsync()
+    {
+        _exercises = (await ExerciseService.GetExercisesAsync()).ToList();
+        await base.OnInitializedAsync();
+    }
+    private async Task<IEnumerable<Exercise>> GetExercisesAsync(string searchVal)
+    {
+        if (string.IsNullOrEmpty(searchVal))
+            return _exercises;
+        return _exercises.Where(x => x.Name.Contains(searchVal));
+    }
+}
