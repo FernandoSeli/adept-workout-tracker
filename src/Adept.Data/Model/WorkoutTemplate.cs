@@ -16,6 +16,6 @@ namespace Adept.Data.Model
 
         public int RoutineId { get; set; }
         public Routine Routine { get; set; }
-        public List<WorkoutTemplateExercise> WorkoutTemplateExercises { get; set; }
+        public List<WorkoutTemplateExercise> WorkoutTemplateExercises { get; set; } = new List<WorkoutTemplateExercise>();
     }
 }

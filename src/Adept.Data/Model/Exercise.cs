@@ -8,14 +8,13 @@ namespace Adept.Data.Model
     {
         [Key]
         public int Id { get; set; }
-
         [Required]
         public string Name { get; set; }
 
-        public string Url { get; set; }
+        public string? Url { get; set; }
 
-        public List<WorkoutTemplateExercise> WorkoutTemplateExercises { get; set; }
-        public ExerciseCategory ExerciseCategory { get; set; }
-        public int ExerciseCategoryId { get; set; }
+        public List<WorkoutTemplateExercise>? WorkoutTemplateExercises { get; set; }
+        public ExerciseCategory? ExerciseCategory { get; set; }
+        public int? ExerciseCategoryId { get; set; }
     }
 }
