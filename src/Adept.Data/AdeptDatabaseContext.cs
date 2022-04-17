@@ -15,6 +15,7 @@ namespace Adept.Data
         public DbSet<WorkoutLogExercise> LogExercises { get; set; } = default!;
         public DbSet<WorkoutTemplateExerciseSet> TemplateExerciseSets { get; set; } = default!;
         public DbSet<WorkoutTemplateExercise> TemplateExercises { get; set; } = default!;
+        public DbSet<CurrentRoutine> CurrentRoutine { get; set; } = default!;
 
         public AdeptDatabaseContext(DbContextOptions<AdeptDatabaseContext> options)
             : base(options)
