@@ -1,0 +1,112 @@
+﻿@page "/routine"
+@page "/routine/{RoutineId:int}"
+@using System.Text.Json
+@implements IDisposable
+@inject RoutineState RoutineState
+@inject HttpClient Http
+@inject IRoutineService RoutineService;
+@inject IExerciseService ExerciseService;
+@inject NavigationManager NavigationManager;
+
+
+<MudText Class="Typo.h3">Routine</MudText>
+<MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="@AddNewRoutine">add new routine</MudButton>
+<MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="@InitializeRoutines">initialize</MudButton>
+<MudExpansionPanels MultiExpansion="true">
+@foreach (var routine in _routines)
+{
+    <MudExpansionPanel >
+        <TitleContent>
+            <div class="d-flex">
+                <MudText>@routine.Name <strong>@(routine.IsSelected ? "Selected" : "")</strong></MudText>
+            </div>
+        </TitleContent>
+        <ChildContent>
+            <MudList Clickable="true">
+            @foreach (var workoutTemplate in routine.WorkoutTemplates.OrderBy(x=> x.Order).ToList())
+            {
+                <MudListItem Text="@workoutTemplate.Name" />
+            }
+            </MudList>
+            <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => ModifyRoutine(routine))">Modify Routine</MudButton>
+            <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => SelectRoutine(routine))">Select Routine</MudButton>
+        </ChildContent>
+    </MudExpansionPanel>
+}
+</MudExpansionPanels>
+
+<MudDrawer @bind-Open="@open" Anchor="@Anchor.Right" Elevation="1" Variant="@DrawerVariant.Temporary">
+    <MudDrawerHeader>
+        <MudIconButton OnClick="@CloseDrawer" Icon="@Icons.Material.Filled.ArrowBack" aria-label="delete"></MudIconButton>
+        <MudText Typo="Typo.h6">@_drawerTitle</MudText>
+    </MudDrawerHeader>
+    <RoutineForm Routine="@NewRoutine" SaveRoutineCallback="SaveRoutineHandler"/>
+</MudDrawer>
+@code {
+    [Parameter]
+    public int RoutineId { get; set; }
+
+    private List<Routine> _routines = new List<Routine>();
+    public Routine NewRoutine { get; set; } = new Routine();
+
+    private string _drawerTitle => (NewRoutine.Id == 0 ? "Create new" : "Modify") + " Routine";
+    private bool open;
+    protected override async Task OnInitializedAsync()
+    {
+        _routines = (await RoutineService.GetRoutinesAsync()).ToList();
+        RoutineState.OnChange += StateHasChanged;
+        await base.OnInitializedAsync();
+    }
+
+
+    public void Dispose()
+    {
+        RoutineState.OnChange -= StateHasChanged;
+    }
+
+    private async Task InitializeRoutines()
+    {
+        var exercises = await Http.GetFromJsonAsync<List<Exercise>>("/_content/Adept.Blazor/sample-data/Exercises.json");
+        foreach (var exercise in exercises)
+        {
+            await ExerciseService.AddExerciseAsync(exercise); 
+        }
+
+        var routine = await Http.GetFromJsonAsync<Routine>("/_content/Adept.Blazor/sample-data/Routine.json");
+        Console.WriteLine(JsonSerializer.Serialize(routine));
+        await RoutineService.AddRoutineAsync(routine);
+        _routines = (await RoutineService.GetRoutinesAsync()).ToList();
+    }
+
+    private async Task AddNewRoutine()
+    {
+        NewRoutine = new Routine();
+        open = true;
+    }
+
+    private void CloseDrawer()
+    {
+        open = false;
+    }
+
+    private async Task ModifyRoutine(Routine routine)
+    {
+        NewRoutine = routine;
+        open = true;
+    }
+
+    public void SaveRoutineHandler((Routine routine, bool newRoutine) result)
+    {
+        if (result.newRoutine)
+        {
+            _routines.Add(result.routine);
+        }
+        open = false;
+    }
+
+    private async Task SelectRoutine(Routine routine)
+    {
+        await RoutineService.AddOrUpdateCurrentRoutine(routine.Id);
+        RoutineState.SetSelectedRoutine(routine);
+    }
+}
