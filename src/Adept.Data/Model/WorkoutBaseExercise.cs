@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Adept.Data.Extension;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Adept.Data.Model
@@ -23,25 +24,35 @@ namespace Adept.Data.Model
 
     public class WorkoutTemplateExercise : WorkoutBaseExercise
     {
-        public List<WorkoutTemplateExerciseSet>? ExerciseSets { get; set; } = new List<WorkoutTemplateExerciseSet>();
+        public WorkoutTemplateExercise()
+        {
+
+        }
+
+        public WorkoutTemplateExercise(int order)
+        {
+            Order = order;
+            var setOrder = GetNextTemplateExerciseSetOrder();
+            Exercise = new Exercise();
+            Sets.Add(new WorkoutTemplateSet(setOrder));
+        }
+        public List<WorkoutTemplateSet>? Sets { get; set; } = new List<WorkoutTemplateSet>();
 
         public int? WorkoutTemplateId { get; set; }
         public WorkoutTemplate? WorkoutTemplate { get; set; }
 
-        public List<WorkoutTemplateExercise>? ChildTemplateExercises { get; set; } = new  List<WorkoutTemplateExercise> ();
-        public int? ParentTemplateExerciseId { get; set; }
-        public WorkoutTemplateExercise? ParentTemplateExercise { get; set; }
+
+
+        public IEnumerable<int> GetTemplateExerciseSetOrders() => Sets.Select(x => x.Order);
+        public int GetNextTemplateExerciseSetOrder() => GetTemplateExerciseSetOrders().GetFirstAvailableInt();
     }
 
     public class WorkoutLogExercise : WorkoutBaseExercise
     {
-        private List<WorkoutLogExerciseSet>? ExerciseSets { get; set; }
+        private List<WorkoutLogSet>? Sets { get; set; }
 
         public int WorkoutLogId { get; set; }
         public WorkoutLog? WorkoutLog { get; set; }
 
-        public List<WorkoutLogExercise>? ChildLogExercises { get; set; }
-        public int ParentLogExerciseId { get; set; }
-        public WorkoutLogExercise? ParentLogExercise { get; set; }
     }
 }

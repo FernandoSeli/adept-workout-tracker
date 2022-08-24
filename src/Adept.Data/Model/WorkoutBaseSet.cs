@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Adept.Data.Model
 {
-    public class WorkoutBaseExerciseSet
+    public class WorkoutBaseSet
     {
         [Key]
         public int Id { get; set; }
@@ -18,8 +18,17 @@ namespace Adept.Data.Model
         public string Name => "Set " + Order;
     }
 
-    public class WorkoutTemplateExerciseSet : WorkoutBaseExerciseSet
+    public class WorkoutTemplateSet : WorkoutBaseSet
     {
+        public WorkoutTemplateSet()
+        {
+
+        }
+        public WorkoutTemplateSet(int setOrder)
+        {
+            Order = setOrder;
+        }
+
         //public int ParentTemplateExercisetSetId { get; set; }
         //public WorkoutTemplateExerciseSet? ParentTemplateExerciseSet { get; set; }
         //public List<WorkoutTemplateExerciseSet> DropSets { get; set; } = new List<WorkoutTemplateExerciseSet>();
@@ -28,7 +37,7 @@ namespace Adept.Data.Model
         public WorkoutTemplateExercise? WorkoutTemplateExercise { get; set; }
     }
 
-    public class WorkoutLogExerciseSet : WorkoutBaseExerciseSet
+    public class WorkoutLogSet : WorkoutBaseSet
     {
         public int RepsAchieved { get; set; }
         public int WeightAchieved { get; set; }
