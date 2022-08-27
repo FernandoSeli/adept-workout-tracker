@@ -34,7 +34,7 @@ namespace Adept.Data.Model
         //public List<WorkoutTemplateExerciseSet> DropSets { get; set; } = new List<WorkoutTemplateExerciseSet>();
 
         public int WorkoutTemplateExerciseId { get; set; }
-        public WorkoutTemplateExercise? WorkoutTemplateExercise { get; set; }
+        public WorkoutTemplateExercise WorkoutTemplateExercise { get; set; }
     }
 
     public class WorkoutLogSet : WorkoutBaseSet

@@ -12,7 +12,7 @@ namespace Adept.Data.Model
     {
         [DefaultValue("1")]
         [Key]
-        public int Id { get; set; }
+        public int Id { get; set; } = 1;
 
         public int? RoutineId { get; set; }
         public Routine Routine { get; set; }

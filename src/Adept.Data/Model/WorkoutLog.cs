@@ -14,6 +14,6 @@ namespace Adept.Data.Model
 
         public int WorkoutTemplateId { get; set; }
         public WorkoutTemplate WorkoutTemplate { get; set; }
-        public List<WorkoutLog> WorkoutTemplateExercises { get; set; }
+        public List<WorkoutLogExercise> WorkoutLogExercises { get; set; }
     }
 }
