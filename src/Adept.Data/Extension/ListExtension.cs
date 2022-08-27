@@ -9,36 +9,52 @@ namespace Adept.Data.Extension
 {
     public static class ListExtension
     {
-        public static void AddOrUpdateWorkoutTemplate(this List<WorkoutTemplate> workoutTemplates,
-            WorkoutTemplate newWorkoutTemplate)
+        public static void AddUpdateOrDeleteWorkoutTemplate(this List<WorkoutTemplate> workoutTemplates,
+            WorkoutTemplate newWorkoutTemplate,
+            bool deleted)
         {
             if (newWorkoutTemplate != default)
             {
-                var oldWorkoutTemplate = workoutTemplates.FirstOrDefault(x => x.Id == newWorkoutTemplate.Id);
-                if (oldWorkoutTemplate != default)
+                if (deleted)
                 {
-                    oldWorkoutTemplate = newWorkoutTemplate;
+                    workoutTemplates.Remove(newWorkoutTemplate);
                 }
                 else
                 {
-                    workoutTemplates.Add(newWorkoutTemplate);
+                    var oldWorkoutTemplate = workoutTemplates.FirstOrDefault(x => x.Id == newWorkoutTemplate.Id);
+                    if (oldWorkoutTemplate != default)
+                    {
+                        oldWorkoutTemplate = newWorkoutTemplate;
+                    }
+                    else
+                    {
+                        workoutTemplates.Add(newWorkoutTemplate);
+                    }
                 }
             }
         }
 
-        public static void AddOrUpdateRoutine(this List<Routine> routines,
-            Routine newRoutine)
+        public static void AddUpdateOrDeleteRoutine(this List<Routine> routines,
+            Routine routine,
+            bool deleted)
         {
-            if (newRoutine != default)
+            if (routine != default)
             {
-                var oldRoutine = routines.FirstOrDefault(x => x.Id == newRoutine.Id);
-                if (oldRoutine != default)
+                if (deleted)
                 {
-                    oldRoutine = newRoutine;
+                    routines.Remove(routine);
                 }
                 else
                 {
-                    routines.Add(newRoutine);
+                    var oldRoutine = routines.FirstOrDefault(x => x.Id == routine.Id);
+                    if (oldRoutine != default)
+                    {
+                        oldRoutine = routine;
+                    }
+                    else
+                    {
+                        routines.Add(routine);
+                    }
                 }
             }
         }

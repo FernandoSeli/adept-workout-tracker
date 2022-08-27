@@ -1,4 +1,4 @@
-﻿
+﻿@inject IGenericRepository<WorkoutTemplateSet> WorkoutTemplateSetRepository;
 @if (WorkoutTemplateExercise.Sets.Any())
 {
     <MudTabs Elevation="4" Rounded="true" AlwaysShowScrollButtons="true" Color="@Color.Primary" Class="mt-4">
@@ -19,9 +19,13 @@
     [Parameter]
     public WorkoutTemplateExercise WorkoutTemplateExercise { get; set; }
 
-    
-    private void DeleteSet(WorkoutTemplateExercise workoutTemplateExercise, WorkoutTemplateSet set)
+
+    private async Task DeleteSet(WorkoutTemplateExercise workoutTemplateExercise, WorkoutTemplateSet set)
     {
+        if (set.Id != 0)
+        {
+            await WorkoutTemplateSetRepository.RemoveAsync(set);
+        }
         workoutTemplateExercise.Sets.Remove(set);
     }
 }

@@ -1,4 +1,4 @@
-﻿@inject IExerciseService ExerciseService;
+﻿@inject IExerciseRepository ExerciseRepository;
 
 <MudAutocomplete T="Exercise" Label="Exercise" @bind-Value="Exercise" 
                         SearchFunc="@GetExercisesAsync"
@@ -13,7 +13,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        _exercises = (await ExerciseService.GetExercisesAsync()).ToList();
+        _exercises = (await ExerciseRepository.GetExercisesAsync()).ToList();
         await base.OnInitializedAsync();
     }
     private async Task<IEnumerable<Exercise>> GetExercisesAsync(string searchVal)

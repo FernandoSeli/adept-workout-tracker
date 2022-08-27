@@ -1,24 +1,27 @@
 ﻿using Microsoft.JSInterop;
 using System.Threading.Tasks;
-
-public class BrowserService
+namespace Adept.Blazor.Services
 {
-    private readonly IJSRuntime _js;
-
-    public BrowserService(IJSRuntime js)
+    public class BrowserService
     {
-        _js = js;
+        private readonly IJSRuntime _js;
+
+        public BrowserService(IJSRuntime js)
+        {
+            _js = js;
+        }
+
+        public async Task<BrowserDimension> GetDimensions()
+        {
+            return await _js.InvokeAsync<BrowserDimension>("getDimensions");
+        }
+
     }
 
-    public async Task<BrowserDimension> GetDimensions()
+    public class BrowserDimension
     {
-        return await _js.InvokeAsync<BrowserDimension>("getDimensions");
+        public int Width { get; set; }
+        public int Height { get; set; }
     }
 
-}
-
-public class BrowserDimension
-{
-    public int Width { get; set; }
-    public int Height { get; set; }
 }

@@ -2,15 +2,14 @@
 using Adept.Data.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace Adept.Blazor.Services
+namespace Adept.Data.Repository
 {
-    public class ExerciseService : IExerciseService
+    public class ExerciseRepository : GenericRepository<Exercise>, IExerciseRepository
     {
         private AdeptDatabaseContext _context;
 
-        public ExerciseService(IDbContextFactory<AdeptDatabaseContext> DbContextFactory)
+        public ExerciseRepository(IDbContextFactory<AdeptDatabaseContext> DbContextFactory): base(DbContextFactory)
         {
-            _context = DbContextFactory.CreateDbContext();
         }
 
         public async Task<int> AddExerciseAsync(Exercise exercise)

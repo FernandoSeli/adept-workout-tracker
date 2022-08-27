@@ -5,15 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Adept.Blazor.Services
+namespace Adept.Data.Repository
 {
-    public interface IRoutineService
+    public interface IRoutineRepository : IGenericRepository<Routine>
     {
         Task<IEnumerable<Routine>> GetRoutinesAsync();
         Task<int> GetRoutinesCountAsync();
         Task<Routine?> GetRoutineAsync(int routineId);
-        Task<int> AddRoutineAsync(Routine routine);
-        Task<int> AddOrUpdateRoutineAsync(Routine routine);
         Task<int> AddOrUpdateCurrentRoutine(int routineId);
         Task<Routine?> GetCurrentRoutineAsync();
     }

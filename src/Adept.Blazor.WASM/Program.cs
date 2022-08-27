@@ -21,9 +21,9 @@ builder.Services.AddDbContextFactory<AdeptDatabaseContext>(options => options.Us
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-builder.Services.AddTransient<IRoutineService, RoutineService>();
-builder.Services.AddScoped<IExerciseService, ExerciseService>();
-builder.Services.AddScoped<IWorkoutTemplateService, WorkoutTemplateService>();
+builder.Services.AddTransient<IRoutineRepository, RoutineRepository>();
+builder.Services.AddScoped<IExerciseRepository, ExerciseRepository>();
+//builder.Services.AddScoped<IWorkoutTemplateService, WorkoutTemplateService>();
 builder.Services.AddSingleton<RoutineState>();
 builder.Services.AddScoped<BrowserService>();
 builder.Services.AddScoped<DialogHelper>();

@@ -1,4 +1,8 @@
-﻿@if (WorkoutTemplateExercise.MultiExerciseSets.Any())
+﻿@inject IGenericRepository<WorkoutTemplateExerciseSet> WorkoutTemplateExerciseSetRepository
+@inject IGenericRepository<WorkoutTemplateMultiExerciseSet> WorkoutTemplateMultiExerciseSetRepository
+
+
+@if (WorkoutTemplateExercise.MultiExerciseSets.Any())
 {
     <MudTabs Elevation="4" Rounded="true" AlwaysShowScrollButtons="true" Color="@Color.Primary" Class="mt-4">
         @foreach (var multiExerciseSet in WorkoutTemplateExercise.MultiExerciseSets.OrderBy(x => x.Order))
@@ -33,13 +37,21 @@
         multiExerciseSet.ExerciseSets.Add(new WorkoutTemplateExerciseSet(setOrder));
     }
 
-    private void DeleteExerciseSet(WorkoutTemplateMultiExerciseSet multiExerciseSet, WorkoutTemplateExerciseSet exerciseSet)
+    private async Task DeleteExerciseSet(WorkoutTemplateMultiExerciseSet multiExerciseSet, WorkoutTemplateExerciseSet exerciseSet)
     {
+        if (exerciseSet.Id != 0)
+        {
+            await WorkoutTemplateExerciseSetRepository.RemoveAsync(exerciseSet);
+        }
         multiExerciseSet.ExerciseSets.Remove(exerciseSet);
     }
 
-    private void DeleteMultiExerciseSet(WorkoutTemplateMultiExerciseSet multiExerciseSet)
+    private async Task DeleteMultiExerciseSet(WorkoutTemplateMultiExerciseSet multiExerciseSet)
     {
+        if (multiExerciseSet.Id != 0)
+        {
+            await WorkoutTemplateMultiExerciseSetRepository.RemoveAsync(multiExerciseSet);
+        }
         WorkoutTemplateExercise.MultiExerciseSets.Remove(multiExerciseSet);
     }
 }
