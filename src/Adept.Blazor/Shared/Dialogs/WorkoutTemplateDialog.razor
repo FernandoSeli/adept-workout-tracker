@@ -1,11 +1,11 @@
-﻿@inject IWorkoutTemplateService WorkoutTemplateService
+﻿@inject IGenericRepository<WorkoutTemplate> IWorkoutTemplateRepository
 @using DialogOptions = MudBlazor.DialogOptions
 <MudDialog>
     <DialogContent>
         <WorkoutTemplateForm WorkoutTemplate="@WorkoutTemplate"/>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton OnClick="DeleteWorkoutTemplate">Delete</MudButton>
         <MudButton Color="Color.Primary" OnClick="SaveChanges">Save Changes</MudButton>
     </DialogActions>
 </MudDialog>
@@ -16,7 +16,6 @@
     private string _title => (WorkoutTemplate.Id == 0 ? "Create new" : "Modify") + " Workout Template";
     private DialogOptions _dialogOptions = new DialogOptions() {   FullScreen = true };
 
-    void Cancel() => MudDialog.Cancel();
 
 
     protected override async Task OnInitializedAsync()
@@ -28,9 +27,17 @@
         MudDialog.SetOptions(MudDialog.Options);
     }
 
+    public async Task DeleteWorkoutTemplate() 
+    {
+        var deleted = true;
+        await IWorkoutTemplateRepository.RemoveAsync(WorkoutTemplate);
+        MudDialog.Close(DialogResult.Ok((WorkoutTemplate, deleted)));
+    }
+
     public async Task SaveChanges() 
     {
-        await WorkoutTemplateService.AddOrUpdateWorkoutTemplateAsync(WorkoutTemplate);
-        MudDialog.Close(DialogResult.Ok(WorkoutTemplate));
+        var deleted = false;
+        await IWorkoutTemplateRepository.AddOrUpdateAsync(WorkoutTemplate);
+        MudDialog.Close(DialogResult.Ok((WorkoutTemplate, deleted)));
     }
 }

@@ -34,7 +34,7 @@
 
     private async Task OpenWorkoutTemplateDialog(WorkoutTemplate workoutTemplate)
     {
-        var newWorkoutTemplate = await DialogHelper.OpenWorkoutTemplateDialogAsync(workoutTemplate);
-        Routine.WorkoutTemplates.AddOrUpdateWorkoutTemplate(newWorkoutTemplate);
+        var result = await DialogHelper.OpenWorkoutTemplateDialogAsync(workoutTemplate);
+        Routine.WorkoutTemplates.AddUpdateOrDeleteWorkoutTemplate(result.WorkoutTemplate, result.Deleted);
     }
 }

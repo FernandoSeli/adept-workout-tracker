@@ -2,15 +2,14 @@
 @page "/routine/{RoutineId:int}"
 @using System.Text.Json
 @implements IDisposable
-@inject RoutineState RoutineState
-@inject HttpClient Http
-@inject IRoutineService RoutineService;
-@inject IExerciseService ExerciseService;
+@inject RoutineState RoutineState;
+@inject HttpClient Http;
+@inject IGenericRepository<Exercise> ExerciseRepository;
+@inject IRoutineRepository RoutineRepository;
 @inject BrowserService BrowserService;
 @inject NavigationManager NavigationManager;
 @inject IDialogService DialogService;
 @inject DialogHelper DialogHelper;
-@inject IGenericRepository<Routine> GenericRoutineRepo;
 
 
 <MudText Typo="Typo.h3">Routine</MudText>
@@ -39,6 +38,9 @@
 </MudExpansionPanels>
 
 <MudButton Variant="Variant.Text" Color="Color.Primary"  OnClick="(() => OpenRoutineDialog(new Routine()))">Add new routine</MudButton>
+<MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="@DeleteRoutine">Delete</MudButton>
+<MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="@AddRoutine">Add</MudButton>
+<MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="@RefreshRoutine">Add</MudButton>
            
 @code {
     [Parameter]
@@ -51,17 +53,18 @@
     protected override async Task OnInitializedAsync()
     {
         _browserDimension = await BrowserService.GetDimensions();
-        _routines = (await RoutineService.GetRoutinesAsync()).ToList();
+        _routines = (await RoutineRepository.GetRoutinesAsync()).ToList();
         RoutineState.OnChange += StateHasChanged;
 
         var exercises = await Http.GetFromJsonAsync<List<Exercise>>("/_content/Adept.Blazor/sample-data/Exercises.json");
-        foreach (var exercise in exercises)
-        {
-            await ExerciseService.AddExerciseAsync(exercise); 
-        }
+        ExerciseRepository.AddRangeAsync(exercises);
+        //foreach (var exercise in exercises)
+        //{
+        //    await ExerciseService.AddExerciseAsync(exercise); 
+        //}
         var routine = await Http.GetFromJsonAsync<Routine>("/_content/Adept.Blazor/sample-data/Routine.json");
-        await RoutineService.AddRoutineAsync(routine);
-        _routines = (await RoutineService.GetRoutinesAsync()).ToList();
+        await RoutineRepository.AddAsync(routine);
+        _routines = (await RoutineRepository.GetRoutinesAsync()).ToList();
         await base.OnInitializedAsync();
     }
 
@@ -71,22 +74,40 @@
         RoutineState.OnChange -= StateHasChanged;
     }
 
+    private async Task DeleteRoutine()
+    {
+
+        _routines = (await RoutineRepository.GetRoutinesAsync()).ToList();
+        await RoutineRepository.RemoveAsync(_routines.FirstOrDefault());
+    }
+    private async Task AddRoutine()
+    {
+
+        var routine = await Http.GetFromJsonAsync<Routine>("/_content/Adept.Blazor/sample-data/Routine.json");
+        await RoutineRepository.AddOrUpdateAsync(routine);
+    }
+    private async Task RefreshRoutine()
+    {
+        _routines = (await RoutineRepository.GetRoutinesAsync()).ToList();
+    }
+
     private async Task OpenRoutineDialog(Routine routine)
     {
-        var newRoutine = await DialogHelper.OpenRoutineDialogAsync(routine);
-        _routines.AddOrUpdateRoutine(newRoutine);
+        var result = await DialogHelper.OpenRoutineDialogAsync(routine);
+        
+        _routines.AddUpdateOrDeleteRoutine(result.Routine, result.Deleted);
     }
 
     private async Task OpenWorkoutTemplateDialog(Routine routine, WorkoutTemplate workoutTemplate)
     {
-        var newWorkoutTemplate = await DialogHelper.OpenWorkoutTemplateDialogAsync(workoutTemplate);
-        routine.WorkoutTemplates.AddOrUpdateWorkoutTemplate(newWorkoutTemplate);
+        var result = await DialogHelper.OpenWorkoutTemplateDialogAsync(workoutTemplate);
+        routine.WorkoutTemplates.AddUpdateOrDeleteWorkoutTemplate(result.WorkoutTemplate, result.Deleted);
     }
 
 
     private async Task SelectRoutine(Routine routine)
     {
-        await RoutineService.AddOrUpdateCurrentRoutine(routine.Id);
+        await RoutineRepository.AddOrUpdateCurrentRoutine(routine.Id);
         RoutineState.SetSelectedRoutine(routine);
     }
     

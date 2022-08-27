@@ -1,4 +1,4 @@
-﻿@inject IRoutineService RoutineService;
+﻿@inject IRoutineRepository RoutineRepository;
 @using DialogOptions = MudBlazor.DialogOptions
 
 <MudDialog>
@@ -6,7 +6,7 @@
         <RoutineForm Routine="@Routine"/>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Error" OnClick="DeleteRoutine">Delete</MudButton>
         <MudButton Color="Color.Primary" OnClick="SaveRoutine">Save Changes</MudButton>
     </DialogActions>
 </MudDialog>
@@ -31,7 +31,15 @@
 
     private async Task SaveRoutine()
     {
-        await RoutineService.AddOrUpdateRoutineAsync(Routine);
-        MudDialog.Close(DialogResult.Ok(Routine));
+        var deleted = false;
+        await RoutineRepository.AddOrUpdateAsync(Routine);
+        MudDialog.Close(DialogResult.Ok((Routine, deleted)));
+    }
+
+    private async Task DeleteRoutine()
+    {
+        var deleted = true;
+        await RoutineRepository.RemoveAsync(Routine);
+        MudDialog.Close(DialogResult.Ok((Routine, deleted)));
     }
 }

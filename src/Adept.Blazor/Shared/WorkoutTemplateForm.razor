@@ -1,4 +1,5 @@
-﻿@inject IWorkoutTemplateService WorkoutTemplateService
+﻿@inject IGenericRepository<WorkoutTemplate> WorkoutTemplateRepository
+@inject IGenericRepository<WorkoutTemplateExercise> WorkoutTemplateExerciseRepository
 
 <MudTextField  @bind-Value="@WorkoutTemplate.Name" Label="Name"/>
 <MudNumericField   @bind-Value="@WorkoutTemplate.Order" Label="Order"/>
@@ -57,8 +58,12 @@
     }
 
 
-    private void DeleteTemplateExercise(WorkoutTemplateExercise workoutTemplateExercise)
+    private async Task DeleteTemplateExercise(WorkoutTemplateExercise workoutTemplateExercise)
     {
+        if (workoutTemplateExercise.Id != 0)
+        {
+            await WorkoutTemplateExerciseRepository.RemoveAsync(workoutTemplateExercise);
+        }
         WorkoutTemplate.WorkoutTemplateExercises.Remove(workoutTemplateExercise);
     }
 }

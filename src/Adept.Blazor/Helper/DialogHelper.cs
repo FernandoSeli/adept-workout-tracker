@@ -1,5 +1,6 @@
 ﻿using Adept.Blazor.Shared.Dialogs;
 using Adept.Data.Model;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using MudBlazor;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace Adept.Blazor.Helper
             _dialogService = dialogService;
         }
 
-        public async Task<Routine?> OpenRoutineDialogAsync(Routine routine)
+        public async Task<(Routine? Routine, bool Deleted)> OpenRoutineDialogAsync(Routine routine)
         {
             var parameters = new DialogParameters();
             parameters.Add("Routine", routine);
@@ -28,11 +29,11 @@ namespace Adept.Blazor.Helper
 
             if (!result.Cancelled)
             {
-                return (Routine)result.Data;
+                return await dialog.GetReturnValueAsync<(Routine? Routine, bool Deleted)>();
             }
             return default;
         }
-        public async Task<WorkoutTemplate?> OpenWorkoutTemplateDialogAsync(WorkoutTemplate workoutTemplate)
+        public async Task<(WorkoutTemplate? WorkoutTemplate, bool Deleted)> OpenWorkoutTemplateDialogAsync(WorkoutTemplate workoutTemplate)
         {
             var parameters = new DialogParameters();
             parameters.Add("WorkoutTemplate", workoutTemplate);
@@ -41,7 +42,7 @@ namespace Adept.Blazor.Helper
 
             if (!result.Cancelled)
             {
-                return (WorkoutTemplate)result.Data;
+                return await dialog.GetReturnValueAsync<(WorkoutTemplate? Routine, bool Deleted)>();
             }
             return default;
         }
