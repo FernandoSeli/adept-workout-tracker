@@ -15,7 +15,7 @@
 
     <!--Mudblazor-->
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
-<link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
 
     <!--Radzen-->
     <link rel="stylesheet" href="_content/Radzen.Blazor/css/default-base.css">
@@ -39,6 +39,14 @@
     <!-- Radzen -->
     <script src="_content/Radzen.Blazor/Radzen.Blazor.js"></script>
 
+    <script type="text/javascript">
+        window.getDimensions = function() {
+            return {
+                    width: window.innerWidth,
+                    height: window.innerHeight
+                };
+        };
+    </script>
 </body>
 
 </html>
