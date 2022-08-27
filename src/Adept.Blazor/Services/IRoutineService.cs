@@ -13,7 +13,7 @@ namespace Adept.Blazor.Services
         Task<int> GetRoutinesCountAsync();
         Task<Routine?> GetRoutineAsync(int routineId);
         Task<int> AddRoutineAsync(Routine routine);
-        Task<int> UpdateRoutineAsync(Routine routine);
+        Task<int> AddOrUpdateRoutineAsync(Routine routine);
         Task<int> AddOrUpdateCurrentRoutine(int routineId);
         Task<Routine?> GetCurrentRoutineAsync();
     }

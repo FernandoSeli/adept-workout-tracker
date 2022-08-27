@@ -45,90 +45,16 @@
           "Note": "Test",
           "Order": 1,
           "isMultiExercise": true,
-          "ChildTemplateExercises": [
+          "MultiExerciseSets": [
             {
-              "Note": "Test",
-              "ExerciseId": 1,
+              "Note": "test2",
               "Order": 1,
               "ExerciseSets": [
                 {
-                  "Repetition": 10,
-                  "Rest": 10,
-                  "Order": 1,
+                  "ExerciseId": 1,
                   "Weight": 10,
-                  "Note": "rpe10"
-                },
-                {
-                  "Repetition": 10,
-                  "Rest": 10,
-                  "Order": 2,
-                  "Weight": 10,
-                  "Note": "rpe10"
-                },
-                {
-                  "Repetition": 10,
-                  "Rest": 10,
-                  "Order": 3,
-                  "Weight": 10,
-                  "Note": "rpe10"
-                }
-              ]
-            },
-
-            {
-              "Note": "Test",
-              "ExerciseId": 2,
-              "Order": 2,
-              "ExerciseSets": [
-                {
-                  "Repetition": 10,
-                  "Rest": 10,
-                  "Order": 2,
-                  "Weight": 10,
-                  "Note": "rpe10"
-                },
-                {
-                  "Repetition": 10,
-                  "Rest": 10,
-                  "Order": 3,
-                  "Weight": 10,
-                  "Note": "rpe10"
-                },
-                {
-                  "Repetition": 10,
-                  "Rest": 10,
-                  "Order": 1,
-                  "Weight": 10,
-                  "Note": "rpe10"
-                }
-              ]
-            },
-
-            {
-              "Note": "Test",
-              "ExerciseId": 3,
-              "Order": 2,
-              "ExerciseSets": [
-                {
-                  "Repetition": 10,
-                  "Rest": 10,
-                  "Order": 1,
-                  "Weight": 10,
-                  "Note": "rpe10"
-                },
-                {
-                  "Repetition": 10,
-                  "Rest": 10,
-                  "Order": 2,
-                  "Weight": 10,
-                  "Note": "rpe10"
-                },
-                {
-                  "Repetition": 10,
-                  "Rest": 10,
-                  "Order": 3,
-                  "Weight": 10,
-                  "Note": "rpe10"
+                  "Repetition": 1,
+                  "Order": 1
                 }
               ]
             }

@@ -32,47 +32,54 @@ namespace Adept.Blazor.Services
 
         public async Task<IEnumerable<Routine>> GetRoutinesAsync()
         {
-            return _context.Routines
+            return await _context.Routines
                 .Include(r => r.CurrentRoutine)
                 .Include(r => r.WorkoutTemplates)
                     .ThenInclude(template => template.WorkoutTemplateExercises)
                         .ThenInclude(templateExercise => templateExercise.Exercise)
-                    .ThenInclude(template => template.WorkoutTemplateExercises)
-                        .ThenInclude(templateExercise => templateExercise.ExerciseSets)
                 .Include(r => r.WorkoutTemplates)
                     .ThenInclude(template => template.WorkoutTemplateExercises)
-                    .ThenInclude(templateExercise => templateExercise.ChildTemplateExercises)
-                        .ThenInclude(templateExercise => templateExercise.Exercise)
+                        .ThenInclude(templateExercise => templateExercise.Sets)
+                .Include(r => r.WorkoutTemplates)
                     .ThenInclude(template => template.WorkoutTemplateExercises)
-                    .ThenInclude(templateExercise => templateExercise.ChildTemplateExercises)
-                        .ThenInclude(templateExercise => templateExercise.ExerciseSets);
+                        .ThenInclude(templateExercise => templateExercise.MultiExerciseSets)
+                            .ThenInclude(templateMultiExercise => templateMultiExercise.ExerciseSets)
+                                .ThenInclude(exerciseSet => exerciseSet.Exercise)
+                 .ToListAsync();
         }
 
-        public async Task<int> UpdateRoutineAsync(Routine routine)
+        public async Task<int> AddOrUpdateRoutineAsync(Routine routine)
         {
-            _context.Routines.Update(routine);
+            _context.Update(routine);
             return await _context.SaveChangesAsync();
         }
 
         public async Task<int> AddRoutineAsync(Routine routine)
         {
-            await _context.Routines.AddAsync(routine);
-            foreach (var template in routine.WorkoutTemplates)
-            {
-                await _context.WorkoutTemplates.AddAsync(template);
-                foreach (var templateExercise in template.WorkoutTemplateExercises)
-                {
-                    await _context.TemplateExercises.AddAsync(templateExercise);
-                    foreach (var templateExerciseSet in templateExercise.ExerciseSets)
-                    {
-                        await _context.TemplateExerciseSets.AddAsync(templateExerciseSet);
-                    }
-                    foreach (var childExercise in templateExercise.ChildTemplateExercises)
-                    {
-                        await _context.TemplateExercises.AddAsync(templateExercise);
-                    }
-                }
-            }
+            await _context.AddAsync(routine);
+            //await _context.Routines.AddAsync(routine);
+            //foreach (var template in routine.WorkoutTemplates)
+            //{
+            //    await _context.WorkoutTemplates.AddAsync(template);
+            //    foreach (var templateExercise in template.WorkoutTemplateExercises)
+            //    {
+            //        await _context.TemplateExercises.AddAsync(templateExercise);
+            //        foreach (var set in templateExercise.Sets)
+            //        {
+            //            await _context.TemplateSets.AddAsync(set);
+            //        }
+
+            //        foreach (var multiExerciseSet in templateExercise.MultiExerciseSets)
+            //        {
+            //            await _context.TemplateMultiExercises.AddAsync(multiExerciseSet);
+            //            foreach (var exerciseSet in multiExerciseSet.ExerciseSets)
+            //            {
+            //                await _context.TemplateExerciseSets.AddAsync(exerciseSet);
+
+            //            }
+            //        }
+            //    }
+            //}
             return await _context.SaveChangesAsync();
         }
 

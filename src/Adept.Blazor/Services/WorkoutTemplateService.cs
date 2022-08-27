@@ -16,13 +16,13 @@ namespace Adept.Blazor.Services
 
         public async Task<int> AddWorkoutTemplateAsync(WorkoutTemplate workoutTemplate)
         {
-            await _context.WorkoutTemplates.AddAsync(workoutTemplate);
+            await _context.AddAsync(workoutTemplate);
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<int> UpdateWorkoutTemplateAsync(WorkoutTemplate workoutTemplate)
+        public async Task<int> AddOrUpdateWorkoutTemplateAsync(WorkoutTemplate workoutTemplate)
         {
-            _context.WorkoutTemplates.Update(workoutTemplate);
+            _context.Update(workoutTemplate);
             return await _context.SaveChangesAsync();
         }
     }

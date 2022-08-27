@@ -1,0 +1,27 @@
+﻿
+@if (WorkoutTemplateExercise.Sets.Any())
+{
+    <MudTabs Elevation="4" Rounded="true" AlwaysShowScrollButtons="true" Color="@Color.Primary" Class="mt-4">
+    @foreach (var set in WorkoutTemplateExercise.Sets)
+    {
+        <MudTabPanel  Text="@set.Name">
+            <MudNumericField @bind-Value="@set.Order" Label="Order"/>
+            <MudNumericField @bind-Value="@set.Repetition" Label="Reps"/>
+            <MudNumericField @bind-Value="@set.Rest" Label="Rest"/>
+            <MudNumericField @bind-Value="@set.Weight" Label="Weight"/>
+            <MudTextField @bind-Value="@set.Note" Label="Note"/>
+            <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => DeleteSet(WorkoutTemplateExercise, set))">Delete Set</MudButton>
+        </MudTabPanel>
+    }
+    </MudTabs>
+}
+@code {
+    [Parameter]
+    public WorkoutTemplateExercise WorkoutTemplateExercise { get; set; }
+
+    
+    private void DeleteSet(WorkoutTemplateExercise workoutTemplateExercise, WorkoutTemplateSet set)
+    {
+        workoutTemplateExercise.Sets.Remove(set);
+    }
+}
