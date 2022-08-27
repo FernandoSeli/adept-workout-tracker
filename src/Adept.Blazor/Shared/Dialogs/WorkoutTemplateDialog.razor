@@ -1,0 +1,36 @@
+﻿@inject IWorkoutTemplateService WorkoutTemplateService
+@using DialogOptions = MudBlazor.DialogOptions
+<MudDialog>
+    <DialogContent>
+        <WorkoutTemplateForm WorkoutTemplate="@WorkoutTemplate"/>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="SaveChanges">Save Changes</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [Parameter] public WorkoutTemplate WorkoutTemplate{ get; set; }
+    private string _title => (WorkoutTemplate.Id == 0 ? "Create new" : "Modify") + " Workout Template";
+    private DialogOptions _dialogOptions = new DialogOptions() {   FullScreen = true };
+
+    void Cancel() => MudDialog.Cancel();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        base.OnInitializedAsync();
+        MudDialog.SetTitle(_title);
+        MudDialog.Options.FullScreen = true;
+        MudDialog.Options.CloseButton = true;
+        MudDialog.SetOptions(MudDialog.Options);
+    }
+
+    public async Task SaveChanges() 
+    {
+        await WorkoutTemplateService.AddOrUpdateWorkoutTemplateAsync(WorkoutTemplate);
+        MudDialog.Close(DialogResult.Ok(WorkoutTemplate));
+    }
+}

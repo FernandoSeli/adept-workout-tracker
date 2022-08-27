@@ -1,0 +1,37 @@
+﻿@inject IRoutineService RoutineService;
+@using DialogOptions = MudBlazor.DialogOptions
+
+<MudDialog>
+    <DialogContent>
+        <RoutineForm Routine="@Routine"/>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="SaveRoutine">Save Changes</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [Parameter] public Routine Routine{ get; set; }
+    private string _title => (Routine.Id == 0 ? "Create new" : "Modify") + " Routine";
+    private DialogOptions _dialogOptions = new DialogOptions() {   FullScreen = true };
+    void Cancel() => MudDialog.Cancel();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        base.OnInitializedAsync();
+        MudDialog.SetTitle(_title);
+        MudDialog.Options.FullScreen = true;
+        MudDialog.Options.CloseButton = true;
+        MudDialog.SetOptions(MudDialog.Options);
+    }
+
+
+    private async Task SaveRoutine()
+    {
+        await RoutineService.AddOrUpdateRoutineAsync(Routine);
+        MudDialog.Close(DialogResult.Ok(Routine));
+    }
+}
