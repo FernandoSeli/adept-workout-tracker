@@ -1,0 +1,40 @@
+﻿@using System.Text.Json
+@inject DialogHelper DialogHelper;
+
+<MudTextField  @bind-Value="@Routine.Name" Label="Name"/>
+
+<MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => OpenWorkoutTemplateDialog(new WorkoutTemplate()))">add new template</MudButton>
+<MudList Clickable="true">
+@foreach (var workoutTemplate in Routine.WorkoutTemplates.OrderBy(x=> x.Order).ToList())
+{
+
+    <MudExpansionPanel Text="@workoutTemplate.Name">
+        <MudList>
+        @foreach (var templateExercise in workoutTemplate.WorkoutTemplateExercises.OrderBy(x=> x.Order).ToList())
+        {
+            <MudListItem Text="@templateExercise.GetExerciseName()" />
+        }
+        </MudList>
+        <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => OpenWorkoutTemplateDialog(workoutTemplate))">Modify Template</MudButton>
+    </MudExpansionPanel>
+}
+</MudList>
+@code {
+
+    [Parameter]
+    public Routine Routine { get; set; }
+
+    private bool _isNew => Routine.Id == 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        base.OnInitializedAsync();
+    }
+
+
+    private async Task OpenWorkoutTemplateDialog(WorkoutTemplate workoutTemplate)
+    {
+        var result = await DialogHelper.OpenWorkoutTemplateDialogAsync(workoutTemplate);
+        Routine.WorkoutTemplates.AddUpdateOrDeleteWorkoutTemplate(result.WorkoutTemplate, result.Deleted);
+    }
+}

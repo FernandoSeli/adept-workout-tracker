@@ -12,6 +12,8 @@ namespace Adept.Data.Model
         [Required]
         public string Name { get; set; }
 
-        public List<WorkoutTemplate> WorkoutTemplates { get; set; }
+        public bool IsSelected => CurrentRoutine != null;
+        public CurrentRoutine? CurrentRoutine { get; set; }
+        public List<WorkoutTemplate> WorkoutTemplates { get; set; } = new List<WorkoutTemplate> ();
     }
 }

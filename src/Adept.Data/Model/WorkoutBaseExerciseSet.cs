@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Adept.Data.Model
 {
@@ -8,20 +9,29 @@ namespace Adept.Data.Model
         public int Id { get; set; }
 
         public int Repetition { get; set; }
-        public int Rest { get; set; }
         public int Weight { get; set; }
         public int Order { get; set; }
-        public string Note { get; set; }
+        public int? ExerciseId { get; set; }
+        public Exercise? Exercise { get; set; }
+
+        [NotMapped]
+        public string Name => "Exercise " + Order;
     }
 
     public class WorkoutTemplateExerciseSet : WorkoutBaseExerciseSet
     {
-        public int ParenTemplateExercisetSetId { get; set; }
-        public WorkoutTemplateExerciseSet ParentTemplateExerciseSet { get; set; }
-        public List<WorkoutTemplateExerciseSet> ParentTemplateExerciseSets { get; set; }
+        public WorkoutTemplateExerciseSet()
+        {
 
-        public int WorkoutTemplateExerciseId { get; set; }
-        public WorkoutTemplateExercise WorkoutTemplateExercise { get; set; }
+        }
+        public WorkoutTemplateExerciseSet(int setOrder)
+        {
+            Order = setOrder;
+        }
+
+
+        public int WorkoutTemplateMultiExerciseSetId { get; set; }
+        public WorkoutTemplateMultiExerciseSet WorkoutTemplateMultiExerciseSet { get; set; }
     }
 
     public class WorkoutLogExerciseSet : WorkoutBaseExerciseSet
@@ -29,11 +39,7 @@ namespace Adept.Data.Model
         public int RepsAchieved { get; set; }
         public int WeightAchieved { get; set; }
 
-        public int ParentSetId { get; set; }
-        public WorkoutLogExerciseSet ParentLogExerciseSet { get; set; }
-        public List<WorkoutTemplateExerciseSet> WorkoutLogExerciseSets { get; set; }
-
-        public int WorkoutLogExerciseId { get; set; }
-        public WorkoutLogExercise WorkoutLogExercise { get; set; }
+        public int WorkoutLogMultiExerciseSetId { get; set; }
+        public WorkoutLogMultiExerciseSet? WorkoutLogMultiExerciseSet { get; set; }
     }
 }

@@ -6,18 +6,28 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.CodeAnalysis;
+using Adept.Blazor.Services;
+using Adept.Blazor.State;
+using Adept.Blazor.Helper;
+using Adept.Data.Repository;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddMudServices();
-
 //builder.Services.AddDbContext<AdeptDatabaseContext>(options => options.UseSqlite($"Filename=app.db"));
 builder.Services.AddDbContextFactory<AdeptDatabaseContext>(options => options.UseSqlite($"Filename=app.db"));
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
+builder.Services.AddTransient<IRoutineRepository, RoutineRepository>();
+builder.Services.AddScoped<IExerciseRepository, ExerciseRepository>();
+//builder.Services.AddScoped<IWorkoutTemplateService, WorkoutTemplateService>();
+builder.Services.AddSingleton<RoutineState>();
+builder.Services.AddScoped<BrowserService>();
+builder.Services.AddScoped<DialogHelper>();
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
 var dbFactory = builder.Services.BuildServiceProvider().GetService<IDbContextFactory<AdeptDatabaseContext>>();
 

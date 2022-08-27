@@ -1,0 +1,69 @@
+﻿@inject IGenericRepository<WorkoutTemplate> WorkoutTemplateRepository
+@inject IGenericRepository<WorkoutTemplateExercise> WorkoutTemplateExerciseRepository
+
+<MudTextField  @bind-Value="@WorkoutTemplate.Name" Label="Name"/>
+<MudNumericField   @bind-Value="@WorkoutTemplate.Order" Label="Order"/>
+<MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="@AddTemplateExercise">Add Exercise</MudButton>
+<MudExpansionPanels MultiExpansion="true">
+@foreach (var templateExercise in WorkoutTemplate.WorkoutTemplateExercises.OrderBy(x=> x.Order))
+{
+    <MudExpansionPanel Text="@templateExercise.Name">
+        <MudNumericField @bind-Value="@templateExercise.Order" Label="Order"/>
+        <MudTextField @bind-Value="@templateExercise.Note" Label="Note"/>
+        <MudSwitch @bind-Checked="@templateExercise.IsMultiExercise" Label="Is Multi Exercise" Color="Color.Info" />
+
+        @if(templateExercise.IsMultiExercise)
+        {
+            <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => AddTemplateMultiExerciseSet(templateExercise))">Add MultiSets</MudButton>
+
+           <MultiExerciseSetFields WorkoutTemplateExercise="@templateExercise" />
+        }
+        else
+        {
+            <ExerciseAutocomplete Exercise="@templateExercise.Exercise"></ExerciseAutocomplete>
+            <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => AddTemplateSet(templateExercise))">Add Sets</MudButton>
+           
+            <ExerciseSetFields WorkoutTemplateExercise="@templateExercise" />
+        }
+
+
+        <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => DeleteTemplateExercise(templateExercise))">Delete Exercise</MudButton>
+
+    </MudExpansionPanel>
+}
+</MudExpansionPanels>
+@code {
+    private bool _isNew => WorkoutTemplate.Id == 0;
+
+    [Parameter]
+    public WorkoutTemplate WorkoutTemplate { get; set; }
+
+
+    private void AddTemplateExercise()
+    {
+        var templateOrder = WorkoutTemplate.GetNextTemplateExerciseOrder();
+        WorkoutTemplate.WorkoutTemplateExercises.Add(new WorkoutTemplateExercise(templateOrder));
+    }
+
+    private void AddTemplateSet(WorkoutTemplateExercise workoutTemplateExercise)
+    {
+        var setOrder = workoutTemplateExercise.GetNextSetOrder();
+        workoutTemplateExercise.Sets.Add(new WorkoutTemplateSet(setOrder));
+    }
+
+    private void AddTemplateMultiExerciseSet(WorkoutTemplateExercise workoutTemplateExercise)
+    {
+        var setOrder = workoutTemplateExercise.GetNextMultiExerciseSetOrder();
+        workoutTemplateExercise.MultiExerciseSets.Add(new WorkoutTemplateMultiExerciseSet(setOrder));
+    }
+
+
+    private async Task DeleteTemplateExercise(WorkoutTemplateExercise workoutTemplateExercise)
+    {
+        if (workoutTemplateExercise.Id != 0)
+        {
+            await WorkoutTemplateExerciseRepository.RemoveAsync(workoutTemplateExercise);
+        }
+        WorkoutTemplate.WorkoutTemplateExercises.Remove(workoutTemplateExercise);
+    }
+}

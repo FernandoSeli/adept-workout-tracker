@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Adept.Data.Extension;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace Adept.Data.Model
@@ -16,6 +17,9 @@ namespace Adept.Data.Model
 
         public int RoutineId { get; set; }
         public Routine Routine { get; set; }
-        public List<WorkoutTemplateExercise> WorkoutTemplateExercises { get; set; }
+        public List<WorkoutTemplateExercise> WorkoutTemplateExercises { get; set; } = new List<WorkoutTemplateExercise>();
+
+        public IEnumerable<int> GetTemplateExerciseOrders() => WorkoutTemplateExercises.Select(x => x.Order);
+        public int GetNextTemplateExerciseOrder() => GetTemplateExerciseOrders().GetFirstAvailableInt();
     }
 }

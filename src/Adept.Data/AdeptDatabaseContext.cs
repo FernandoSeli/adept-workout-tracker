@@ -11,10 +11,17 @@ namespace Adept.Data
         public DbSet<Routine> Routines { get; set; } = default!;
         public DbSet<WorkoutLog> WorkoutLogs { get; set; } = default!;
         public DbSet<WorkoutTemplate> WorkoutTemplates { get; set; } = default!;
+        public DbSet<WorkoutLogSet> LogSets { get; set; } = default!;
         public DbSet<WorkoutLogExerciseSet> LogExerciseSets { get; set; } = default!;
         public DbSet<WorkoutLogExercise> LogExercises { get; set; } = default!;
+
+        public DbSet<WorkoutLogMultiExerciseSet> LogMultiExercises { get; set; } = default!;
+        public DbSet<WorkoutTemplateSet> TemplateSets { get; set; } = default!;
         public DbSet<WorkoutTemplateExerciseSet> TemplateExerciseSets { get; set; } = default!;
         public DbSet<WorkoutTemplateExercise> TemplateExercises { get; set; } = default!;
+        public DbSet<WorkoutTemplateMultiExerciseSet> TemplateMultiExercises { get; set; } = default!;
+
+        public DbSet<CurrentRoutine> CurrentRoutine { get; set; } = default!;
 
         public AdeptDatabaseContext(DbContextOptions<AdeptDatabaseContext> options)
             : base(options)

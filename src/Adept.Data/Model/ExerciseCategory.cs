@@ -10,8 +10,8 @@ namespace Adept.Data.Model
         [Required]
         public string Name { get; set; }
 
-        public string ImagePath { get; set; }
+        public string? ImagePath { get; set; }
 
-        public List<Exercise> Exercises { get; set; }
+        public List<Exercise>? Exercises { get; set; }
     }
 }
