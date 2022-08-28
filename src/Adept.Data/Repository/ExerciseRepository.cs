@@ -12,15 +12,23 @@ namespace Adept.Data.Repository
         {
         }
 
-        public async Task<int> AddExerciseAsync(Exercise exercise)
-        {
-            await _context.Exercises.AddAsync(exercise);
-            return await _context.SaveChangesAsync();
-        }
-
         public async Task<IEnumerable<Exercise>> GetExercisesAsync()
         {
             return _context.Exercises.AsNoTracking();
+        }
+
+        public async Task<int> GetExercisesCountAsync()
+        {
+            var count = 0;
+            try
+            {
+                count = await _context.Exercises.CountAsync();
+            }
+            catch (NullReferenceException ex)
+            {
+            }
+            return count;
+            //return await _context.Exercises.CountAsync();
         }
     }
 }

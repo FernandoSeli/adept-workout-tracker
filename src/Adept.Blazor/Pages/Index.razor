@@ -4,14 +4,14 @@
 @using Microsoft.EntityFrameworkCore
 @using System.Text.Json
 @implements IDisposable
-@inject IGenericRepository<Routine> GenericRoutineRepository;
 @inject IRoutineRepository RoutineRepository;
+@inject NavigationManager NavigationManager;
 @inject RoutineState RoutineState;
 
 @*<PageTitle>Index</PageTitle>*@
 
 <MudText Typo="Typo.h3" GutterBottom="true">Hello!</MudText>
-<MudText Class="mb-8">@_welcomeText</MudText>
+<MudText Typo="Typo.body1">@_welcomeText</MudText>
 @if(_selectedRoutine == null)
 {
     if (_routineCount == 0)
@@ -39,16 +39,9 @@ else
     {
         get
         {
-            string text;
-            if (_selectedRoutine == null)
-            {
-                text = "No routine selected routine";
-            }
-            else
-            {
-                text = "Current routine: " + _selectedRoutine.Name;
-            }
-            return text;
+            return _selectedRoutine is null ?
+                    (_routineCount == 0 ? "No routine found" : "No routine selected") :
+                    "Current routine: " + _selectedRoutine.Name;
         }
     }
 
@@ -56,12 +49,12 @@ else
     {
         _selectedRoutine = RoutineState.SelectedRoutine;
         _routineCount = await RoutineRepository.GetRoutinesCountAsync();
-    
+
         RoutineState.OnChange += StateHasChanged;
         await base.OnInitializedAsync();
     }
 
-    
+
     public void Dispose()
     {
         RoutineState.OnChange -= StateHasChanged;
@@ -70,28 +63,16 @@ else
 
     private async Task StartWorkout()
     {
-        //var routine = new Routine{ Name = "Jeff Nippard PPL" };
-        //routine.WorkoutTemplates.Add(new WorkoutTemplate { Name = "Push 1", Order = 1 });
-        //await RoutineService.AddRoutineAsync(routine);
-        //await RoutineService.AddOrUpdateCurrentRoutine(routine.Id);
-        //_selectedRoutine = routine;
+        NavigationManager.NavigateTo("/workout");
     }
 
     private async Task AddNewRoutine()
     {
-        //var routine = new Routine{ Name = "Jeff Nippard PPL" };
-        //routine.WorkoutTemplates.Add(new WorkoutTemplate { Name = "Push 1", Order = 1 });
-        //await RoutineService.AddRoutineAsync(routine);
-        //await RoutineService.AddOrUpdateCurrentRoutine(routine.Id);
-        //_selectedRoutine = routine;
+        NavigationManager.NavigateTo("/routine");
     }
 
     private async Task SelectRoutine()
     {
-        //var routine = new Routine{ Name = "Jeff Nippard PPL" };
-        //routine.WorkoutTemplates.Add(new WorkoutTemplate { Name = "Push 1", Order = 1 });
-        //await RoutineService.AddRoutineAsync(routine);
-        //await RoutineService.AddOrUpdateCurrentRoutine(routine.Id);
-        //_selectedRoutine = routine;
+        NavigationManager.NavigateTo("/routine");
     }
 }

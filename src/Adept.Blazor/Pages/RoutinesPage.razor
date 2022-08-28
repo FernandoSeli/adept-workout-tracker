@@ -4,7 +4,7 @@
 @implements IDisposable
 @inject RoutineState RoutineState;
 @inject HttpClient Http;
-@inject IGenericRepository<Exercise> ExerciseRepository;
+@inject IExerciseRepository ExerciseRepository;
 @inject IRoutineRepository RoutineRepository;
 @inject BrowserService BrowserService;
 @inject NavigationManager NavigationManager;
@@ -53,18 +53,23 @@
     protected override async Task OnInitializedAsync()
     {
         _browserDimension = await BrowserService.GetDimensions();
-        _routines = (await RoutineRepository.GetRoutinesAsync()).ToList();
+        _routines = await RoutineRepository.GetRoutinesAsync();
         RoutineState.OnChange += StateHasChanged;
 
-        var exercises = await Http.GetFromJsonAsync<List<Exercise>>("/_content/Adept.Blazor/sample-data/Exercises.json");
-        ExerciseRepository.AddRangeAsync(exercises);
-        //foreach (var exercise in exercises)
-        //{
-        //    await ExerciseService.AddExerciseAsync(exercise); 
-        //}
-        var routine = await Http.GetFromJsonAsync<Routine>("/_content/Adept.Blazor/sample-data/Routine.json");
-        await RoutineRepository.AddAsync(routine);
-        _routines = (await RoutineRepository.GetRoutinesAsync()).ToList();
+        if ((await ExerciseRepository.GetExercisesCountAsync()) == 0)
+        {
+            var exercises = await Http.GetFromJsonAsync<List<Exercise>>("_content/Adept.Blazor/sample-data/Exercises.json");
+            await ExerciseRepository.AddRangeAsync(exercises);
+            var test = ExerciseRepository.GetExercisesAsync();
+        }
+
+        
+        if (!_routines.Any())
+        {
+            var routine = await Http.GetFromJsonAsync<Routine>("_content/Adept.Blazor/sample-data/Routine.json");
+            await RoutineRepository.AddAsync(routine);
+            _routines = await RoutineRepository.GetRoutinesAsync();
+        }
         await base.OnInitializedAsync();
     }
 
