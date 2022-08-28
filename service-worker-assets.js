@@ -33,19 +33,19 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-UYxOLyqiUlZBn96Sd1bcIQq10fG87R26OHdW+Vy7tJA=",
+      "hash": "sha256-FjCxocdrCQ4vbgFDy3pRPPMZJCECmK3iVEfzKVO7Bdw=",
       "url": "_framework\/blazor.boot.json"
     },
     {
-      "hash": "sha256-n+X6oyMCOqTbkExVNfFq9tBXig5MIqvS\/oElcj1SUxQ=",
+      "hash": "sha256-Lo902yaAXrlFs1GlvdoWWPnCTMWeeFUCc4bNcrGnZ70=",
       "url": "_framework\/Adept.Blazor.dll"
     },
     {
-      "hash": "sha256-m8ShXGYHZ6qoL31yY+9WTT46aJfPRWsP2uMwh94oECc=",
+      "hash": "sha256-hC1Yt41MgkPjVKy7kq8Xy7cR6gnAF0KF8EmlYwI+0sU=",
       "url": "_framework\/Adept.Blazor.WASM.dll"
     },
     {
-      "hash": "sha256-Kt1EgNsX61wcKOYGVi\/PsiwdCezQpKd9uwBxjWDOpFs=",
+      "hash": "sha256-mtpcVvBjZfTxz0fXu8bZqwmP7McximSnUrbhXeR4cEI=",
       "url": "_framework\/Adept.Data.dll"
     },
     {
@@ -593,5 +593,5 @@
       "url": "_content\/Adept.Blazor\/sample-data\/Routine.json"
     }
   ],
-  "version": "5HIXRLtz"
+  "version": "73sCwyOt"
 };

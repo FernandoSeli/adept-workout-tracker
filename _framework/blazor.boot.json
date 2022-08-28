@@ -7,9 +7,9 @@
   "linkerEnabled": true,
   "resources": {
     "assembly": {
-      "Adept.Blazor.dll": "sha256-n+X6oyMCOqTbkExVNfFq9tBXig5MIqvS\/oElcj1SUxQ=",
-      "Adept.Blazor.WASM.dll": "sha256-m8ShXGYHZ6qoL31yY+9WTT46aJfPRWsP2uMwh94oECc=",
-      "Adept.Data.dll": "sha256-Kt1EgNsX61wcKOYGVi\/PsiwdCezQpKd9uwBxjWDOpFs=",
+      "Adept.Blazor.dll": "sha256-Lo902yaAXrlFs1GlvdoWWPnCTMWeeFUCc4bNcrGnZ70=",
+      "Adept.Blazor.WASM.dll": "sha256-hC1Yt41MgkPjVKy7kq8Xy7cR6gnAF0KF8EmlYwI+0sU=",
+      "Adept.Data.dll": "sha256-mtpcVvBjZfTxz0fXu8bZqwmP7McximSnUrbhXeR4cEI=",
       "Microsoft.AspNetCore.Authorization.dll": "sha256-QU74JLtr1npUs0ypfiH2Y8cfjKHuIHkKI5bFzjFy660=",
       "Microsoft.AspNetCore.Components.Authorization.dll": "sha256-9emCHRpZTWi0yLZmN2N5zFBPTKbdyGSq5IwdZNVcZdc=",
       "Microsoft.AspNetCore.Components.dll": "sha256-3pvEikTNMtwi2g7CmXXoMfLFqy4KWPwu58l7bwYuDdA=",
