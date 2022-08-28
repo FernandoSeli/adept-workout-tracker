@@ -52,7 +52,7 @@ namespace Adept.Data.Repository
                 .FirstOrDefaultAsync(x => x.Id == routineId);
         }
 
-        public async Task<IEnumerable<Routine>> GetRoutinesAsync()
+        public async Task<List<Routine>> GetRoutinesAsync()
         {
             return await _context.Routines
                 .Include(r => r.CurrentRoutine)
