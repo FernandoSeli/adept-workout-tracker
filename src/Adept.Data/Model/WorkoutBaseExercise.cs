@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Adept.Data.Model
 {
-    public class WorkoutBaseExercise
+    public abstract class WorkoutBaseExercise
     {
         [Key]
         public int Id { get; set; }
@@ -15,14 +15,14 @@ namespace Adept.Data.Model
 
         public bool IsMultiExercise { get; set; }
 
-        public int? ExerciseId { get; set; }
-        public Exercise? Exercise { get; set; }
 
         [NotMapped]
         public string Name => "Exercise " + Order;
+        //[NotMapped]
+        public virtual string GetExerciseName() => "Exercise " + Order;
     }
 
-    public class WorkoutTemplateExercise : WorkoutBaseExercise
+    public abstract class WorkoutTemplateExercise  : WorkoutBaseExercise
     {
         public WorkoutTemplateExercise()
         {
@@ -32,35 +32,56 @@ namespace Adept.Data.Model
         public WorkoutTemplateExercise(int order)
         {
             Order = order;
-            Exercise = new Exercise();
         }
 
-        public List<WorkoutTemplateSet>? Sets { get; set; } = new List<WorkoutTemplateSet>();
-        public List<WorkoutTemplateMultiExerciseSet>? MultiExerciseSets { get; set; } = new List<WorkoutTemplateMultiExerciseSet>();
-
+        public int? ExerciseId { get; set; }
+        public Exercise? Exercise { get; set; }
         public int WorkoutTemplateId { get; set; }
         public WorkoutTemplate WorkoutTemplate { get; set; }
 
 
-        public string GetExerciseName()
+    }
+    public class WorkoutTemplateSingleExercise : WorkoutTemplateExercise
+    {
+        public WorkoutTemplateSingleExercise()
         {
-            if (IsMultiExercise)
-            {
-                return string.Join(", ", MultiExerciseSets?.Select(x => x.Name));
-            }
-            return Name;
+
         }
 
-        public IEnumerable<int> GetSetOrders() => Sets.Select(x => x.Order);
+        public WorkoutTemplateSingleExercise(int order) :base(order)
+        {
+            Exercise = new Exercise();
+        }
+
+
+        public List<WorkoutTemplateSet> TemplateSets { get; set; } = new List<WorkoutTemplateSet>();
+
+        public IEnumerable<int> GetSetOrders() => TemplateSets.Select(x => x.Order);
         public int GetNextSetOrder() => GetSetOrders().GetFirstAvailableInt();
-        public IEnumerable<int> GetMultiExerciseSetOrders() => MultiExerciseSets.Select(x => x.Order);
-        public int GetNextMultiExerciseSetOrder() => GetMultiExerciseSetOrders().GetFirstAvailableInt();
+        public override string GetExerciseName() => "Multi Exercise " + Order;
+    }
+    public class WorkoutTemplateMultiExercise : WorkoutTemplateExercise
+    {
+        public WorkoutTemplateMultiExercise()
+        {
+
+        }
+
+        public WorkoutTemplateMultiExercise(int order) :base(order)
+        {
+        }
+
+
+        public List<WorkoutTemplateMultiExerciseSet> MultiExerciseSets { get; set; } = new List<WorkoutTemplateMultiExerciseSet>();
+
+        public IEnumerable<int> GetMultiExerciseSetOrder() => MultiExerciseSets.Select(x => x.Order);
+        public int GetNextMultiExerciseSetOrder() => GetMultiExerciseSetOrder().GetFirstAvailableInt();
     }
 
     public class WorkoutLogExercise : WorkoutBaseExercise
     {
         private List<WorkoutLogSet>? Sets { get; set; }
-        public List<WorkoutLogMultiExerciseSet>? MultiExerciseSets { get; set; } = new List<WorkoutLogMultiExerciseSet>();
+        //public List<WorkoutLogMultiExerciseSet>? MultiExerciseSets { get; set; } = new List<WorkoutLogMultiExerciseSet>();
 
         public int WorkoutLogId { get; set; }
         public WorkoutLog WorkoutLog { get; set; }

@@ -19,8 +19,10 @@ namespace Adept.Data
         public DbSet<WorkoutTemplateSet> TemplateSets { get; set; } = default!;
         public DbSet<WorkoutTemplateExerciseSet> TemplateExerciseSets { get; set; } = default!;
         public DbSet<WorkoutTemplateExercise> TemplateExercises { get; set; } = default!;
-        public DbSet<WorkoutTemplateMultiExerciseSet> TemplateMultiExercises { get; set; } = default!;
-
+        public DbSet<WorkoutTemplateMultiExercise> TemplateMultiExercises { get; set; } = default!;
+        public DbSet<WorkoutTemplateMultiExerciseSet> TemplateMultiExerciseSets { get; set; } = default!;
+        public DbSet<WorkoutTemplateSingleExercise> TemplateSingleExercises { get; set; } = default!;
+        public DbSet<Setting> Settings { get; set; } = default!;
         public DbSet<CurrentRoutine> CurrentRoutine { get; set; } = default!;
 
         public AdeptDatabaseContext(DbContextOptions<AdeptDatabaseContext> options)
@@ -32,6 +34,18 @@ namespace Adept.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<WorkoutTemplateExercise>()
+                    .HasDiscriminator(b => b.IsMultiExercise)
+                    .HasValue<WorkoutTemplateSingleExercise>(false)
+                    .HasValue<WorkoutTemplateMultiExercise>(true);
+            modelBuilder.Entity<WorkoutTemplateMultiExercise>()
+                .HasOne(p => p.WorkoutTemplate)
+                .WithMany(x =>x.WorkoutTemplateMultiExercises)
+                .HasForeignKey(p => p.WorkoutTemplateId);
+            modelBuilder.Entity<WorkoutTemplateSingleExercise>()
+                .HasOne(p => p.WorkoutTemplate)
+                .WithMany(x => x.WorkoutTemplateSingleExercises)
+                .HasForeignKey(p => p.WorkoutTemplateId);
         }
     }
 }

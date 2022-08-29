@@ -3,27 +3,31 @@
 
 <MudTextField  @bind-Value="@WorkoutTemplate.Name" Label="Name"/>
 <MudNumericField   @bind-Value="@WorkoutTemplate.Order" Label="Order"/>
-<MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="@AddTemplateExercise">Add Exercise</MudButton>
+<MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="@AddTemplateSingleExercise">Add Exercise</MudButton>
+<MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="@AddTemplateMultiExercise">Add Exercise</MudButton>
 <MudExpansionPanels MultiExpansion="true">
 @foreach (var templateExercise in WorkoutTemplate.WorkoutTemplateExercises.OrderBy(x=> x.Order))
 {
-    <MudExpansionPanel Text="@templateExercise.Name">
+    <MudExpansionPanel Text="@templateExercise.GetExerciseName()">
         <MudNumericField @bind-Value="@templateExercise.Order" Label="Order"/>
         <MudTextField @bind-Value="@templateExercise.Note" Label="Note"/>
-        <MudSwitch @bind-Checked="@templateExercise.IsMultiExercise" Label="Is Multi Exercise" Color="Color.Info" />
+        @*<MudSwitch @bind-Checked="@templateExercise.IsMultiExercise" Label="Is Multi Exercise" Color="Color.Info" />*@
 
-        @if(templateExercise.IsMultiExercise)
+        @if(templateExercise is WorkoutTemplateMultiExercise)
         {
-            <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => AddTemplateMultiExerciseSet(templateExercise))">Add MultiSets</MudButton>
+            var workoutTemplateMultiExercise = (WorkoutTemplateMultiExercise)templateExercise;
 
-           <MultiExerciseSetFields WorkoutTemplateExercise="@templateExercise" />
+            <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => AddTemplateMultiExerciseSet(workoutTemplateMultiExercise))">Add MultiSets</MudButton>
+            <MultiExerciseSetFields WorkoutTemplateMultiExercise="@workoutTemplateMultiExercise" />
         }
-        else
+        else if(templateExercise is WorkoutTemplateSingleExercise)
         {
+            var workoutTemplateSingleExercise = (WorkoutTemplateSingleExercise)templateExercise;
             <ExerciseAutocomplete Exercise="@templateExercise.Exercise"></ExerciseAutocomplete>
-            <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => AddTemplateSet(templateExercise))">Add Sets</MudButton>
+            <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => AddTemplateSet(workoutTemplateSingleExercise))">Add Sets</MudButton>
+            
            
-            <ExerciseSetFields WorkoutTemplateExercise="@templateExercise" />
+            <ExerciseSetFields WorkoutTemplateSingleExercise="@workoutTemplateSingleExercise" />
         }
 
 
@@ -32,6 +36,7 @@
     </MudExpansionPanel>
 }
 </MudExpansionPanels>
+
 @code {
     private bool _isNew => WorkoutTemplate.Id == 0;
 
@@ -39,19 +44,25 @@
     public WorkoutTemplate WorkoutTemplate { get; set; }
 
 
-    private void AddTemplateExercise()
+    private void AddTemplateSingleExercise()
     {
         var templateOrder = WorkoutTemplate.GetNextTemplateExerciseOrder();
-        WorkoutTemplate.WorkoutTemplateExercises.Add(new WorkoutTemplateExercise(templateOrder));
-    }
+        WorkoutTemplate.WorkoutTemplateSingleExercises.Add(new WorkoutTemplateSingleExercise(templateOrder));
 
-    private void AddTemplateSet(WorkoutTemplateExercise workoutTemplateExercise)
+    }
+    private void AddTemplateMultiExercise()
+    {
+        var templateOrder = WorkoutTemplate.GetNextTemplateExerciseOrder();
+        WorkoutTemplate.WorkoutTemplateMultiExercises.Add(new WorkoutTemplateMultiExercise(templateOrder));
+
+    }
+    private void AddTemplateSet(WorkoutTemplateSingleExercise workoutTemplateExercise)
     {
         var setOrder = workoutTemplateExercise.GetNextSetOrder();
-        workoutTemplateExercise.Sets.Add(new WorkoutTemplateSet(setOrder));
+        workoutTemplateExercise.TemplateSets.Add(new WorkoutTemplateSet(setOrder));
     }
 
-    private void AddTemplateMultiExerciseSet(WorkoutTemplateExercise workoutTemplateExercise)
+    private void AddTemplateMultiExerciseSet(WorkoutTemplateMultiExercise workoutTemplateExercise)
     {
         var setOrder = workoutTemplateExercise.GetNextMultiExerciseSetOrder();
         workoutTemplateExercise.MultiExerciseSets.Add(new WorkoutTemplateMultiExerciseSet(setOrder));
@@ -64,6 +75,16 @@
         {
             await WorkoutTemplateExerciseRepository.RemoveAsync(workoutTemplateExercise);
         }
-        WorkoutTemplate.WorkoutTemplateExercises.Remove(workoutTemplateExercise);
+        if (workoutTemplateExercise is WorkoutTemplateSingleExercise)
+        {
+            WorkoutTemplate.WorkoutTemplateSingleExercises.Remove((WorkoutTemplateSingleExercise)workoutTemplateExercise);
+        }
+        else if (workoutTemplateExercise is WorkoutTemplateMultiExercise)
+        {
+            WorkoutTemplate.WorkoutTemplateMultiExercises.Remove((WorkoutTemplateMultiExercise)workoutTemplateExercise);
+        }
     }
+
+    
+     
 }

@@ -10,6 +10,8 @@ namespace Adept.Data.Model
 
         public int Repetition { get; set; }
         public int Rest { get; set; }
+
+        //todo change to float
         public int Weight { get; set; }
         public int Order { get; set; }
         public string? Note { get; set; }
@@ -33,13 +35,15 @@ namespace Adept.Data.Model
         //public WorkoutTemplateExerciseSet? ParentTemplateExerciseSet { get; set; }
         //public List<WorkoutTemplateExerciseSet> DropSets { get; set; } = new List<WorkoutTemplateExerciseSet>();
 
-        public int WorkoutTemplateExerciseId { get; set; }
-        public WorkoutTemplateExercise WorkoutTemplateExercise { get; set; }
+        public int WorkoutTemplateSingleExerciseId { get; set; }
+        public WorkoutTemplateSingleExercise WorkoutTemplateSingleExercise { get; set; }
     }
 
     public class WorkoutLogSet : WorkoutBaseSet
     {
         public int RepsAchieved { get; set; }
+
+        //todo change to float
         public int WeightAchieved { get; set; }
 
         //public int ParentSetId { get; set; }

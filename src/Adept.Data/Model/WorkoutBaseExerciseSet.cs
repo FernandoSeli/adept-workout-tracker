@@ -9,6 +9,7 @@ namespace Adept.Data.Model
         public int Id { get; set; }
 
         public int Repetition { get; set; }
+        //todo change to float
         public int Weight { get; set; }
         public int Order { get; set; }
         public int? ExerciseId { get; set; }
@@ -29,7 +30,6 @@ namespace Adept.Data.Model
             Order = setOrder;
         }
 
-
         public int WorkoutTemplateMultiExerciseSetId { get; set; }
         public WorkoutTemplateMultiExerciseSet WorkoutTemplateMultiExerciseSet { get; set; }
     }
@@ -37,9 +37,10 @@ namespace Adept.Data.Model
     public class WorkoutLogExerciseSet : WorkoutBaseExerciseSet
     {
         public int RepsAchieved { get; set; }
+        //todo change to float
         public int WeightAchieved { get; set; }
 
-        public int WorkoutLogMultiExerciseSetId { get; set; }
-        public WorkoutLogMultiExerciseSet? WorkoutLogMultiExerciseSet { get; set; }
+        //public int WorkoutLogMultiExerciseSetId { get; set; }
+        //public WorkoutLogMultiExerciseSet? WorkoutLogMultiExerciseSet { get; set; }
     }
 }

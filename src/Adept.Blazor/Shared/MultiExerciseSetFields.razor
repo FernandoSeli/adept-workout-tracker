@@ -2,10 +2,10 @@
 @inject IGenericRepository<WorkoutTemplateMultiExerciseSet> WorkoutTemplateMultiExerciseSetRepository
 
 
-@if (WorkoutTemplateExercise.MultiExerciseSets.Any())
+@if (WorkoutTemplateMultiExercise.MultiExerciseSets.Any())
 {
     <MudTabs Elevation="4" Rounded="true" AlwaysShowScrollButtons="true" Color="@Color.Primary" Class="mt-4">
-        @foreach (var multiExerciseSet in WorkoutTemplateExercise.MultiExerciseSets.OrderBy(x => x.Order))
+        @foreach (var multiExerciseSet in WorkoutTemplateMultiExercise.MultiExerciseSets.OrderBy(x => x.Order))
         {
             <MudTabPanel  Text="@multiExerciseSet.Name">
                 <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => AddExerciseSet(multiExerciseSet))">Add Exercise Set</MudButton>
@@ -29,7 +29,7 @@
 }
 @code {
     [Parameter]
-    public WorkoutTemplateExercise WorkoutTemplateExercise { get; set; }
+    public WorkoutTemplateMultiExercise WorkoutTemplateMultiExercise { get; set; }
 
     private void AddExerciseSet(WorkoutTemplateMultiExerciseSet multiExerciseSet)
     {
@@ -52,6 +52,6 @@
         {
             await WorkoutTemplateMultiExerciseSetRepository.RemoveAsync(multiExerciseSet);
         }
-        WorkoutTemplateExercise.MultiExerciseSets.Remove(multiExerciseSet);
+        WorkoutTemplateMultiExercise.MultiExerciseSets.Remove(multiExerciseSet);
     }
 }

@@ -3,7 +3,9 @@
 
 <MudDialog>
     <DialogContent>
+        <MudContainer Style="max-height:85h; overflow-y: auto">
         <RoutineForm Routine="@Routine"/>
+        </MudContainer>
     </DialogContent>
     <DialogActions>
         <MudButton Color="Color.Error" OnClick="DeleteRoutine">Delete</MudButton>
@@ -23,7 +25,7 @@
     {
         base.OnInitializedAsync();
         MudDialog.SetTitle(_title);
-        MudDialog.Options.FullScreen = true;
+        MudDialog.Options.FullWidth = true;
         MudDialog.Options.CloseButton = true;
         MudDialog.SetOptions(MudDialog.Options);
     }

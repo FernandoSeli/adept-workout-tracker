@@ -2,7 +2,9 @@
 @using DialogOptions = MudBlazor.DialogOptions
 <MudDialog>
     <DialogContent>
+        <MudContainer Style="max-height:85vh; overflow-y: auto">
         <WorkoutTemplateForm WorkoutTemplate="@WorkoutTemplate"/>
+        </MudContainer>
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="DeleteWorkoutTemplate">Delete</MudButton>
@@ -22,7 +24,7 @@
     {
         base.OnInitializedAsync();
         MudDialog.SetTitle(_title);
-        MudDialog.Options.FullScreen = true;
+        MudDialog.Options.FullWidth = true;
         MudDialog.Options.CloseButton = true;
         MudDialog.SetOptions(MudDialog.Options);
     }

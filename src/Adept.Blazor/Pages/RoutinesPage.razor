@@ -1,5 +1,4 @@
 ﻿@page "/routine"
-@page "/routine/{RoutineId:int}"
 @using System.Text.Json
 @implements IDisposable
 @inject RoutineState RoutineState;
@@ -56,20 +55,23 @@
         _routines = await RoutineRepository.GetRoutinesAsync();
         RoutineState.OnChange += StateHasChanged;
 
+        
+        
         if ((await ExerciseRepository.GetExercisesCountAsync()) == 0)
         {
+            var test = await ExerciseRepository.GetExercisesAsync();
             var exercises = await Http.GetFromJsonAsync<List<Exercise>>("_content/Adept.Blazor/sample-data/Exercises.json");
             await ExerciseRepository.AddRangeAsync(exercises);
-            var test = ExerciseRepository.GetExercisesAsync();
+             test = await ExerciseRepository.GetExercisesAsync();
         }
-
-        
         if (!_routines.Any())
         {
             var routine = await Http.GetFromJsonAsync<Routine>("_content/Adept.Blazor/sample-data/Routine.json");
             await RoutineRepository.AddAsync(routine);
             _routines = await RoutineRepository.GetRoutinesAsync();
         }
+
+
         await base.OnInitializedAsync();
     }
 

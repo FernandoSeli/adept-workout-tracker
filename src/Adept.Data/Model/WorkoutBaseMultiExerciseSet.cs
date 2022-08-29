@@ -29,8 +29,8 @@ namespace Adept.Data.Model
 
         public List<WorkoutTemplateExerciseSet> ExerciseSets { get; set; } = new List<WorkoutTemplateExerciseSet>();
 
-        public int WorkoutTemplateExerciseId { get; set; }
-        public WorkoutTemplateExercise WorkoutTemplateExercise { get; set; }
+        public int WorkoutTemplateMultiExerciseId { get; set; }
+        public WorkoutTemplateMultiExercise WorkoutTemplateMultiExercise { get; set; }
 
         public IEnumerable<int> GetExerciseSetOrders() => ExerciseSets.Select(x => x.Order);
         public int GetNextExerciseSetOrder() => GetExerciseSetOrders().GetFirstAvailableInt();

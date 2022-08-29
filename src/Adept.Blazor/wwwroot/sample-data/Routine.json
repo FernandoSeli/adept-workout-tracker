@@ -5,13 +5,12 @@
     {
       "Name": "Push Day 1",
       "Order": 1,
-      "WorkoutTemplateExercises": [
+      "WorkoutTemplateSingleExercises": [
         {
           "Note": "Test",
           "Order": 1,
-          "isMultiExercise": false,
           "ExerciseId": 1,
-          "ExerciseSets": [
+          "TemplateSets": [
             {
               "Repetition": 10,
               "Rest": 10,
@@ -22,29 +21,30 @@
             {
               "Repetition": 10,
               "Rest": 10,
-              "Order": 1,
+              "Order": 2,
               "Weight": 10,
               "Note": "rpe10"
             },
             {
               "Repetition": 10,
               "Rest": 10,
-              "Order": 1,
+              "Order": 3,
               "Weight": 10,
               "Note": "rpe10"
             }
           ]
+
+
         }
       ]
     },
     {
       "Name": "Pull Day 1",
       "Order": 2,
-      "WorkoutTemplateExercises": [
+      "WorkoutTemplateMultiExercises": [
         {
           "Note": "Test",
           "Order": 1,
-          "isMultiExercise": true,
           "MultiExerciseSets": [
             {
               "Note": "test2",
