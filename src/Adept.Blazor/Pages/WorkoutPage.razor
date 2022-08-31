@@ -1,11 +1,13 @@
 ﻿@page "/workout"
+@page "/workout/{workoutTemplateId:int}"
+
 @using System.Text.Json
+@using System.Text.Json.Serialization
 @implements IDisposable
 @inject RoutineState RoutineState;
 @inject HttpClient Http;
 @inject IExerciseRepository ExerciseRepository;
 @inject IRoutineRepository RoutineRepository;
-@inject BrowserService BrowserService;
 @inject NavigationManager NavigationManager;
 @inject IDialogService DialogService;
 @inject DialogHelper DialogHelper;
@@ -15,15 +17,22 @@
            
 @code {
     [Parameter]
-    public int RoutineId { get; set; }
+    public int WorkoutTemplateId { get; set; }
 
-    private BrowserDimension _browserDimension;
     private List<Routine> _routines = new List<Routine>();
 
     private bool open;
     protected override async Task OnInitializedAsync()
     {
-        RoutineState.OnChange += StateHasChanged;
+        Console.WriteLine(WorkoutTemplateId);
+        var workoutTemplate = RoutineState.SelectedRoutine.WorkoutTemplates.FirstOrDefault(x => x.Id == WorkoutTemplateId);
+        var workoutLog = new WorkoutLog(workoutTemplate);
+        JsonSerializerOptions options = new()
+        {
+                ReferenceHandler = ReferenceHandler.IgnoreCycles,
+                WriteIndented = true
+            };
+        var test =JsonSerializer.Serialize(workoutLog, options);
         await base.OnInitializedAsync();
     }
 

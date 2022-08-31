@@ -10,13 +10,6 @@ namespace Adept.Data.Repository
         {
         }
 
-        //private AdeptDatabaseContext _context;
-
-        //public RoutineRepository(IDbContextFactory<AdeptDatabaseContext> DbContextFactory)
-        //{
-        //    _context = DbContextFactory.CreateDbContext();
-        //}
-
         public async Task<int> AddOrUpdateCurrentRoutine(int routineId)
         {
             var currentRoutine = await _context.CurrentRoutine.FirstOrDefaultAsync();
@@ -55,7 +48,6 @@ namespace Adept.Data.Repository
         public async Task<List<Routine>> GetRoutinesAsync()
         {
             var tes = _context.Routines.ToList();
-            var tes2 = _context.WorkoutTemplates.ToList();
             var tes4 = _context.TemplateSingleExercises.ToList();
             var tes5 = _context.TemplateMultiExercises.ToList();
             var tes6 = _context.TemplateMultiExerciseSets.ToList();

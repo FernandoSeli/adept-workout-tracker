@@ -5,7 +5,6 @@
 @inject HttpClient Http;
 @inject IExerciseRepository ExerciseRepository;
 @inject IRoutineRepository RoutineRepository;
-@inject BrowserService BrowserService;
 @inject NavigationManager NavigationManager;
 @inject IDialogService DialogService;
 @inject DialogHelper DialogHelper;
@@ -45,13 +44,11 @@
     [Parameter]
     public int RoutineId { get; set; }
 
-    private BrowserDimension _browserDimension;
     private List<Routine> _routines = new List<Routine>();
 
     private bool open;
     protected override async Task OnInitializedAsync()
     {
-        _browserDimension = await BrowserService.GetDimensions();
         _routines = await RoutineRepository.GetRoutinesAsync();
         RoutineState.OnChange += StateHasChanged;
 
@@ -62,7 +59,6 @@
             var test = await ExerciseRepository.GetExercisesAsync();
             var exercises = await Http.GetFromJsonAsync<List<Exercise>>("_content/Adept.Blazor/sample-data/Exercises.json");
             await ExerciseRepository.AddRangeAsync(exercises);
-             test = await ExerciseRepository.GetExercisesAsync();
         }
         if (!_routines.Any())
         {

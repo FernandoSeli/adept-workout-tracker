@@ -12,31 +12,34 @@ namespace Adept.Data.Model
         public int Rest { get; set; }
 
         //todo change to float
-        public int Weight { get; set; }
+        public decimal Weight { get; set; }
+
         public int Order { get; set; }
         public string? Note { get; set; }
 
         [NotMapped]
         public string Name => "Set " + Order;
+
+        public WorkoutBaseSet()
+        { }
+
+        public WorkoutBaseSet(int order)
+        {
+            Order = order;
+        }
     }
 
     public class WorkoutTemplateSet : WorkoutBaseSet
     {
-        public WorkoutTemplateSet()
-        {
-
-        }
-        public WorkoutTemplateSet(int setOrder)
-        {
-            Order = setOrder;
-        }
-
-        //public int ParentTemplateExercisetSetId { get; set; }
-        //public WorkoutTemplateExerciseSet? ParentTemplateExerciseSet { get; set; }
-        //public List<WorkoutTemplateExerciseSet> DropSets { get; set; } = new List<WorkoutTemplateExerciseSet>();
-
         public int WorkoutTemplateSingleExerciseId { get; set; }
         public WorkoutTemplateSingleExercise WorkoutTemplateSingleExercise { get; set; }
+
+        public WorkoutTemplateSet()
+        { }
+
+        public WorkoutTemplateSet(int order) : base(order)
+        {
+        }
     }
 
     public class WorkoutLogSet : WorkoutBaseSet
@@ -44,13 +47,27 @@ namespace Adept.Data.Model
         public int RepsAchieved { get; set; }
 
         //todo change to float
-        public int WeightAchieved { get; set; }
-
-        //public int ParentSetId { get; set; }
-        //public WorkoutLogExerciseSet ParentLogExerciseSet { get; set; }
-        //public List<WorkoutTemplateExerciseSet> ChildLogExerciseSets { get; set; }
+        public decimal WeightAchieved { get; set; }
 
         public int WorkoutLogExerciseId { get; set; }
         public WorkoutLogExercise? WorkoutLogExercise { get; set; }
+
+        public WorkoutLogSet()
+        { }
+
+        public WorkoutLogSet(int order) : base(order)
+        {
+        }
+
+        public WorkoutLogSet(WorkoutTemplateSet workoutTemplateSet)
+        {
+            Repetition = workoutTemplateSet.Repetition;
+            RepsAchieved = workoutTemplateSet.Repetition;
+            Weight = workoutTemplateSet.Weight;
+            WeightAchieved = workoutTemplateSet.Weight;
+            Rest = workoutTemplateSet.Rest;
+            Order = workoutTemplateSet.Order;
+            Note = workoutTemplateSet.Note;
+        }
     }
 }

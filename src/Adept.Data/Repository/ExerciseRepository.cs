@@ -12,7 +12,7 @@ namespace Adept.Data.Repository
 
         public async Task<IEnumerable<Exercise>> GetExercisesAsync()
         {
-            return await _context.Exercises.ToListAsync();
+            return await _context.Exercises.AsNoTracking().ToListAsync();
         }
 
         public async Task<int> GetExercisesCountAsync()
