@@ -33,8 +33,89 @@
               "Note": "rpe10"
             }
           ]
+        }
+      ],
+      "WorkoutTemplateMultiExercises": [
+        {
+          "Note": "Test",
+          "Order": 1,
+          "MultiExerciseSets": [
+            {
+              "Note": "test2",
+              "Order": 1,
+              "ExerciseSets": [
+                {
+                  "ExerciseId": 1,
+                  "Weight": 10,
+                  "Repetition": 1,
+                  "Order": 1
+                },
 
+                {
+                  "ExerciseId": 2,
+                  "Weight": 10,
+                  "Repetition": 1,
+                  "Order": 1
+                },
+                {
+                  "ExerciseId": 3,
+                  "Weight": 10,
+                  "Repetition": 1,
+                  "Order": 1
+                }
+              ]
+            },
+            {
+              "Note": "test2",
+              "Order": 1,
+              "ExerciseSets": [
+                {
+                  "ExerciseId": 1,
+                  "Weight": 10,
+                  "Repetition": 1,
+                  "Order": 1
+                },
 
+                {
+                  "ExerciseId": 2,
+                  "Weight": 10,
+                  "Repetition": 1,
+                  "Order": 1
+                },
+                {
+                  "ExerciseId": 3,
+                  "Weight": 10,
+                  "Repetition": 1,
+                  "Order": 1
+                }
+              ]
+            },
+            {
+              "Note": "test2",
+              "Order": 1,
+              "ExerciseSets": [
+                {
+                  "ExerciseId": 1,
+                  "Weight": 10,
+                  "Repetition": 1,
+                  "Order": 1
+                },
+
+                {
+                  "ExerciseId": 2,
+                  "Weight": 10,
+                  "Repetition": 1,
+                  "Order": 1
+                },
+                {
+                  "ExerciseId": 3,
+                  "Weight": 10,
+                  "Repetition": 1,
+                  "Order": 1
+                }
+              ]
+            }
+          ]
         }
       ]
     },

@@ -5,12 +5,15 @@ namespace Adept.Data
 {
     public class AdeptDatabaseContext : DbContext
     {
+        public DbSet<Setting> Settings { get; set; } = default!;
 
         public DbSet<Exercise> Exercises { get; set; } = default!;
         public DbSet<ExerciseCategory> ExerciseCategories { get; set; } = default!;
-        public DbSet<Routine> Routines { get; set; } = default!;
 
-        public DbSet<WorkoutLog> WorkoutLogs { get; set; } = default!;
+        public DbSet<Routine> Routines { get; set; } = default!;
+        public DbSet<CurrentRoutine> CurrentRoutine { get; set; } = default!;
+
+        //public DbSet<WorkoutLog> WorkoutLogs { get; set; } = default!;
         public DbSet<WorkoutLogSet> LogSets { get; set; } = default!;
         public DbSet<WorkoutLogExerciseSet> LogExerciseSets { get; set; } = default!;
         public DbSet<WorkoutLogExercise> LogExercises { get; set; } = default!;
@@ -25,8 +28,7 @@ namespace Adept.Data
         public DbSet<WorkoutTemplateMultiExercise> TemplateMultiExercises { get; set; } = default!;
         public DbSet<WorkoutTemplateMultiExerciseSet> TemplateMultiExerciseSets { get; set; } = default!;
         public DbSet<WorkoutTemplateSingleExercise> TemplateSingleExercises { get; set; } = default!;
-        public DbSet<Setting> Settings { get; set; } = default!;
-        public DbSet<CurrentRoutine> CurrentRoutine { get; set; } = default!;
+
 
         public AdeptDatabaseContext(DbContextOptions<AdeptDatabaseContext> options)
             : base(options)
