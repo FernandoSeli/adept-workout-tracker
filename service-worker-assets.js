@@ -1,11 +1,15 @@
 ﻿self.assetsManifest = {
   "assets": [
     {
+      "hash": "sha256-Wr1axJsncy\/TkNZkdvqgG9\/w4XrjNIsmrHCmupC7iTE=",
+      "url": "decode.js"
+    },
+    {
       "hash": "sha256-8EnC6wNNYIcqKg8OOcOZYTjP7JT9RO2KAKzQBUvgq+M=",
       "url": "decode.min.js"
     },
     {
-      "hash": "sha256-7IzSi6DcsFud2rxqes\/8F1LLiQGBCiXdlpCFJI4yEps=",
+      "hash": "sha256-ztJzK4KmUW028Nm1k6WA9NHtq1JFEfiCuRURr1QIVPk=",
       "url": "index.html"
     },
     {
@@ -601,5 +605,5 @@
       "url": "_content\/Adept.Blazor\/sample-data\/Routine.json"
     }
   ],
-  "version": "ig5ncImI"
+  "version": "tXIf4RHH"
 };
