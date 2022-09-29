@@ -5,7 +5,7 @@
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
-		<BlazorEnableCompression>false</BlazorEnableCompression>
+		<BlazorEnableCompression>true</BlazorEnableCompression>
 		<!--<BlazorWebAssemblyEnableLinking>false</BlazorWebAssemblyEnableLinking>-->
 		<!--<PublishTrimmed>false</PublishTrimmed>-->
 	</PropertyGroup>
