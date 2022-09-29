@@ -58,7 +58,7 @@
     <!-- End Single Page Apps for GitHub Pages -->
     <!--brotli decode for GitHub Pages-->
     <script type="module">
-        import { BrotliDecode } from './decode.min.js';
+        import { BrotliDecode } from './decode.js';
         Blazor.start({
             loadBootResource: function (type, name, defaultUri, integrity) {
                 if (type !== 'dotnetjs' && location.hostname !== 'localhost') {
