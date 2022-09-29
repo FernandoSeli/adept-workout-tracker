@@ -22,7 +22,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 
 builder.Services.AddTransient<IRoutineRepository, RoutineRepository>();
 builder.Services.AddScoped<IExerciseRepository, ExerciseRepository>();
-//builder.Services.AddScoped<IWorkoutTemplateService, WorkoutTemplateService>();
+builder.Services.AddScoped<IWorkoutTemplateRepository, WorkoutTemplateRepository>();
 builder.Services.AddSingleton<RoutineState>();
 builder.Services.AddScoped<DialogHelper>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));

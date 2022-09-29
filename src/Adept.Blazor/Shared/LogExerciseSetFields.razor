@@ -1,0 +1,31 @@
+﻿@inject IGenericRepository<WorkoutLogSet> WorkoutTemplateSetRepository;
+@if (WorkoutLogSingleExercise.LogSets.Any())
+{
+    <MudTabs Elevation="4" Rounded="true" AlwaysShowScrollButtons="true" Color="@Color.Primary" Class="mt-4">
+    @foreach (var set in WorkoutLogSingleExercise.LogSets)
+    {
+        <MudTabPanel  Text="@set.Name">
+            <MudNumericField @bind-Value="@set.Order" Label="Order"/>
+            <MudNumericField @bind-Value="@set.Repetition" Label="Reps"/>
+            <MudNumericField @bind-Value="@set.Rest" Label="Rest"/>
+            <MudNumericField @bind-Value="@set.Weight" Label="Weight"/>
+            <MudTextField @bind-Value="@set.Note" Label="Note"/>
+            <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => DeleteSet(set))">Delete Set</MudButton>
+        </MudTabPanel>
+    }
+    </MudTabs>
+}
+@code {
+    [Parameter]
+    public WorkoutLogSingleExercise WorkoutLogSingleExercise { get; set; }
+
+
+    private async Task DeleteSet(WorkoutLogSet set)
+    {
+        if (set.Id != 0)
+        {
+            await WorkoutTemplateSetRepository.RemoveAsync(set);
+        }
+        WorkoutLogSingleExercise.LogSets.Remove(set);
+    }
+}

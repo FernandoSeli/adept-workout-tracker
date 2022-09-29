@@ -7,6 +7,7 @@
 @inject RoutineState RoutineState;
 @inject HttpClient Http;
 @inject IExerciseRepository ExerciseRepository;
+@inject IWorkoutTemplateRepository WorkoutTemplateRepository;
 @inject IRoutineRepository RoutineRepository;
 @inject NavigationManager NavigationManager;
 @inject IDialogService DialogService;
@@ -14,31 +15,63 @@
 
 
 <MudText Typo="Typo.h3">Workout</MudText>
-           
+<MudButton Color="Color.Inherit" OnClick="(() =>StartWorkout())">Start New Workout</MudButton>
+<MudButton Color="Color.Inherit" OnClick="ChooseFromTemplate">Choose From Template</MudButton>
+@if (_showTemplateSelector)
+{
+    @foreach (var workoutTemplate in WorkoutTemplates)
+    {
+        <MudCard>
+            @*<MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">@workoutTemplate.Name</MudText>
+                </CardHeaderContent>
+                <CardHeaderActions>
+                    <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" />
+                </CardHeaderActions>
+            </MudCardHeader>*@
+            <MudCardContent>
+                <MudText>@workoutTemplate.Name</MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => StartWorkout(workoutTemplate))">Start Workout</MudButton>
+            </MudCardActions>
+        </MudCard>
+    }
+}
+@if (_workoutStarted)
+{
+    foreach(var workoutLogExercise in WorkoutLog.WorkoutLogExercises)
+    {
+        @if (workoutLogExercise is WorkoutLogMultiExercise)
+        {
+            var workoutLogMultiExercise = (WorkoutLogMultiExercise)workoutLogExercise;
 
-<MudDrawer DisableOverlay="true"  @bind-Open="@open" Anchor="Anchor.Bottom" Elevation="5" Variant="@DrawerVariant.Temporary">
+            <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => AddWorkoutLogMultiExerciseSet(workoutLogMultiExercise))">Add MultiSets</MudButton>
+            <LogMultiExerciseSetFields WorkoutLogMultiExercise="@workoutLogMultiExercise" />
+        }
+        else if (workoutLogExercise is WorkoutLogSingleExercise)
+        {
+            var workoutLogSingleExercise = (WorkoutLogSingleExercise)workoutLogExercise;
+            <ExerciseAutocomplete Exercise="@workoutLogSingleExercise.Exercise"></ExerciseAutocomplete>
+            <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => AddLogSet(workoutLogSingleExercise))">Add Sets</MudButton>
+
+
+            <LogExerciseSetFields WorkoutLogSingleExercise="@workoutLogSingleExercise" />
+        }
+
+    }
+}
+<MudDrawer DisableOverlay="false" Width="100%" Height="50%" @bind-Open="@open" Anchor="Anchor.Bottom" Elevation="5" Variant="@DrawerVariant.Temporary">
     <MudDrawerHeader>
         <MudText Typo="Typo.h6">@_drawerHeader</MudText>
-        
-    <MudButton  Color="Color.Inherit"  OnClick="ToggleDrawer">close</MudButton>
-
+        <MudButton Color="Color.Inherit"  OnClick="ToggleDrawer">close</MudButton>
     </MudDrawerHeader>
-    @if (showTimer)
-    {
-        <RestTimer/>
-    }
-    else if (showRepMaxCalculator)
-    {
-        <RepMaxCalculator/>
-    }
-    else if (showStopwatch)
-    {
-        <StopwatchTimer/>
-    }
+    <DynamicComponent Type="selectedType" />
 </MudDrawer>
 <MudAppBar Bottom="true" Fixed="true" Color="Color.Primary" Elevation="1">
     <MudSpacer />
-    <MudButton  Color="Color.Inherit"  OnClick="ShowCalculator">repmax calculator </MudButton>
+    <MudButton  Color="Color.Inherit"  OnClick="ShowCalculator">repmax calculator</MudButton>
     <MudSpacer />
     <MudDivider Vertical="true" FlexItem="true" />
     <MudSpacer />
@@ -53,26 +86,62 @@
 @code {
     [Parameter]
     public int WorkoutTemplateId { get; set; }
-
+    bool _workoutStarted;
     bool open = false;
     bool showTimer = false;
     bool showRepMaxCalculator = false;
     bool showStopwatch = false;
+    bool _showTemplateSelector = false;
     string _drawerHeader = "";
+    WorkoutLog WorkoutLog { get; set; }
+    List<WorkoutTemplate> WorkoutTemplates { get; set; }
+    Type selectedType = typeof(RepMaxCalculator);
     protected override async Task OnInitializedAsync()
     {
-        Console.WriteLine(WorkoutTemplateId);
-        //var workoutTemplate = RoutineState.SelectedRoutine.WorkoutTemplates.FirstOrDefault(x => x.Id == WorkoutTemplateId);
-        //var workoutLog = new WorkoutLog(workoutTemplate);
-        //JsonSerializerOptions options = new()
-        //{
-        //        ReferenceHandler = ReferenceHandler.IgnoreCycles,
-        //        WriteIndented = true
-        //    };
-        //var test =JsonSerializer.Serialize(workoutLog, options);
+        if (WorkoutTemplateId != 0)
+        {
+            var workoutTemplate = RoutineState.SelectedRoutine.WorkoutTemplates.FirstOrDefault(x => x.Id == WorkoutTemplateId);
+            WorkoutLog = new WorkoutLog(workoutTemplate);
+            JsonSerializerOptions options = new()
+                {
+                    ReferenceHandler = ReferenceHandler.IgnoreCycles,
+                    WriteIndented = true
+                };
+            var test = JsonSerializer.Serialize(WorkoutLog, options);
+        }
         await base.OnInitializedAsync();
     }
 
+    private async Task AddWorkoutLogMultiExerciseSet(WorkoutLogMultiExercise workoutLogMultiExercise)
+    {
+
+        workoutLogMultiExercise.MultiExerciseSets.Add(new WorkoutLogMultiExerciseSet(workoutLogMultiExercise.GetNextSetOrder()));
+    }
+    private async Task AddLogSet(WorkoutLogSingleExercise workoutLogSingleExercise)
+    {
+
+        workoutLogSingleExercise.LogSets.Add(new WorkoutLogSet(workoutLogSingleExercise.GetNextSetOrder()));
+    }
+
+    public async Task StartWorkout(WorkoutTemplate? workoutTemplate = null)
+    {
+        if (workoutTemplate == null)
+        {
+            WorkoutLog = new WorkoutLog();
+        }
+        else
+        {
+            WorkoutLog = new WorkoutLog(workoutTemplate);
+        }
+        _workoutStarted = true;
+        _showTemplateSelector = false;
+    }
+
+    public async Task ChooseFromTemplate()
+    {
+        _showTemplateSelector = true;
+        WorkoutTemplates = await WorkoutTemplateRepository.GetWorkoutTemplatesAsync();
+    }
 
     public void Dispose()
     {
@@ -82,27 +151,22 @@
     void ShowCalculator()
     {
         _drawerHeader = "Rep Max Calulator";
-        showRepMaxCalculator = true;
-        showTimer = false;
-        showStopwatch = false;
+        selectedType = typeof(RepMaxCalculator);
         ToggleDrawer();
     }
 
     void ShowTimer()
     {
         _drawerHeader = "Rest Timer";
-        showRepMaxCalculator = false;
-        showTimer = true;
-        showStopwatch = false;
+        selectedType = typeof(RestTimer);
         ToggleDrawer();
     }
 
     void ShowStopwatch()
     {
+
+        selectedType = typeof(StopwatchTimer);
         _drawerHeader = "Stopwatch";
-        showStopwatch = true;
-        showRepMaxCalculator = false;
-        showTimer = false;
         ToggleDrawer();
     }
     void ToggleDrawer()
