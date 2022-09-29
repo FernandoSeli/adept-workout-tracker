@@ -1,8 +1,8 @@
 ﻿@inject IGenericRepository<WorkoutTemplateSet> WorkoutTemplateSetRepository;
-@if (WorkoutTemplateExercise.Sets.Any())
+@if (WorkoutTemplateSingleExercise.TemplateSets.Any())
 {
     <MudTabs Elevation="4" Rounded="true" AlwaysShowScrollButtons="true" Color="@Color.Primary" Class="mt-4">
-    @foreach (var set in WorkoutTemplateExercise.Sets)
+    @foreach (var set in WorkoutTemplateSingleExercise.TemplateSets)
     {
         <MudTabPanel  Text="@set.Name">
             <MudNumericField @bind-Value="@set.Order" Label="Order"/>
@@ -10,22 +10,22 @@
             <MudNumericField @bind-Value="@set.Rest" Label="Rest"/>
             <MudNumericField @bind-Value="@set.Weight" Label="Weight"/>
             <MudTextField @bind-Value="@set.Note" Label="Note"/>
-            <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => DeleteSet(WorkoutTemplateExercise, set))">Delete Set</MudButton>
+            <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => DeleteSet(set))">Delete Set</MudButton>
         </MudTabPanel>
     }
     </MudTabs>
 }
 @code {
     [Parameter]
-    public WorkoutTemplateExercise WorkoutTemplateExercise { get; set; }
+    public WorkoutTemplateSingleExercise WorkoutTemplateSingleExercise { get; set; }
 
 
-    private async Task DeleteSet(WorkoutTemplateExercise workoutTemplateExercise, WorkoutTemplateSet set)
+    private async Task DeleteSet(WorkoutTemplateSet set)
     {
         if (set.Id != 0)
         {
             await WorkoutTemplateSetRepository.RemoveAsync(set);
         }
-        workoutTemplateExercise.Sets.Remove(set);
+        WorkoutTemplateSingleExercise.TemplateSets.Remove(set);
     }
 }

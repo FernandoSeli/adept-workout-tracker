@@ -1,4 +1,5 @@
 ﻿using Adept.Data;
+using Adept.Data.Extension;
 using Adept.Data.Model;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,13 +10,6 @@ namespace Adept.Data.Repository
         public RoutineRepository(IDbContextFactory<AdeptDatabaseContext> DbContextFactory) : base(DbContextFactory)
         {
         }
-
-        //private AdeptDatabaseContext _context;
-
-        //public RoutineRepository(IDbContextFactory<AdeptDatabaseContext> DbContextFactory)
-        //{
-        //    _context = DbContextFactory.CreateDbContext();
-        //}
 
         public async Task<int> AddOrUpdateCurrentRoutine(int routineId)
         {
@@ -55,19 +49,10 @@ namespace Adept.Data.Repository
         public async Task<List<Routine>> GetRoutinesAsync()
         {
             return await _context.Routines
+                .IncludeWorkoutTemplateTree()
                 .Include(r => r.CurrentRoutine)
-                .Include(r => r.WorkoutTemplates)
-                    .ThenInclude(template => template.WorkoutTemplateExercises)
-                        .ThenInclude(templateExercise => templateExercise.Exercise)
-                .Include(r => r.WorkoutTemplates)
-                    .ThenInclude(template => template.WorkoutTemplateExercises)
-                        .ThenInclude(templateExercise => templateExercise.Sets)
-                .Include(r => r.WorkoutTemplates)
-                    .ThenInclude(template => template.WorkoutTemplateExercises)
-                        .ThenInclude(templateExercise => templateExercise.MultiExerciseSets)
-                            .ThenInclude(templateMultiExercise => templateMultiExercise.ExerciseSets)
-                                .ThenInclude(exerciseSet => exerciseSet.Exercise)
-                 .ToListAsync();
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<int> GetRoutinesCountAsync()

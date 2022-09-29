@@ -1,3 +1,8 @@
+
+@inject IExerciseRepository ExerciseRepository;
+@inject IRoutineRepository RoutineRepository;
+@inject HttpClient Http;
+
 <Router AppAssembly="@typeof(App).Assembly">
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
@@ -9,3 +14,23 @@
         </LayoutView>
     </NotFound>
 </Router>
+
+@code{
+    protected override async Task OnInitializedAsync()
+    {
+        var routines = await RoutineRepository.GetRoutinesAsync();
+
+        if ((await ExerciseRepository.GetExercisesCountAsync()) == 0)
+        {
+            var test = await ExerciseRepository.GetExercisesAsync();
+            var exercises = await Http.GetFromJsonAsync<List<Exercise>>("_content/Adept.Blazor/sample-data/Exercises.json");
+            await ExerciseRepository.AddRangeAsync(exercises);
+        }
+        if (!routines.Any())
+        {
+            var routine = await Http.GetFromJsonAsync<Routine>("_content/Adept.Blazor/sample-data/Routine.json");
+            await RoutineRepository.AddAsync(routine);
+        }
+        await base.OnInitializedAsync();
+    }
+}

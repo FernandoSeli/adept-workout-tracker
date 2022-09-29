@@ -13,7 +13,10 @@ namespace Adept.Data.Model
 
         public string? Url { get; set; }
 
+        public List<WorkoutLogExercise>? WorkoutLogExercises { get; set; }
+        public List<WorkoutLogExerciseSet>? WorkoutLogExerciseSets { get; set; }
         public List<WorkoutTemplateExercise>? WorkoutTemplateExercises { get; set; }
+        public List<WorkoutTemplateExerciseSet>? WorkoutTemplateExerciseSets { get; set; }
         public ExerciseCategory? ExerciseCategory { get; set; }
         public int? ExerciseCategoryId { get; set; }
     }

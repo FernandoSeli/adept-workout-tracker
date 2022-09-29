@@ -26,9 +26,27 @@
 else
 {
     
-    <MudText Class="mb-8">Next Workout is: </MudText>
+    <MudText Class="mb-8">Your last Workout is: </MudText>
     
-    <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="@StartWorkout">Start workout</MudButton>
+    @foreach (var workoutTemplate in _selectedRoutine.WorkoutTemplates.OrderBy(x =>x.Order))
+    {
+        <MudCard Style="margin:40px">
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">@workoutTemplate.Name</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent>
+                @foreach (var workoutTemplateExercise in workoutTemplate.WorkoutTemplateExercises)
+                {
+                    <MudText>@workoutTemplateExercise.GetExerciseName()</MudText>   
+                }
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="@(() =>StartWorkout(workoutTemplate.Id))">Start workout</MudButton>
+            </MudCardActions>
+        </MudCard>
+    }
 }
 
 
@@ -61,18 +79,18 @@ else
     }
 
 
-    private async Task StartWorkout()
+    private async Task StartWorkout(int workoutTemplateId)
     {
-        NavigationManager.NavigateTo("/workout");
+        NavigationManager.NavigateTo($"workout/{workoutTemplateId}");
     }
 
     private async Task AddNewRoutine()
     {
-        NavigationManager.NavigateTo("/routine");
+        NavigationManager.NavigateTo("routine");
     }
 
     private async Task SelectRoutine()
     {
-        NavigationManager.NavigateTo("/routine");
+        NavigationManager.NavigateTo("routine");
     }
 }

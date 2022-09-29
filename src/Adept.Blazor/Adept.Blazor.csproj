@@ -26,4 +26,8 @@
 	  <ProjectReference Include="..\Adept.Data\Adept.Data.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Services\" />
+	</ItemGroup>
+
 </Project>

@@ -1,0 +1,26 @@
+﻿<MudButtonGroup Color="Color.Primary" Variant="Variant.Filled">
+    <MudButton OnClick="(async () => {StartStopwatchAsync();})">Start</MudButton>
+    <MudButton OnClick="(() =>{_isStopWatchRunning = false;})">Pause</MudButton>
+    <MudButton OnClick="(() => {_stopWatch = new TimeSpan();})">Reset</MudButton>
+</MudButtonGroup>
+<MudText>@_stopWatchValue</MudText>
+
+@code {
+    TimeSpan _stopWatch = new TimeSpan();
+    string _stopWatchValue => _stopWatch.ToString("mm':'ss':'f");
+    bool _isStopWatchRunning = false;
+
+    async Task StartStopwatchAsync()
+    {
+        _isStopWatchRunning = true;
+        while (_isStopWatchRunning)
+        {
+            await Task.Delay(100);
+            if (_isStopWatchRunning)
+            {
+                _stopWatch = _stopWatch.Add(new TimeSpan(0, 0, 0, 0, 100));
+                StateHasChanged();
+            }
+        }
+    }
+}

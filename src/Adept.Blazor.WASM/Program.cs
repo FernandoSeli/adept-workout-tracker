@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.CodeAnalysis;
-using Adept.Blazor.Services;
 using Adept.Blazor.State;
 using Adept.Blazor.Helper;
 using Adept.Data.Repository;
@@ -23,9 +22,8 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 
 builder.Services.AddTransient<IRoutineRepository, RoutineRepository>();
 builder.Services.AddScoped<IExerciseRepository, ExerciseRepository>();
-//builder.Services.AddScoped<IWorkoutTemplateService, WorkoutTemplateService>();
+builder.Services.AddScoped<IWorkoutTemplateRepository, WorkoutTemplateRepository>();
 builder.Services.AddSingleton<RoutineState>();
-builder.Services.AddScoped<BrowserService>();
 builder.Services.AddScoped<DialogHelper>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 

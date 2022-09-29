@@ -1,0 +1,660 @@
+{
+  "Id": 0,
+  "Date": "2022-09-01T01:15:37.004+02:00",
+  "Note": null,
+  "WorkoutTemplateId": 1,
+  "WorkoutTemplate": null,
+  "WorkoutLogSingleExercises": [
+    {
+      "ExerciseId": 1,
+      "Exercise": {
+        "Id": 1,
+        "Name": "Bench Press",
+        "Url": null,
+        "WorkoutLogExercises": null,
+        "WorkoutLogExerciseSets": null,
+        "WorkoutTemplateExercises": [
+          {
+            "ExerciseId": 1,
+            "Exercise": null,
+            "WorkoutTemplateId": 1,
+            "WorkoutTemplate": {
+              "Id": 1,
+              "Name": "Push Day 1",
+              "Order": 1,
+              "RoutineId": 1,
+              "Routine": {
+                "Id": 1,
+                "Name": "PPL",
+                "IsSelected": true,
+                "CurrentRoutine": {
+                  "Id": 1,
+                  "RoutineId": 1,
+                  "Routine": null
+                },
+                "WorkoutTemplates": [
+                  null,
+                  {
+                    "Id": 2,
+                    "Name": "Pull Day 1",
+                    "Order": 2,
+                    "RoutineId": 1,
+                    "Routine": null,
+                    "WorkoutTemplateSingleExercises": [],
+                    "WorkoutTemplateMultiExercises": [
+                      {
+                        "MultiExerciseSets": [
+                          {
+                            "ExerciseSets": [
+                              {
+                                "WorkoutTemplateMultiExerciseSetId": 1,
+                                "WorkoutTemplateMultiExerciseSet": null,
+                                "Id": 1,
+                                "Repetition": 1,
+                                "Weight": 10,
+                                "Order": 1,
+                                "ExerciseId": 1,
+                                "Exercise": null,
+                                "Name": "Exercise 1"
+                              }
+                            ],
+                            "WorkoutTemplateMultiExerciseId": 1,
+                            "WorkoutTemplateMultiExercise": null,
+                            "Id": 1,
+                            "Order": 1,
+                            "Note": "test2",
+                            "Name": "Multi Set 1"
+                          }
+                        ],
+                        "ExerciseId": null,
+                        "Exercise": null,
+                        "WorkoutTemplateId": 2,
+                        "WorkoutTemplate": null,
+                        "Id": 1,
+                        "Note": "Test",
+                        "Order": 1,
+                        "IsMultiExercise": false,
+                        "Name": "Exercise 1"
+                      }
+                    ],
+                    "WorkoutTemplateExercises": [
+                      {
+                        "ExerciseId": null,
+                        "Exercise": null,
+                        "WorkoutTemplateId": 2,
+                        "WorkoutTemplate": null,
+                        "Id": 1,
+                        "Note": "Test",
+                        "Order": 1,
+                        "IsMultiExercise": false,
+                        "Name": "Exercise 1"
+                      }
+                    ]
+                  },
+                  {
+                    "Id": 3,
+                    "Name": "Leg Day 1",
+                    "Order": 3,
+                    "RoutineId": 1,
+                    "Routine": null,
+                    "WorkoutTemplateSingleExercises": [],
+                    "WorkoutTemplateMultiExercises": [],
+                    "WorkoutTemplateExercises": []
+                  },
+                  {
+                    "Id": 4,
+                    "Name": "Push Day 2",
+                    "Order": 4,
+                    "RoutineId": 1,
+                    "Routine": null,
+                    "WorkoutTemplateSingleExercises": [],
+                    "WorkoutTemplateMultiExercises": [],
+                    "WorkoutTemplateExercises": []
+                  },
+                  {
+                    "Id": 5,
+                    "Name": "Pull Day 2",
+                    "Order": 5,
+                    "RoutineId": 1,
+                    "Routine": null,
+                    "WorkoutTemplateSingleExercises": [],
+                    "WorkoutTemplateMultiExercises": [],
+                    "WorkoutTemplateExercises": []
+                  },
+                  {
+                    "Id": 6,
+                    "Name": "Leg Day 2",
+                    "Order": 6,
+                    "RoutineId": 1,
+                    "Routine": null,
+                    "WorkoutTemplateSingleExercises": [],
+                    "WorkoutTemplateMultiExercises": [],
+                    "WorkoutTemplateExercises": []
+                  }
+                ]
+              },
+              "WorkoutTemplateSingleExercises": [
+                null
+              ],
+              "WorkoutTemplateMultiExercises": [],
+              "WorkoutTemplateExercises": [
+                null
+              ]
+            },
+            "Id": 2,
+            "Note": "Test",
+            "Order": 1,
+            "IsMultiExercise": false,
+            "Name": "Exercise 1"
+          }
+        ],
+        "WorkoutTemplateExerciseSets": [
+          {
+            "WorkoutTemplateMultiExerciseSetId": 1,
+            "WorkoutTemplateMultiExerciseSet": {
+              "ExerciseSets": [
+                null
+              ],
+              "WorkoutTemplateMultiExerciseId": 1,
+              "WorkoutTemplateMultiExercise": {
+                "MultiExerciseSets": [
+                  null
+                ],
+                "ExerciseId": null,
+                "Exercise": null,
+                "WorkoutTemplateId": 2,
+                "WorkoutTemplate": {
+                  "Id": 2,
+                  "Name": "Pull Day 1",
+                  "Order": 2,
+                  "RoutineId": 1,
+                  "Routine": {
+                    "Id": 1,
+                    "Name": "PPL",
+                    "IsSelected": true,
+                    "CurrentRoutine": {
+                      "Id": 1,
+                      "RoutineId": 1,
+                      "Routine": null
+                    },
+                    "WorkoutTemplates": [
+                      {
+                        "Id": 1,
+                        "Name": "Push Day 1",
+                        "Order": 1,
+                        "RoutineId": 1,
+                        "Routine": null,
+                        "WorkoutTemplateSingleExercises": [
+                          {
+                            "TemplateSets": [
+                              {
+                                "WorkoutTemplateSingleExerciseId": 2,
+                                "WorkoutTemplateSingleExercise": null,
+                                "Id": 1,
+                                "Repetition": 10,
+                                "Rest": 10,
+                                "Weight": 10,
+                                "Order": 1,
+                                "Note": "rpe10",
+                                "Name": "Set 1"
+                              },
+                              {
+                                "WorkoutTemplateSingleExerciseId": 2,
+                                "WorkoutTemplateSingleExercise": null,
+                                "Id": 2,
+                                "Repetition": 10,
+                                "Rest": 10,
+                                "Weight": 10,
+                                "Order": 2,
+                                "Note": "rpe10",
+                                "Name": "Set 2"
+                              },
+                              {
+                                "WorkoutTemplateSingleExerciseId": 2,
+                                "WorkoutTemplateSingleExercise": null,
+                                "Id": 3,
+                                "Repetition": 10,
+                                "Rest": 10,
+                                "Weight": 10,
+                                "Order": 3,
+                                "Note": "rpe10",
+                                "Name": "Set 3"
+                              }
+                            ],
+                            "ExerciseId": 1,
+                            "Exercise": null,
+                            "WorkoutTemplateId": 1,
+                            "WorkoutTemplate": null,
+                            "Id": 2,
+                            "Note": "Test",
+                            "Order": 1,
+                            "IsMultiExercise": false,
+                            "Name": "Exercise 1"
+                          }
+                        ],
+                        "WorkoutTemplateMultiExercises": [],
+                        "WorkoutTemplateExercises": [
+                          {
+                            "ExerciseId": 1,
+                            "Exercise": null,
+                            "WorkoutTemplateId": 1,
+                            "WorkoutTemplate": null,
+                            "Id": 2,
+                            "Note": "Test",
+                            "Order": 1,
+                            "IsMultiExercise": false,
+                            "Name": "Exercise 1"
+                          }
+                        ]
+                      },
+                      null,
+                      {
+                        "Id": 3,
+                        "Name": "Leg Day 1",
+                        "Order": 3,
+                        "RoutineId": 1,
+                        "Routine": null,
+                        "WorkoutTemplateSingleExercises": [],
+                        "WorkoutTemplateMultiExercises": [],
+                        "WorkoutTemplateExercises": []
+                      },
+                      {
+                        "Id": 4,
+                        "Name": "Push Day 2",
+                        "Order": 4,
+                        "RoutineId": 1,
+                        "Routine": null,
+                        "WorkoutTemplateSingleExercises": [],
+                        "WorkoutTemplateMultiExercises": [],
+                        "WorkoutTemplateExercises": []
+                      },
+                      {
+                        "Id": 5,
+                        "Name": "Pull Day 2",
+                        "Order": 5,
+                        "RoutineId": 1,
+                        "Routine": null,
+                        "WorkoutTemplateSingleExercises": [],
+                        "WorkoutTemplateMultiExercises": [],
+                        "WorkoutTemplateExercises": []
+                      },
+                      {
+                        "Id": 6,
+                        "Name": "Leg Day 2",
+                        "Order": 6,
+                        "RoutineId": 1,
+                        "Routine": null,
+                        "WorkoutTemplateSingleExercises": [],
+                        "WorkoutTemplateMultiExercises": [],
+                        "WorkoutTemplateExercises": []
+                      }
+                    ]
+                  },
+                  "WorkoutTemplateSingleExercises": [],
+                  "WorkoutTemplateMultiExercises": [
+                    null
+                  ],
+                  "WorkoutTemplateExercises": [
+                    null
+                  ]
+                },
+                "Id": 1,
+                "Note": "Test",
+                "Order": 1,
+                "IsMultiExercise": false,
+                "Name": "Exercise 1"
+              },
+              "Id": 1,
+              "Order": 1,
+              "Note": "test2",
+              "Name": "Multi Set 1"
+            },
+            "Id": 1,
+            "Repetition": 1,
+            "Weight": 10,
+            "Order": 1,
+            "ExerciseId": 1,
+            "Exercise": null,
+            "Name": "Exercise 1"
+          }
+        ],
+        "ExerciseCategory": null,
+        "ExerciseCategoryId": null
+      },
+      "WorkoutLogId": 0,
+      "WorkoutLog": null,
+      "Id": 0,
+      "Note": "Test",
+      "Order": 1,
+      "IsMultiExercise": false,
+      "Name": "Exercise 1"
+    }
+  ],
+  "WorkoutLogMultiExercises": [],
+  "WorkoutLogExercises": [
+    {
+      "ExerciseId": 1,
+      "Exercise": {
+        "Id": 1,
+        "Name": "Bench Press",
+        "Url": null,
+        "WorkoutLogExercises": null,
+        "WorkoutLogExerciseSets": null,
+        "WorkoutTemplateExercises": [
+          {
+            "ExerciseId": 1,
+            "Exercise": null,
+            "WorkoutTemplateId": 1,
+            "WorkoutTemplate": {
+              "Id": 1,
+              "Name": "Push Day 1",
+              "Order": 1,
+              "RoutineId": 1,
+              "Routine": {
+                "Id": 1,
+                "Name": "PPL",
+                "IsSelected": true,
+                "CurrentRoutine": {
+                  "Id": 1,
+                  "RoutineId": 1,
+                  "Routine": null
+                },
+                "WorkoutTemplates": [
+                  null,
+                  {
+                    "Id": 2,
+                    "Name": "Pull Day 1",
+                    "Order": 2,
+                    "RoutineId": 1,
+                    "Routine": null,
+                    "WorkoutTemplateSingleExercises": [],
+                    "WorkoutTemplateMultiExercises": [
+                      {
+                        "MultiExerciseSets": [
+                          {
+                            "ExerciseSets": [
+                              {
+                                "WorkoutTemplateMultiExerciseSetId": 1,
+                                "WorkoutTemplateMultiExerciseSet": null,
+                                "Id": 1,
+                                "Repetition": 1,
+                                "Weight": 10,
+                                "Order": 1,
+                                "ExerciseId": 1,
+                                "Exercise": null,
+                                "Name": "Exercise 1"
+                              }
+                            ],
+                            "WorkoutTemplateMultiExerciseId": 1,
+                            "WorkoutTemplateMultiExercise": null,
+                            "Id": 1,
+                            "Order": 1,
+                            "Note": "test2",
+                            "Name": "Multi Set 1"
+                          }
+                        ],
+                        "ExerciseId": null,
+                        "Exercise": null,
+                        "WorkoutTemplateId": 2,
+                        "WorkoutTemplate": null,
+                        "Id": 1,
+                        "Note": "Test",
+                        "Order": 1,
+                        "IsMultiExercise": false,
+                        "Name": "Exercise 1"
+                      }
+                    ],
+                    "WorkoutTemplateExercises": [
+                      {
+                        "ExerciseId": null,
+                        "Exercise": null,
+                        "WorkoutTemplateId": 2,
+                        "WorkoutTemplate": null,
+                        "Id": 1,
+                        "Note": "Test",
+                        "Order": 1,
+                        "IsMultiExercise": false,
+                        "Name": "Exercise 1"
+                      }
+                    ]
+                  },
+                  {
+                    "Id": 3,
+                    "Name": "Leg Day 1",
+                    "Order": 3,
+                    "RoutineId": 1,
+                    "Routine": null,
+                    "WorkoutTemplateSingleExercises": [],
+                    "WorkoutTemplateMultiExercises": [],
+                    "WorkoutTemplateExercises": []
+                  },
+                  {
+                    "Id": 4,
+                    "Name": "Push Day 2",
+                    "Order": 4,
+                    "RoutineId": 1,
+                    "Routine": null,
+                    "WorkoutTemplateSingleExercises": [],
+                    "WorkoutTemplateMultiExercises": [],
+                    "WorkoutTemplateExercises": []
+                  },
+                  {
+                    "Id": 5,
+                    "Name": "Pull Day 2",
+                    "Order": 5,
+                    "RoutineId": 1,
+                    "Routine": null,
+                    "WorkoutTemplateSingleExercises": [],
+                    "WorkoutTemplateMultiExercises": [],
+                    "WorkoutTemplateExercises": []
+                  },
+                  {
+                    "Id": 6,
+                    "Name": "Leg Day 2",
+                    "Order": 6,
+                    "RoutineId": 1,
+                    "Routine": null,
+                    "WorkoutTemplateSingleExercises": [],
+                    "WorkoutTemplateMultiExercises": [],
+                    "WorkoutTemplateExercises": []
+                  }
+                ]
+              },
+              "WorkoutTemplateSingleExercises": [
+                null
+              ],
+              "WorkoutTemplateMultiExercises": [],
+              "WorkoutTemplateExercises": [
+                null
+              ]
+            },
+            "Id": 2,
+            "Note": "Test",
+            "Order": 1,
+            "IsMultiExercise": false,
+            "Name": "Exercise 1"
+          }
+        ],
+        "WorkoutTemplateExerciseSets": [
+          {
+            "WorkoutTemplateMultiExerciseSetId": 1,
+            "WorkoutTemplateMultiExerciseSet": {
+              "ExerciseSets": [
+                null
+              ],
+              "WorkoutTemplateMultiExerciseId": 1,
+              "WorkoutTemplateMultiExercise": {
+                "MultiExerciseSets": [
+                  null
+                ],
+                "ExerciseId": null,
+                "Exercise": null,
+                "WorkoutTemplateId": 2,
+                "WorkoutTemplate": {
+                  "Id": 2,
+                  "Name": "Pull Day 1",
+                  "Order": 2,
+                  "RoutineId": 1,
+                  "Routine": {
+                    "Id": 1,
+                    "Name": "PPL",
+                    "IsSelected": true,
+                    "CurrentRoutine": {
+                      "Id": 1,
+                      "RoutineId": 1,
+                      "Routine": null
+                    },
+                    "WorkoutTemplates": [
+                      {
+                        "Id": 1,
+                        "Name": "Push Day 1",
+                        "Order": 1,
+                        "RoutineId": 1,
+                        "Routine": null,
+                        "WorkoutTemplateSingleExercises": [
+                          {
+                            "TemplateSets": [
+                              {
+                                "WorkoutTemplateSingleExerciseId": 2,
+                                "WorkoutTemplateSingleExercise": null,
+                                "Id": 1,
+                                "Repetition": 10,
+                                "Rest": 10,
+                                "Weight": 10,
+                                "Order": 1,
+                                "Note": "rpe10",
+                                "Name": "Set 1"
+                              },
+                              {
+                                "WorkoutTemplateSingleExerciseId": 2,
+                                "WorkoutTemplateSingleExercise": null,
+                                "Id": 2,
+                                "Repetition": 10,
+                                "Rest": 10,
+                                "Weight": 10,
+                                "Order": 2,
+                                "Note": "rpe10",
+                                "Name": "Set 2"
+                              },
+                              {
+                                "WorkoutTemplateSingleExerciseId": 2,
+                                "WorkoutTemplateSingleExercise": null,
+                                "Id": 3,
+                                "Repetition": 10,
+                                "Rest": 10,
+                                "Weight": 10,
+                                "Order": 3,
+                                "Note": "rpe10",
+                                "Name": "Set 3"
+                              }
+                            ],
+                            "ExerciseId": 1,
+                            "Exercise": null,
+                            "WorkoutTemplateId": 1,
+                            "WorkoutTemplate": null,
+                            "Id": 2,
+                            "Note": "Test",
+                            "Order": 1,
+                            "IsMultiExercise": false,
+                            "Name": "Exercise 1"
+                          }
+                        ],
+                        "WorkoutTemplateMultiExercises": [],
+                        "WorkoutTemplateExercises": [
+                          {
+                            "ExerciseId": 1,
+                            "Exercise": null,
+                            "WorkoutTemplateId": 1,
+                            "WorkoutTemplate": null,
+                            "Id": 2,
+                            "Note": "Test",
+                            "Order": 1,
+                            "IsMultiExercise": false,
+                            "Name": "Exercise 1"
+                          }
+                        ]
+                      },
+                      null,
+                      {
+                        "Id": 3,
+                        "Name": "Leg Day 1",
+                        "Order": 3,
+                        "RoutineId": 1,
+                        "Routine": null,
+                        "WorkoutTemplateSingleExercises": [],
+                        "WorkoutTemplateMultiExercises": [],
+                        "WorkoutTemplateExercises": []
+                      },
+                      {
+                        "Id": 4,
+                        "Name": "Push Day 2",
+                        "Order": 4,
+                        "RoutineId": 1,
+                        "Routine": null,
+                        "WorkoutTemplateSingleExercises": [],
+                        "WorkoutTemplateMultiExercises": [],
+                        "WorkoutTemplateExercises": []
+                      },
+                      {
+                        "Id": 5,
+                        "Name": "Pull Day 2",
+                        "Order": 5,
+                        "RoutineId": 1,
+                        "Routine": null,
+                        "WorkoutTemplateSingleExercises": [],
+                        "WorkoutTemplateMultiExercises": [],
+                        "WorkoutTemplateExercises": []
+                      },
+                      {
+                        "Id": 6,
+                        "Name": "Leg Day 2",
+                        "Order": 6,
+                        "RoutineId": 1,
+                        "Routine": null,
+                        "WorkoutTemplateSingleExercises": [],
+                        "WorkoutTemplateMultiExercises": [],
+                        "WorkoutTemplateExercises": []
+                      }
+                    ]
+                  },
+                  "WorkoutTemplateSingleExercises": [],
+                  "WorkoutTemplateMultiExercises": [
+                    null
+                  ],
+                  "WorkoutTemplateExercises": [
+                    null
+                  ]
+                },
+                "Id": 1,
+                "Note": "Test",
+                "Order": 1,
+                "IsMultiExercise": false,
+                "Name": "Exercise 1"
+              },
+              "Id": 1,
+              "Order": 1,
+              "Note": "test2",
+              "Name": "Multi Set 1"
+            },
+            "Id": 1,
+            "Repetition": 1,
+            "Weight": 10,
+            "Order": 1,
+            "ExerciseId": 1,
+            "Exercise": null,
+            "Name": "Exercise 1"
+          }
+        ],
+        "ExerciseCategory": null,
+        "ExerciseCategoryId": null
+      },
+      "WorkoutLogId": 0,
+      "WorkoutLog": null,
+      "Id": 0,
+      "Note": "Test",
+      "Order": 1,
+      "IsMultiExercise": false,
+      "Name": "Exercise 1"
+    }
+  ]
+}

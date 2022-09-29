@@ -1,0 +1,70 @@
+﻿<h3>RepMaxCalculator</h3>
+<h3>Current</h3>
+<MudNumericField @bind-Value="CurrentWeight" Label="CurrentWeight" Variant="Variant.Outlined" Min="0.0" Step="0.5" />
+<MudNumericField @bind-Value="CurrentReps" Label="CurrentReps" Variant="Variant.Outlined" Min="1" Max="15" Step="1" />
+<MudNumericField @bind-Value="CurrentRpe" Label="CurrentRpe" Variant="Variant.Outlined" Min="4" Max="10" Step="0.5" />
+<h3>one rep max @EstimatedOneRepMax </h3>
+
+<h3>aim</h3>
+<MudNumericField @bind-Value="OneRepMax" Label="OneRepMax" Variant="Variant.Outlined" Min="0.0" Step="0.5" />
+<MudNumericField @bind-Value="RepsAim" Label="RepsAim" Variant="Variant.Outlined" Min="1" Max="15" Step="1" />
+<MudNumericField @bind-Value="RpeAim" Label="RpeAim" Variant="Variant.Outlined" Min="4" Max="10" Step="0.5" />
+<h3> @WeightUsed </h3>
+
+@code {
+
+    public double? CurrentWeight { get; set; }
+    public double? CurrentRpe { get; set; }
+    public int? CurrentReps { get; set; }
+    public double EstimatedOneRepMax => CalculateOneRepMax(CurrentWeight, CurrentReps, CurrentRpe).RoundToNearestPoint5();
+
+    public double? WeightUsed => CalculateWeightUsed(OneRepMax, RepsAim, RpeAim).RoundToNearestPoint5();
+    public double? RpeAim { get; set; }
+    public int? RepsAim { get; set; }
+    public double? OneRepMax { get; set; }
+
+
+    private double CalculateOneRepMax(double? currentWeight, int? currentReps, double? currentRpe)
+    {
+        if (currentWeight.HasValue && currentReps.HasValue && currentRpe.HasValue )
+        {
+            var percentage = WeightPercentage(currentReps.Value, currentRpe.Value);
+            return currentWeight.Value * 100 / percentage;
+        }
+        return 0;
+    }
+    private double CalculateWeightUsed(double? oneRepMax, int? repsAim, double? rpeAim)
+    {
+        if (oneRepMax.HasValue && repsAim.HasValue && rpeAim.HasValue)
+        {
+            var percentage = WeightPercentage(repsAim.Value, rpeAim.Value);
+            return oneRepMax.Value * percentage / 100;
+        }
+        return 0;
+    }
+
+    
+    private double WeightPercentage(int reps, double rpe)
+    {
+        //1 at rpe 10 == 100
+        if (reps == 1 && rpe == 10.0)
+        {
+            return 100.0;
+        }
+
+        // 1 at rpe 10 = 100
+        // 2 at rpe 10 = 1 at rpe 9 = 95 
+        // 3 at rpe 10 = 2 at rpe 9 = 3 at rpe 8 = 91 and so on
+        // https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4961270/
+        // multiple linear regression
+        // y = b + m1x1 + m2x2
+        // let y be the percentage
+        // and x1 = rpe and x2 = rep
+        // todo kind of inaccurate maybe find other method?
+        var b = 71.137117;
+        var m1 = 2.776786;
+        var m2 = -2.537415;
+        return b + m1 * rpe + m2 * reps;
+    }
+
+}
