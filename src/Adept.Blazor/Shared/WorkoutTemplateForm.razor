@@ -18,7 +18,7 @@
             var workoutTemplateMultiExercise = (WorkoutTemplateMultiExercise)templateExercise;
 
             <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => AddTemplateMultiExerciseSet(workoutTemplateMultiExercise))">Add MultiSets</MudButton>
-            <MultiExerciseSetFields WorkoutTemplateMultiExercise="@workoutTemplateMultiExercise" />
+                <TemplateMultiExerciseSetFields WorkoutTemplateMultiExercise="@workoutTemplateMultiExercise" />
         }
         else if(templateExercise is WorkoutTemplateSingleExercise)
         {
@@ -27,7 +27,7 @@
             <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => AddTemplateSet(workoutTemplateSingleExercise))">Add Sets</MudButton>
             
            
-            <ExerciseSetFields WorkoutTemplateSingleExercise="@workoutTemplateSingleExercise" />
+            <TemplateExerciseSetFields WorkoutTemplateSingleExercise="@workoutTemplateSingleExercise" />
         }
 
 
