@@ -107,7 +107,7 @@ namespace Adept.Data.Model
 
     public class WorkoutLogSingleExercise : WorkoutLogExercise
     {
-        private List<WorkoutLogSet> LogSets { get; set; } = new List<WorkoutLogSet>();
+        public List<WorkoutLogSet> LogSets { get; set; } = new List<WorkoutLogSet>();
 
         public WorkoutLogSingleExercise()
         { }

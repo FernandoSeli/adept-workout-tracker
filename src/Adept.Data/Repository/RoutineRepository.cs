@@ -1,4 +1,5 @@
 ﻿using Adept.Data;
+using Adept.Data.Extension;
 using Adept.Data.Model;
 using Microsoft.EntityFrameworkCore;
 
@@ -47,27 +48,11 @@ namespace Adept.Data.Repository
 
         public async Task<List<Routine>> GetRoutinesAsync()
         {
-            var tes = _context.Routines.ToList();
-            var tes4 = _context.TemplateSingleExercises.ToList();
-            var tes5 = _context.TemplateMultiExercises.ToList();
-            var tes6 = _context.TemplateMultiExerciseSets.ToList();
-            var tes67 = _context.Exercises.ToList();
-            var tes3 = _context.TemplateExerciseSets.ToList();
-            var tes32 = _context.TemplateSets.ToList();
             return await _context.Routines
+                .IncludeWorkoutTemplateTree()
                 .Include(r => r.CurrentRoutine)
-                .Include(r => r.WorkoutTemplates)
-                    //.ThenInclude(template => template.WorkoutTemplateExercises)
-                    //    .ThenInclude(templateExercise => templateExercise.Exercise)
-                //.Include(r => r.WorkoutTemplates)
-                //    .ThenInclude(template => template.WorkoutTemplateExercises)
-                //        .ThenInclude(templateExercise => templateExercise.Sets)
-                //.Include(r => r.WorkoutTemplates)
-                //    .ThenInclude(template => template.WorkoutTemplateExercises)
-                //        .ThenInclude(templateExercise => templateExercise.MultiExerciseSets)
-                //            .ThenInclude(templateMultiExercise => templateMultiExercise.ExerciseSets)
-                //                .ThenInclude(exerciseSet => exerciseSet.Exercise)
-                 .ToListAsync();
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<int> GetRoutinesCountAsync()
