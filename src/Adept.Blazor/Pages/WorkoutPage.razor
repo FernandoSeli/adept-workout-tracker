@@ -53,10 +53,6 @@
         else if (workoutLogExercise is WorkoutLogSingleExercise)
         {
             var workoutLogSingleExercise = (WorkoutLogSingleExercise)workoutLogExercise;
-            <ExerciseAutocomplete Exercise="@workoutLogSingleExercise.Exercise"></ExerciseAutocomplete>
-            <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => AddLogSet(workoutLogSingleExercise))">Add Sets</MudButton>
-
-
             <LogExerciseSetFields WorkoutLogSingleExercise="@workoutLogSingleExercise" />
         }
 
@@ -117,12 +113,6 @@
 
         workoutLogMultiExercise.MultiExerciseSets.Add(new WorkoutLogMultiExerciseSet(workoutLogMultiExercise.GetNextSetOrder()));
     }
-    private async Task AddLogSet(WorkoutLogSingleExercise workoutLogSingleExercise)
-    {
-
-        workoutLogSingleExercise.LogSets.Add(new WorkoutLogSet(workoutLogSingleExercise.GetNextSetOrder()));
-    }
-
     public async Task StartWorkout(WorkoutTemplate? workoutTemplate = null)
     {
         if (workoutTemplate == null)
