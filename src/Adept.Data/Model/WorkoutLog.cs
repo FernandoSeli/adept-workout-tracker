@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Net.Http.Headers;
 
 namespace Adept.Data.Model
 {
@@ -18,33 +19,23 @@ namespace Adept.Data.Model
         public int WorkoutTemplateId { get; set; }
         public WorkoutTemplate WorkoutTemplate { get; set; }
 
-        public List<WorkoutLogSingleExercise>? WorkoutLogSingleExercises { get; set; } = new List<WorkoutLogSingleExercise>();
-        public List<WorkoutLogMultiExercise>? WorkoutLogMultiExercises { get; set; } = new List<WorkoutLogMultiExercise>();
+        public List<LogExerciseContainer> LogExerciseContainers = new List<LogExerciseContainer>();
+        public WorkoutLog()
+        {
 
-        [NotMapped]
-        public List<WorkoutLogExercise> WorkoutLogExercises =>
-            WorkoutLogSingleExercises.Cast<WorkoutLogExercise>()
-            .Concat(WorkoutLogMultiExercises.Cast<WorkoutLogExercise>())
-            .ToList();
-
-        public WorkoutLog() { }
-
+        }
         public WorkoutLog(WorkoutTemplate workoutTemplate)
         {
             WorkoutTemplateId = workoutTemplate.Id;
             Date = DateTime.Now;
-            WorkoutLogSingleExercises = workoutTemplate.WorkoutTemplateSingleExercises
-                .Select(x => new WorkoutLogSingleExercise(x)).ToList();
-            WorkoutLogMultiExercises = workoutTemplate.WorkoutTemplateMultiExercises
-                .Select(x => new WorkoutLogMultiExercise(x)).ToList();
+            LogExerciseContainers = workoutTemplate.TemplateExerciseContainers.Select(x => new LogExerciseContainer(x)).ToList();
         }
 
-        public IEnumerable<int> GetTemplateExerciseOrders() =>
-            WorkoutLogSingleExercises.Select(x => x.Order)
-            .Concat(WorkoutLogMultiExercises.Select(x => x.Order))
+        public IEnumerable<int> GetLogExerciseOrders() =>
+            LogExerciseContainers.Select(x => x.Order)
             .ToList();
 
-        public int GetNextTemplateExerciseOrder() => GetTemplateExerciseOrders().GetFirstAvailableInt();
+        public int GetNextLogExerciseOrder() => GetLogExerciseOrders().GetFirstAvailableInt();
 
 
     }

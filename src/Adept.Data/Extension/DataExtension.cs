@@ -12,34 +12,38 @@ namespace Adept.Data.Extension
 {
     public static class DataExtension
     {
-        public static IIncludableQueryable<Routine, Exercise> IncludeWorkoutTemplateTree(this DbSet<Routine> routines)
+        public static IIncludableQueryable<Routine, Exercise?> IncludeWorkoutTemplateTree(this DbSet<Routine> routines)
         {
             return routines
                 .Include(r => r.WorkoutTemplates)
-                    .ThenInclude(template => template.WorkoutTemplateMultiExercises)
-                    .ThenInclude(templateExercise => templateExercise.MultiExerciseSets)
-                    .ThenInclude(multiExerciseSet => multiExerciseSet.ExerciseSets)
+                    .ThenInclude(template => template.TemplateExerciseContainers)
+                    .ThenInclude(templateExerciseContainer => templateExerciseContainer.TemplateMultiExercises)
+                    .ThenInclude(multiExerciseSet => multiExerciseSet.MultiExerciseSets)
                     .ThenInclude(exerciseSet => exerciseSet.Exercise)
                 .Include(r => r.WorkoutTemplates)
-                    .ThenInclude(template => template.WorkoutTemplateSingleExercises)
-                        .ThenInclude(templateExercise => templateExercise.TemplateSets)
+                    .ThenInclude(template => template.TemplateExerciseContainers)
+                    .ThenInclude(templateExerciseContainer => templateExerciseContainer.TemplateSingleExercise)
+                    .ThenInclude(TemplateSingleExercise => TemplateSingleExercise.TemplateSets)
                 .Include(r => r.WorkoutTemplates)
-                    .ThenInclude(template => template.WorkoutTemplateSingleExercises)
-                        .ThenInclude(templateExercise => templateExercise.Exercise);
+                    .ThenInclude(template => template.TemplateExerciseContainers)
+                    .ThenInclude(templateExerciseContainer => templateExerciseContainer.TemplateSingleExercise)
+                    .ThenInclude(TemplateSingleExercise => TemplateSingleExercise.Exercise);
 
 
         }
-        public static IIncludableQueryable<WorkoutTemplate, Exercise> IncludeExerciseTree(this DbSet<WorkoutTemplate> workoutTemplates)
+        public static IIncludableQueryable<WorkoutTemplate, Exercise?> IncludeExerciseTree(this DbSet<WorkoutTemplate> workoutTemplates)
         {
             return workoutTemplates
-                    .Include(template => template.WorkoutTemplateMultiExercises)
-                        .ThenInclude(templateExercise => templateExercise.MultiExerciseSets)
-                        .ThenInclude(multiExerciseSet => multiExerciseSet.ExerciseSets)
+                    .Include(template => template.TemplateExerciseContainers)
+                        .ThenInclude(templateExerciseContainer => templateExerciseContainer.TemplateMultiExercises)
+                        .ThenInclude(multiExerciseSet => multiExerciseSet.MultiExerciseSets)
                         .ThenInclude(exerciseSet => exerciseSet.Exercise)
-                    .Include(template => template.WorkoutTemplateSingleExercises)
-                            .ThenInclude(templateExercise => templateExercise.TemplateSets)
-                    .Include(template => template.WorkoutTemplateSingleExercises)
-                            .ThenInclude(templateExercise => templateExercise.Exercise);
+                    .Include(template => template.TemplateExerciseContainers)
+                        .ThenInclude(templateExerciseContainer => templateExerciseContainer.TemplateSingleExercise)
+                        .ThenInclude(TemplateSingleExercise => TemplateSingleExercise.TemplateSets)
+                    .Include(template => template.TemplateExerciseContainers)
+                        .ThenInclude(templateExerciseContainer => templateExerciseContainer.TemplateSingleExercise)
+                        .ThenInclude(TemplateSingleExercise => TemplateSingleExercise.Exercise); ;
         }
     }
 }

@@ -14,20 +14,18 @@ namespace Adept.Data
         public DbSet<CurrentRoutine> CurrentRoutine { get; set; } = default!;
 
         public DbSet<WorkoutLog> WorkoutLogs { get; set; } = default!;
-        public DbSet<WorkoutLogSet> LogSets { get; set; } = default!;
-        public DbSet<WorkoutLogExerciseSet> LogExerciseSets { get; set; } = default!;
-        public DbSet<WorkoutLogExercise> LogExercises { get; set; } = default!;
-        public DbSet<WorkoutLogMultiExerciseSet> LogMultiExerciseSets { get; set; } = default!;
-        public DbSet<WorkoutLogMultiExercise> LogMultiExercises { get; set; } = default!;
-        public DbSet<WorkoutLogSingleExercise> LogSingleExercises { get; set; } = default!;
+        public DbSet<LogExerciseContainer> LogExerciseContainers { get; set; } = default!;
+        public DbSet<LogSingleExercise> LogSingleExercises { get; set; } = default!;
+        public DbSet<LogSingleExerciseSet> LogSingleExerciseSet { get; set; } = default!;
+        public DbSet<LogMultiExercise> LogMultiExercises { get; set; } = default!;
+        public DbSet<LogMultiExerciseSet> LogMultiExerciseSets { get; set; } = default!;
 
         public DbSet<WorkoutTemplate> WorkoutTemplates { get; set; } = default!;
-        public DbSet<WorkoutTemplateSet> TemplateSets { get; set; } = default!;
-        public DbSet<WorkoutTemplateExerciseSet> TemplateExerciseSets { get; set; } = default!;
-        public DbSet<WorkoutTemplateExercise> TemplateExercises { get; set; } = default!;
-        public DbSet<WorkoutTemplateMultiExercise> TemplateMultiExercises { get; set; } = default!;
-        public DbSet<WorkoutTemplateMultiExerciseSet> TemplateMultiExerciseSets { get; set; } = default!;
-        public DbSet<WorkoutTemplateSingleExercise> TemplateSingleExercises { get; set; } = default!;
+        public DbSet<TemplateExerciseContainer> TemplateExerciseContainers { get; set; } = default!;
+        public DbSet<TemplateSingleExercise> TemplateSingleExercises { get; set; } = default!;
+        public DbSet<TemplateSingleExerciseSet> TemplateSingleExerciseSet { get; set; } = default!;
+        public DbSet<TemplateMultiExercise> TemplateMultiExercises { get; set; } = default!;
+        public DbSet<TemplateMultiExerciseSet> TemplateMultiExerciseSets { get; set; } = default!;
 
 
         public AdeptDatabaseContext(DbContextOptions<AdeptDatabaseContext> options)
@@ -44,14 +42,14 @@ namespace Adept.Data
             //    .HasDiscriminator(b => b.IsMultiExercise)
             //    .HasValue<WorkoutTemplateSingleExercise>(false)
             //    .HasValue<WorkoutTemplateMultiExercise>(true);
-            modelBuilder.Entity<WorkoutTemplateMultiExercise>()
-                .HasOne(p => p.WorkoutTemplate)
-                .WithMany(x =>x.WorkoutTemplateMultiExercises)
-                .HasForeignKey(p => p.WorkoutTemplateId);
-            modelBuilder.Entity<WorkoutTemplateSingleExercise>()
-                .HasOne(p => p.WorkoutTemplate)
-                .WithMany(x => x.WorkoutTemplateSingleExercises)
-                .HasForeignKey(p => p.WorkoutTemplateId);
+            //modelBuilder.Entity<WorkoutTemplateMultiExercise>()
+            //    .HasOne(p => p.WorkoutTemplate)
+            //    .WithMany(x =>x.WorkoutTemplateMultiExercises)
+            //    .HasForeignKey(p => p.WorkoutTemplateId);
+            //modelBuilder.Entity<WorkoutTemplateSingleExercise>()
+            //    .HasOne(p => p.WorkoutTemplate)
+            //    .WithMany(x => x.WorkoutTemplateSingleExercises)
+            //    .HasForeignKey(p => p.WorkoutTemplateId);
 
 
             //modelBuilder.Entity<WorkoutLogExercise>()
