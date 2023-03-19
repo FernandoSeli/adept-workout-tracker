@@ -1,14 +1,14 @@
-﻿@inject IGenericRepository<WorkoutTemplateExerciseSet> WorkoutTemplateExerciseSetRepository
-@inject IGenericRepository<WorkoutTemplateMultiExerciseSet> WorkoutTemplateMultiExerciseSetRepository
+﻿@inject IGenericRepository<TemplateMultiExercise> TemplateMultiExerciseRepository
+@inject IGenericRepository<TemplateMultiExerciseSet> TemplateMultiExerciseSetRepository
 
-
+@*
 @if (WorkoutTemplateMultiExercise.MultiExerciseSets.Any())
 {
     <MudTabs Elevation="4" Rounded="true" AlwaysShowScrollButtons="true" Color="@Color.Primary" Class="mt-4">
-        @foreach (var multiExerciseSet in WorkoutTemplateMultiExercise.MultiExerciseSets.OrderBy(x => x.Order))
+        @foreach (var multiExerciseSet in TemplateMultiExercise.MultiExerciseSets.OrderBy(x => x.Order))
         {
-            <MudTabPanel  Text="@multiExerciseSet.Name">
-                <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => AddExerciseSet(multiExerciseSet))">Add Exercise Set</MudButton>
+            <MudTabPanel  Text="@multiExerciseSet.Name">*@
+              @*  <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => AddExerciseSet(multiExerciseSet))">Add Exercise Set</MudButton>
                 <MudExpansionPanels MultiExpansion="true">
                     @foreach (var exerciseSet in multiExerciseSet.ExerciseSets.OrderBy(x => x.Order))
                     {
@@ -22,36 +22,36 @@
                     }
                 </MudExpansionPanels>
                 <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => DeleteMultiExerciseSet(multiExerciseSet))">Delete Multi Exercise Set</MudButton>
-
-            </MudTabPanel>
+*@
+  @*          </MudTabPanel>
         }
     </MudTabs>
-}
+}*@
 @code {
     [Parameter]
-    public WorkoutTemplateMultiExercise WorkoutTemplateMultiExercise { get; set; }
+    public TemplateMultiExercise TemplateMultiExercise { get; set; }
 
-    private void AddExerciseSet(WorkoutTemplateMultiExerciseSet multiExerciseSet)
+    private void AddExerciseSet(TemplateMultiExercise multiExercise)
     {
-        var setOrder = multiExerciseSet.GetNextExerciseSetOrder();
-        multiExerciseSet.ExerciseSets.Add(new WorkoutTemplateExerciseSet(setOrder));
+        var setOrder = multiExercise.GetNextExerciseSetOrder();
+        multiExercise.MultiExerciseSets.Add(new TemplateMultiExerciseSet(setOrder));
     }
 
-    private async Task DeleteExerciseSet(WorkoutTemplateMultiExerciseSet multiExerciseSet, WorkoutTemplateExerciseSet exerciseSet)
+    private async Task DeleteExerciseSet(TemplateMultiExercise multiExercise, TemplateMultiExerciseSet exerciseSet)
     {
         if (exerciseSet.Id != 0)
         {
-            await WorkoutTemplateExerciseSetRepository.RemoveAsync(exerciseSet);
+            await TemplateMultiExerciseSetRepository.RemoveAsync(exerciseSet);
         }
-        multiExerciseSet.ExerciseSets.Remove(exerciseSet);
+        multiExercise.MultiExerciseSets.Remove(exerciseSet);
     }
 
-    private async Task DeleteMultiExerciseSet(WorkoutTemplateMultiExerciseSet multiExerciseSet)
+    private async Task DeleteMultiExerciseSet(TemplateMultiExerciseSet multiExerciseSet)
     {
         if (multiExerciseSet.Id != 0)
         {
-            await WorkoutTemplateMultiExerciseSetRepository.RemoveAsync(multiExerciseSet);
+            await TemplateMultiExerciseSetRepository.RemoveAsync(multiExerciseSet);
         }
-        WorkoutTemplateMultiExercise.MultiExerciseSets.Remove(multiExerciseSet);
+        TemplateMultiExercise.MultiExerciseSets.Remove(multiExerciseSet);
     }
 }

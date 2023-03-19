@@ -22,14 +22,14 @@
     @foreach (var workoutTemplate in WorkoutTemplates)
     {
         <MudCard>
-            @*<MudCardHeader>
+            <MudCardHeader>
                 <CardHeaderContent>
                     <MudText Typo="Typo.h6">@workoutTemplate.Name</MudText>
                 </CardHeaderContent>
                 <CardHeaderActions>
                     <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" />
                 </CardHeaderActions>
-            </MudCardHeader>*@
+            </MudCardHeader>
             <MudCardContent>
                 <MudText>@workoutTemplate.Name</MudText>
             </MudCardContent>
@@ -41,19 +41,19 @@
 }
 @if (_workoutStarted)
 {
-    foreach(var workoutLogExercise in WorkoutLog.WorkoutLogExercises)
+    foreach (var logExercise in WorkoutLog.LogExerciseContainers.OrderBy(x => x.Order))
     {
-        @if (workoutLogExercise is WorkoutLogMultiExercise)
+        @if (logExercise.IsMultiExercise)
         {
-            var workoutLogMultiExercise = (WorkoutLogMultiExercise)workoutLogExercise;
-
-            <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => AddWorkoutLogMultiExerciseSet(workoutLogMultiExercise))">Add MultiSets</MudButton>
-            <LogMultiExerciseSetFields WorkoutLogMultiExercise="@workoutLogMultiExercise" />
+            foreach (var logMultiExercise in logExercise.LogMultiExercises.OrderBy(x => x.Order))
+            {
+                <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => AddWorkoutLogMultiExerciseSet(logMultiExercise))">Add MultiSets</MudButton>
+                <LogMultiExerciseForm LogMultiExercise="@logMultiExercise" />
+            }
         }
-        else if (workoutLogExercise is WorkoutLogSingleExercise)
+        else 
         {
-            var workoutLogSingleExercise = (WorkoutLogSingleExercise)workoutLogExercise;
-            <LogExerciseSetFields WorkoutLogSingleExercise="@workoutLogSingleExercise" />
+            <LogSingleExerciseForm LogSingleExercise="@logExercise.LogSingleExercise" />
         }
 
     }
@@ -82,12 +82,17 @@
 @code {
     [Parameter]
     public int WorkoutTemplateId { get; set; }
-    bool _workoutStarted;
+    bool _workoutStarted = false;
     bool open = false;
     bool showTimer = false;
     bool showRepMaxCalculator = false;
     bool showStopwatch = false;
     bool _showTemplateSelector = false;
+    JsonSerializerOptions _options = new()
+        {
+            ReferenceHandler = ReferenceHandler.IgnoreCycles,
+            WriteIndented = true
+        };
     string _drawerHeader = "";
     WorkoutLog WorkoutLog { get; set; }
     List<WorkoutTemplate> WorkoutTemplates { get; set; }
@@ -98,20 +103,15 @@
         {
             var workoutTemplate = RoutineState.SelectedRoutine.WorkoutTemplates.FirstOrDefault(x => x.Id == WorkoutTemplateId);
             WorkoutLog = new WorkoutLog(workoutTemplate);
-            JsonSerializerOptions options = new()
-                {
-                    ReferenceHandler = ReferenceHandler.IgnoreCycles,
-                    WriteIndented = true
-                };
-            var test = JsonSerializer.Serialize(WorkoutLog, options);
+            var test = JsonSerializer.Serialize(WorkoutLog, _options);
         }
         await base.OnInitializedAsync();
     }
 
-    private async Task AddWorkoutLogMultiExerciseSet(WorkoutLogMultiExercise workoutLogMultiExercise)
+    private async Task AddWorkoutLogMultiExerciseSet(LogMultiExercise logMultiExercise)
     {
 
-        workoutLogMultiExercise.MultiExerciseSets.Add(new WorkoutLogMultiExerciseSet(workoutLogMultiExercise.GetNextSetOrder()));
+        logMultiExercise.MultiExerciseSets.Add(new LogMultiExerciseSet(logMultiExercise.GetNextExerciseSetOrder()));
     }
     public async Task StartWorkout(WorkoutTemplate? workoutTemplate = null)
     {
@@ -122,6 +122,7 @@
         else
         {
             WorkoutLog = new WorkoutLog(workoutTemplate);
+            Console.WriteLine(JsonSerializer.Serialize(WorkoutLog, _options));
         }
         _workoutStarted = true;
         _showTemplateSelector = false;

@@ -37,9 +37,9 @@ else
                 </CardHeaderContent>
             </MudCardHeader>
             <MudCardContent>
-                @foreach (var workoutTemplateExercise in workoutTemplate.WorkoutTemplateExercises)
+                @foreach (var workoutTemplateExercise in workoutTemplate.TemplateExerciseContainers)
                 {
-                    <MudText>@workoutTemplateExercise.GetExerciseName()</MudText>   
+                    <MudText>@workoutTemplateExercise.Order.ToString()</MudText>   
                 }
             </MudCardContent>
             <MudCardActions>
