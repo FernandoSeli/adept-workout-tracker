@@ -19,7 +19,7 @@
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="7.0.4" />
 		<PackageReference Include="Microsoft.Extensions.FileProviders.Abstractions" Version="7.0.0" />
 		<PackageReference Include="MudBlazor" Version="6.2.0" />
-		<PackageReference Include="Radzen.Blazor" Version="4.7.12" />
+		<!--<PackageReference Include="Radzen.Blazor" Version="4.7.12" />-->
 	</ItemGroup>
 
 	<ItemGroup>
