@@ -28,7 +28,7 @@ jobs:
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '6.0.x'
+          dotnet-version: '7.0.x'
           include-prerelease: true
       
       - name: install dotnet workload wasm-tools
