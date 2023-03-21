@@ -1,6 +1,7 @@
 using Adept.Blazor;
 using Adept.Data;
 using MudBlazor.Services;
+using MudExtensions.Services;
 
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -15,6 +16,7 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddMudServices();
+builder.Services.AddMudExtensions();
 //builder.Services.AddDbContext<AdeptDatabaseContext>(options => options.UseSqlite($"Filename=app.db"));
 builder.Services.AddDbContextFactory<AdeptDatabaseContext>(options => options.UseSqlite($"Filename=app.db"));
 
