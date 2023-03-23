@@ -1,0 +1,101 @@
+﻿@inject IGenericRepository<LogSingleExerciseSet> LogSingleExerciseSetRepository;
+    @*<MudTabs Elevation="4" Rounded="true" AlwaysShowScrollButtons="true" Color="@Color.Primary" Class="mt-4">
+    @foreach (var set in WorkoutLogSingleExercise.LogSets)
+    {
+        <MudTabPanel  Text="@set.Name">
+            <MudNumericField @bind-Value="@set.Order" Label="Order"/>
+            <MudNumericField @bind-Value="@set.Repetition" Label="Reps"/>
+            <MudNumericField @bind-Value="@set.Rest" Label="Rest"/>
+            <MudNumericField @bind-Value="@set.Weight" Label="Weight"/>
+            <MudTextField @bind-Value="@set.Note" Label="Note"/>
+            <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => DeleteSet(set))">Delete Set</MudButton>
+        </MudTabPanel>
+    }
+    </MudTabs>*@
+    @*RowEditPreview = "BackupItem" RowEditCancel = "ResetItemToOriginalValues"*@
+<MudTable Items="@LogSingleExercise.LogSets" Dense="true" CommitEditTooltip="Commit Edit"
+    Breakpoint="Breakpoint.None">
+    <ToolBarContent>
+        @*<MudText Typo="Typo.h6">Sets</MudText>*@
+
+        <ExerciseAutocomplete Exercise="@LogSingleExercise.Exercise"></ExerciseAutocomplete>
+        <MudSpacer />
+
+        <MudIconButton Icon="@Icons.Material.Filled.Add" Color="Color.Primary" OnClick="(() => AddLogSet(LogSingleExercise))"></MudIconButton>
+        <MudIconButton Icon="@Icons.Material.Filled.Remove" Color="Color.Primary" OnClick="(() => DeleteLastSet())"></MudIconButton>
+    </ToolBarContent>
+    <ColGroup>
+        <col style="width:25px;" />
+        <col style="width:30px;" />
+        <col style="width:60px;" />
+        <col style="width:20px;" />
+        <col style="width:50px;" />
+    </ColGroup>
+    <HeaderContent>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<LogSingleExerciseSet, object>(x=>x.Order)">Set</MudTableSortLabel></MudTh>
+        @*<MudTh><MudTableSortLabel Enabled="false" SortBy="new Func<WorkoutLogSet, object>(x=>x.Name)">Name</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel Enabled="false" SortBy="new Func<WorkoutLogSet, object>(x=>x.WeightAchieved)">Weight</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel Enabled="false" SortBy="new Func<WorkoutLogSet, object>(x=>x.RepsAchieved)">Reps</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel Enabled="false" SortBy="new Func<WorkoutLogSet, object>(x=>x.Done)">Done</MudTableSortLabel></MudTh>*@
+        <MudTh>Weight</MudTh>
+        <MudTh>Reps</MudTh>
+        <MudTh></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Set">@context.Order</MudTd>
+        <MudTd DataLabel="Weight">@context.WeightAchieved</MudTd>
+        <MudTd DataLabel="Reps">@context.RepsAchieved</MudTd>
+        <MudTd DataLabel="Done">
+            <MudToggleIconButton  @bind-Toggled="@context.Done"
+                                Icon="@Icons.Filled.CheckCircleOutline" Color="@Color.Error" Size="Size.Small"
+                                ToggledIcon="@Icons.Filled.CheckCircle" ToggledColor="@Color.Success" ToggledTitle="Done" ToggledSize="Size.Small" />
+        </MudTd>
+    </RowTemplate>
+    <RowEditingTemplate>
+        <MudTd DataLabel="Set">@context.Order</MudTd>
+        <MudTd DataLabel="Weight">
+            <MudTextField @bind-Value="@context.WeightAchieved" Required  />
+        </MudTd>
+        <MudTd DataLabel="Reps">
+            <MudNumericField HideSpinButtons="true" @bind-Value="@context.RepsAchieved" Required Min="1" />
+        </MudTd>
+        <MudTd DataLabel="Done">
+            <MudToggleIconButton Size="Size.Small" @bind-Toggled="@context.Done"
+                                Icon="@Icons.Filled.CheckCircleOutline" Color="@Color.Error"
+                                ToggledIcon="@Icons.Filled.CheckCircle" ToggledColor="@Color.Success" ToggledTitle="Done" ToggledSize="Size.Small" />
+        </MudTd>
+    </RowEditingTemplate>
+    <PagerContent>
+    </PagerContent>
+</MudTable>
+@code {
+    [Parameter]
+    public LogSingleExercise LogSingleExercise { get; set; }
+
+
+    private async Task AddLogSet(LogSingleExercise workoutLogSingleExercise)
+    {
+        workoutLogSingleExercise.LogSets.Add(new LogSingleExerciseSet(workoutLogSingleExercise.GetNextSetOrder()));
+    }
+
+    //private async Task DeleteLastSet(WorkoutLogSet set)
+    //{
+    //    if (set.Id != 0)
+    //    {
+    //        await WorkoutTemplateSetRepository.RemoveAsync(set);
+    //    }
+    //    WorkoutLogSingleExercise.LogSets.Remove(set);
+    //}
+    private async Task DeleteLastSet()
+    {
+        var set = LogSingleExercise.LogSets.LastOrDefault();
+        if (set != null)
+        {
+            if (set.Id != 0)
+            {
+                await LogSingleExerciseSetRepository.RemoveAsync(set);
+            }
+            LogSingleExercise.LogSets.Remove(set);
+        }
+    }
+}

@@ -16,13 +16,18 @@
     <!--Mudblazor-->
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+    <link href="_content/CodeBeam.MudBlazor.Extensions/MudExtensions.min.css" rel="stylesheet" />
 
-    <!--Radzen-->
-    <link rel="stylesheet" href="_content/Radzen.Blazor/css/default-base.css">
 </head>
 
 <body>
-    <div id="app">Loading...</div>
+    <div id="app">
+        <svg class="loading-progress">
+            <circle r="40%" cx="50%" cy="50%" />
+            <circle r="40%" cx="50%" cy="50%" />
+        </svg>
+        <div class="loading-progress-text"></div>
+    </div>
 
     <!-- Start Single Page Apps for GitHub Pages -->
 
@@ -92,9 +97,7 @@
 
     <!--Blazor-->
     <script src="_content/MudBlazor/MudBlazor.min.js"></script>
-
-    <!-- Radzen -->
-    <script src="_content/Radzen.Blazor/Radzen.Blazor.js"></script>
+    <script src="_content/CodeBeam.MudBlazor.Extensions/MudExtensions.min.js"></script>
 
     <script type="text/javascript">
         window.getDimensions = function () {

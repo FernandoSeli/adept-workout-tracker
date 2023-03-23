@@ -1,8 +1,8 @@
-﻿@inject IGenericRepository<WorkoutTemplateSet> WorkoutTemplateSetRepository;
-@if (WorkoutTemplateSingleExercise.TemplateSets.Any())
+﻿@inject IGenericRepository<TemplateSingleExerciseSet> TemplateSingleExerciseSetRepository;
+@if (TemplateSingleExercise.TemplateSets.Any())
 {
     <MudTabs Elevation="4" Rounded="true" AlwaysShowScrollButtons="true" Color="@Color.Primary" Class="mt-4">
-    @foreach (var set in WorkoutTemplateSingleExercise.TemplateSets)
+        @foreach (var set in TemplateSingleExercise.TemplateSets)
     {
         <MudTabPanel  Text="@set.Name">
             <MudNumericField @bind-Value="@set.Order" Label="Order"/>
@@ -17,15 +17,15 @@
 }
 @code {
     [Parameter]
-    public WorkoutTemplateSingleExercise WorkoutTemplateSingleExercise { get; set; }
+    public TemplateSingleExercise TemplateSingleExercise { get; set; }
 
 
-    private async Task DeleteSet(WorkoutTemplateSet set)
+    private async Task DeleteSet(TemplateSingleExerciseSet set)
     {
         if (set.Id != 0)
         {
-            await WorkoutTemplateSetRepository.RemoveAsync(set);
+            await TemplateSingleExerciseSetRepository.RemoveAsync(set);
         }
-        WorkoutTemplateSingleExercise.TemplateSets.Remove(set);
+        TemplateSingleExercise.TemplateSets.Remove(set);
     }
 }

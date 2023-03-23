@@ -10,9 +10,9 @@
 
     <MudExpansionPanel Text="@workoutTemplate.Name">
         <MudList>
-        @foreach (var templateExercise in workoutTemplate.WorkoutTemplateExercises.OrderBy(x=> x.Order).ToList())
+        @foreach (var templateExercise in workoutTemplate.TemplateExerciseContainers.OrderBy(x=> x.Order).ToList())
         {
-            <MudListItem Text="@templateExercise.GetExerciseName()" />
+            <MudListItem Text="@templateExercise.Order.ToString()" />
         }
         </MudList>
         <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => OpenWorkoutTemplateDialog(workoutTemplate))">Modify Template</MudButton>

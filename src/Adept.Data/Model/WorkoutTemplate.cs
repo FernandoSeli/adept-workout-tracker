@@ -18,19 +18,23 @@ namespace Adept.Data.Model
 
         public int RoutineId { get; set; }
         public Routine Routine { get; set; }
-        public List<WorkoutTemplateSingleExercise>? WorkoutTemplateSingleExercises { get; set; } = new List<WorkoutTemplateSingleExercise>();
-        public List<WorkoutTemplateMultiExercise>? WorkoutTemplateMultiExercises { get; set; } = new List<WorkoutTemplateMultiExercise>();
+        //public List<WorkoutTemplateSingleExercise>? WorkoutTemplateSingleExercises { get; set; } = new List<WorkoutTemplateSingleExercise>();
+        //public List<WorkoutTemplateMultiExercise>? WorkoutTemplateMultiExercises { get; set; } = new List<WorkoutTemplateMultiExercise>();
 
-        [NotMapped]
-        public List<WorkoutTemplateExercise> WorkoutTemplateExercises =>
-            WorkoutTemplateSingleExercises.Cast<WorkoutTemplateExercise>()
-            .Concat(WorkoutTemplateMultiExercises.Cast<WorkoutTemplateExercise>())
-            .ToList();
+        public List<TemplateExerciseContainer> TemplateExerciseContainers { get; set; } = new List<TemplateExerciseContainer>();
 
-        public IEnumerable<int> GetTemplateExerciseOrders() =>
-            WorkoutTemplateSingleExercises.Select(x => x.Order)
-            .Concat(WorkoutTemplateMultiExercises.Select(x => x.Order))
-            .ToList();
+        //[NotMapped]
+        //public List<WorkoutTemplateExercise> WorkoutTemplateExercises =>
+        //    WorkoutTemplateSingleExercises.Cast<WorkoutTemplateExercise>()
+        //    .Concat(WorkoutTemplateMultiExercises.Cast<WorkoutTemplateExercise>())
+        //    .ToList();
+
+        //public IEnumerable<int> GetTemplateExerciseOrders() =>
+        //    WorkoutTemplateSingleExercises.Select(x => x.Order)
+        //    .Concat(WorkoutTemplateMultiExercises.Select(x => x.Order))
+        //    .ToList();
+
+        public IEnumerable<int> GetTemplateExerciseOrders() => TemplateExerciseContainers.Select(x => x.Order);
         public int GetNextTemplateExerciseOrder() => GetTemplateExerciseOrders().GetFirstAvailableInt();
     }
 }

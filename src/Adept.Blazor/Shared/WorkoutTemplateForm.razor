@@ -1,19 +1,19 @@
 ﻿@inject IGenericRepository<WorkoutTemplate> WorkoutTemplateRepository
-@inject IGenericRepository<WorkoutTemplateExercise> WorkoutTemplateExerciseRepository
+@inject IGenericRepository<TemplateExerciseContainer> TemplateExerciseContainerRepository
 
 <MudTextField  @bind-Value="@WorkoutTemplate.Name" Label="Name"/>
 <MudNumericField   @bind-Value="@WorkoutTemplate.Order" Label="Order"/>
 <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="@AddTemplateSingleExercise">Add Exercise</MudButton>
 <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="@AddTemplateMultiExercise">Add Exercise</MudButton>
 <MudExpansionPanels MultiExpansion="true">
-@foreach (var templateExercise in WorkoutTemplate.WorkoutTemplateExercises.OrderBy(x=> x.Order))
+@foreach (var templateExercise in WorkoutTemplate.TemplateExerciseContainers.OrderBy(x=> x.Order))
 {
-    <MudExpansionPanel Text="@templateExercise.GetExerciseName()">
+    <MudExpansionPanel Text="@templateExercise.Order.ToString()">
         <MudNumericField @bind-Value="@templateExercise.Order" Label="Order"/>
         <MudTextField @bind-Value="@templateExercise.Note" Label="Note"/>
         @*<MudSwitch @bind-Checked="@templateExercise.IsMultiExercise" Label="Is Multi Exercise" Color="Color.Info" />*@
 
-        @if(templateExercise is WorkoutTemplateMultiExercise)
+    @*    @if(templateExercise is WorkoutTemplateMultiExercise)
         {
             var workoutTemplateMultiExercise = (WorkoutTemplateMultiExercise)templateExercise;
 
@@ -29,7 +29,7 @@
            
             <TemplateExerciseSetFields WorkoutTemplateSingleExercise="@workoutTemplateSingleExercise" />
         }
-
+*@
 
         <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => DeleteTemplateExercise(templateExercise))">Delete Exercise</MudButton>
 
@@ -47,41 +47,41 @@
     private void AddTemplateSingleExercise()
     {
         var templateOrder = WorkoutTemplate.GetNextTemplateExerciseOrder();
-        WorkoutTemplate.WorkoutTemplateSingleExercises.Add(new WorkoutTemplateSingleExercise(templateOrder));
+        //WorkoutTemplate.TemplateExerciseContainers.Add(new WorkoutTemplateSingleExercise(templateOrder));
 
     }
     private void AddTemplateMultiExercise()
     {
         var templateOrder = WorkoutTemplate.GetNextTemplateExerciseOrder();
-        WorkoutTemplate.WorkoutTemplateMultiExercises.Add(new WorkoutTemplateMultiExercise(templateOrder));
+        //WorkoutTemplate.TemplateExerciseContainers.Add(new WorkoutTemplateMultiExercise(templateOrder));
 
     }
-    private void AddTemplateSet(WorkoutTemplateSingleExercise workoutTemplateExercise)
+    private void AddTemplateSet(TemplateSingleExercise workoutTemplateExercise)
     {
         var setOrder = workoutTemplateExercise.GetNextSetOrder();
-        workoutTemplateExercise.TemplateSets.Add(new WorkoutTemplateSet(setOrder));
+        //workoutTemplateExercise.TemplateSets.Add(new WorkoutTemplateSet(setOrder));
     }
 
-    private void AddTemplateMultiExerciseSet(WorkoutTemplateMultiExercise workoutTemplateExercise)
+    private void AddTemplateMultiExerciseSet(TemplateMultiExercise workoutTemplateExercise)
     {
-        var setOrder = workoutTemplateExercise.GetNextSetOrder();
-        workoutTemplateExercise.MultiExerciseSets.Add(new WorkoutTemplateMultiExerciseSet(setOrder));
+        var setOrder = workoutTemplateExercise.GetNextExerciseSetOrder();
+        //workoutTemplateExercise.MultiExerciseSets.Add(new WorkoutTemplateMultiExerciseSet(setOrder));
     }
 
 
-    private async Task DeleteTemplateExercise(WorkoutTemplateExercise workoutTemplateExercise)
+    private async Task DeleteTemplateExercise(TemplateExerciseContainer templateExerciseContainer)
     {
-        if (workoutTemplateExercise.Id != 0)
+        if (templateExerciseContainer.Id != 0)
         {
-            await WorkoutTemplateExerciseRepository.RemoveAsync(workoutTemplateExercise);
+            await TemplateExerciseContainerRepository.RemoveAsync(templateExerciseContainer);
         }
-        if (workoutTemplateExercise is WorkoutTemplateSingleExercise)
-        {
-            WorkoutTemplate.WorkoutTemplateSingleExercises.Remove((WorkoutTemplateSingleExercise)workoutTemplateExercise);
-        }
-        else if (workoutTemplateExercise is WorkoutTemplateMultiExercise)
-        {
-            WorkoutTemplate.WorkoutTemplateMultiExercises.Remove((WorkoutTemplateMultiExercise)workoutTemplateExercise);
+        //if (workoutTemplateExercise is WorkoutTemplateSingleExercise)
+        //{
+        //    WorkoutTemplate.WorkoutTemplateSingleExercises.Remove((WorkoutTemplateSingleExercise)workoutTemplateExercise);
+        //}
+        //else if (workoutTemplateExercise is WorkoutTemplateMultiExercise)
+        //{
+        //    WorkoutTemplate.WorkoutTemplateMultiExercises.Remove((WorkoutTemplateMultiExercise)workoutTemplateExercise);
         }
     }
 

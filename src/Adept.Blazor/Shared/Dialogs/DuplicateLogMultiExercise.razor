@@ -1,0 +1,58 @@
+﻿
+@using DialogOptions = MudBlazor.DialogOptions
+@using System.Text.Json.Serialization;
+
+<MudDialog>
+    <DialogContent>
+        <MudContainer Style=" overflow-y: auto">
+            <MudList Clickable="true" Color="Color.Primary" @bind-SelectedValue="selectedValue">
+              @*  <MudListSubheader>
+                    Select set to duplicate:
+                </MudListSubheader>*@
+                @foreach (var logMultiExercise in LogExerciseContainer.LogMultiExercises.OrderBy(x=> x.Order))
+                {
+                    <MudListItem Text="@logMultiExercise.Order.ToString()" Value="logMultiExercise" />
+                }
+            </MudList>
+
+        </MudContainer>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="AddMultiExercise">Add</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [Parameter] public LogExerciseContainer LogExerciseContainer { get; set; }
+    private string _title => "Select set to duplicate:";
+    private DialogOptions _dialogOptions = new DialogOptions() {   FullScreen = true };
+
+    object selectedValue = new LogMultiExercise();
+    void Cancel() => MudDialog.Cancel();
+
+    JsonSerializerOptions _options = new()
+        {
+            ReferenceHandler = ReferenceHandler.IgnoreCycles,
+            WriteIndented = true
+        };
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        base.OnInitializedAsync();
+        MudDialog.SetTitle(_title);
+        MudDialog.Options.CloseButton = true;
+        MudDialog.SetOptions(MudDialog.Options);
+    }
+
+
+    private void AddMultiExercise()
+    {
+        var copy = JsonSerializer.Serialize(selectedValue, _options);
+        var logMultiExerciseCopy = JsonSerializer.Deserialize<LogMultiExercise>(copy);
+        MudDialog.Close(DialogResult.Ok(logMultiExerciseCopy));
+    }
+
+}

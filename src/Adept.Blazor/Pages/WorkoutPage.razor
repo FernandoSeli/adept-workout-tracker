@@ -15,112 +15,203 @@
 
 
 <MudText Typo="Typo.h3">Workout</MudText>
-<MudButton Color="Color.Inherit" OnClick="(() =>StartWorkout())">Start New Workout</MudButton>
-<MudButton Color="Color.Inherit" OnClick="ChooseFromTemplate">Choose From Template</MudButton>
+
+@if (!_workoutStarted)
+{
+    <MudButton Color="Color.Inherit" OnClick="(() =>StartWorkout())">Start New Workout</MudButton>
+    @*<MudButton Color="Color.Inherit" OnClick="ChooseFromTemplate">Choose From Template</MudButton>*@
+}
 @if (_showTemplateSelector)
 {
-    @foreach (var workoutTemplate in WorkoutTemplates)
-    {
-        <MudCard>
-            @*<MudCardHeader>
-                <CardHeaderContent>
-                    <MudText Typo="Typo.h6">@workoutTemplate.Name</MudText>
-                </CardHeaderContent>
-                <CardHeaderActions>
-                    <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" />
-                </CardHeaderActions>
-            </MudCardHeader>*@
-            <MudCardContent>
-                <MudText>@workoutTemplate.Name</MudText>
-            </MudCardContent>
-            <MudCardActions>
-                <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => StartWorkout(workoutTemplate))">Start Workout</MudButton>
-            </MudCardActions>
-        </MudCard>
-    }
+    <MudGrid Spacing="2">
+        @foreach (var workoutTemplate in WorkoutTemplates)
+        {
+            <MudItem xs="12" md="6" lg="4" >
+                <MudCard class="h-100">
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.h6">@workoutTemplate.Name</MudText>
+                        </CardHeaderContent>
+                        <CardHeaderActions>
+
+                            @*<MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" />*@
+                        </CardHeaderActions>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        @foreach (var templateExercise in workoutTemplate.TemplateExerciseContainers.OrderBy(x => x.Order))
+                        {
+                            <MudText>@templateExercise.GetExerciseName()</MudText>
+                        }
+                    </MudCardContent>
+                    <MudCardActions>
+                        <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => StartWorkout(workoutTemplate))">Start Workout</MudButton>
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
+        }
+
+    </MudGrid>
 }
 @if (_workoutStarted)
 {
-    foreach(var workoutLogExercise in WorkoutLog.WorkoutLogExercises)
+    @*<MudFab Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" OnClick="(() => AddLogExerciseAsync(WorkoutLog))" />*@
+    @*<MudExpansionPanels MultiExpansion="true">*@
+    @foreach (var logExercise in WorkoutLog.LogExerciseContainers.OrderBy(x => x.Order))
     {
-        @if (workoutLogExercise is WorkoutLogMultiExercise)
-        {
-            var workoutLogMultiExercise = (WorkoutLogMultiExercise)workoutLogExercise;
+        
+        <MudCard class="my-3">
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">Exercise @logExercise.Order</MudText>
+                </CardHeaderContent>
+                <CardHeaderActions>
+                    <MudMenu Icon="@Icons.Material.Filled.MoreVert">
+                    @if (logExercise.IsMultiExercise)
+                    {
+                            <MudMenuItem OnClick="(() => AddNewMultiExerciseSets(logExercise))">Add new Exercise</MudMenuItem>
+                            <MudMenuItem OnClick="(() => DuplicateMultiExercise(logExercise))">Duplicate Set</MudMenuItem>
+                    }
 
-            <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => AddWorkoutLogMultiExerciseSet(workoutLogMultiExercise))">Add MultiSets</MudButton>
-            <LogMultiExerciseSetFields WorkoutLogMultiExercise="@workoutLogMultiExercise" />
-        }
-        else if (workoutLogExercise is WorkoutLogSingleExercise)
-        {
-            var workoutLogSingleExercise = (WorkoutLogSingleExercise)workoutLogExercise;
-            <ExerciseAutocomplete Exercise="@workoutLogSingleExercise.Exercise"></ExerciseAutocomplete>
-            <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => AddLogSet(workoutLogSingleExercise))">Add Sets</MudButton>
 
+                        <MudMenuItem OnClick="(() => DeleteLogExercise(logExercise))">Delete Set</MudMenuItem>
+                    </MudMenu>
 
-            <LogExerciseSetFields WorkoutLogSingleExercise="@workoutLogSingleExercise" />
-        }
+                </CardHeaderActions>
+            </MudCardHeader>
+            <MudCardContent>
+            @*<MudExpansionPanel Text="@logExercise.Order.ToString()">*@
+            @if (logExercise.IsMultiExercise)
+            {
+                 @*<MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="(() => AddLogMultiExerciseSet(logExercise))">Add MultiSets</MudButton>*@
 
+                @if (logExercise.LogMultiExercises.Any())
+                {
+                    <MudTabs Elevation="4" Rounded="true" AlwaysShowScrollButtons="true" Color="@Color.Primary" Class="mt-2">
+                    @foreach (var logMultiExercise in logExercise.LogMultiExercises.OrderBy(x => x.Order))
+                    {
+                        <MudTabPanel Text="@logMultiExercise.Order.ToString()">
+                            <LogMultiExerciseForm LogMultiExercise="@logMultiExercise" />
+                        </MudTabPanel>
+                    }
+                    </MudTabs>
+                }
+            }
+            else 
+            {
+                <LogSingleExerciseForm LogSingleExercise="@logExercise.LogSingleExercise" />
+            }
+                <MudTextField T="string" Label="Note" Variant="Variant.Text" Text="@logExercise.Note" Lines="2" Class="my-2" />
+            </MudCardContent>
+            <MudCardActions>
+            </MudCardActions>
+        </MudCard>
     }
+    <MudAppBar Dense="true" Bottom="true" Fixed="true" Color="Color.Primary" Elevation="1">
+        <MudSpacer />
+        <MudButton Color="Color.Inherit" OnClick="AddLogSingleExerciseAsync">set</MudButton>
+        <MudSpacer />
+        <MudDivider Vertical="true" FlexItem="true" />
+        <MudSpacer />
+        <MudSpacer />
+        <MudButton Color="Color.Inherit" OnClick="AddLogMultiExerciseAsync">multiset</MudButton>
+        <MudSpacer />
+        <MudDivider Vertical="true" FlexItem="true" />
+        <MudSpacer />
+        <MudSpacer />
+        <MudButton Color="Color.Inherit" OnClick="ShowCalculator">repmax calculator</MudButton>
+        <MudSpacer />
+        <MudDivider Vertical="true" FlexItem="true" />
+        <MudSpacer />
+        <MudButton Color="Color.Inherit" OnClick="ShowTimer">timer</MudButton>
+        <MudSpacer />
+        <MudDivider Vertical="true" FlexItem="true" />
+        <MudSpacer />
+        <MudButton Color="Color.Inherit" OnClick="ShowStopwatch">stopwatch</MudButton>
+        <MudSpacer />
+    </MudAppBar>
 }
+
 <MudDrawer DisableOverlay="false" Width="100%" Height="50%" @bind-Open="@open" Anchor="Anchor.Bottom" Elevation="5" Variant="@DrawerVariant.Temporary">
     <MudDrawerHeader>
         <MudText Typo="Typo.h6">@_drawerHeader</MudText>
-        <MudButton Color="Color.Inherit"  OnClick="ToggleDrawer">close</MudButton>
+        <MudButton Color="Color.Inherit" OnClick="ToggleDrawer">close</MudButton>
     </MudDrawerHeader>
     <DynamicComponent Type="selectedType" />
 </MudDrawer>
-<MudAppBar Bottom="true" Fixed="true" Color="Color.Primary" Elevation="1">
-    <MudSpacer />
-    <MudButton  Color="Color.Inherit"  OnClick="ShowCalculator">repmax calculator</MudButton>
-    <MudSpacer />
-    <MudDivider Vertical="true" FlexItem="true" />
-    <MudSpacer />
-    <MudButton Color="Color.Inherit" OnClick="ShowTimer">rest timer </MudButton>
-    <MudSpacer />
-    <MudDivider Vertical="true" FlexItem="true" />
-    <MudSpacer />
-    <MudButton Color="Color.Inherit" OnClick="ShowStopwatch">stopwatch</MudButton>
-    <MudSpacer />
-</MudAppBar>
 
 @code {
     [Parameter]
     public int WorkoutTemplateId { get; set; }
-    bool _workoutStarted;
+    bool _workoutStarted = false;
     bool open = false;
     bool showTimer = false;
     bool showRepMaxCalculator = false;
     bool showStopwatch = false;
     bool _showTemplateSelector = false;
+    JsonSerializerOptions _options = new()
+        {
+            ReferenceHandler = ReferenceHandler.IgnoreCycles,
+            WriteIndented = true
+        };
     string _drawerHeader = "";
     WorkoutLog WorkoutLog { get; set; }
-    List<WorkoutTemplate> WorkoutTemplates { get; set; }
+    List<WorkoutTemplate> WorkoutTemplates = new List<WorkoutTemplate>();
     Type selectedType = typeof(RepMaxCalculator);
+
     protected override async Task OnInitializedAsync()
     {
-        if (WorkoutTemplateId != 0)
-        {
-            var workoutTemplate = RoutineState.SelectedRoutine.WorkoutTemplates.FirstOrDefault(x => x.Id == WorkoutTemplateId);
-            WorkoutLog = new WorkoutLog(workoutTemplate);
-            JsonSerializerOptions options = new()
-                {
-                    ReferenceHandler = ReferenceHandler.IgnoreCycles,
-                    WriteIndented = true
-                };
-            var test = JsonSerializer.Serialize(WorkoutLog, options);
-        }
+        //if (WorkoutTemplateId != 0)
+        //{
+        //    var workoutTemplate = RoutineState.SelectedRoutine.WorkoutTemplates.FirstOrDefault(x => x.Id == WorkoutTemplateId);
+        //    WorkoutLog = new WorkoutLog(workoutTemplate);
+        //    var test = JsonSerializer.Serialize(WorkoutLog, _options);
+        //}
         await base.OnInitializedAsync();
+        await ChooseFromTemplate();
     }
 
-    private async Task AddWorkoutLogMultiExerciseSet(WorkoutLogMultiExercise workoutLogMultiExercise)
+    private async Task AddLogSingleExerciseAsync()
     {
-
-        workoutLogMultiExercise.MultiExerciseSets.Add(new WorkoutLogMultiExerciseSet(workoutLogMultiExercise.GetNextSetOrder()));
+        var order = WorkoutLog.GetNextLogExerciseOrder();
+        var container = new LogExerciseContainer(order, false);
+        WorkoutLog.LogExerciseContainers.Add(container);
     }
-    private async Task AddLogSet(WorkoutLogSingleExercise workoutLogSingleExercise)
+
+    private async Task AddLogMultiExerciseAsync()
     {
 
-        workoutLogSingleExercise.LogSets.Add(new WorkoutLogSet(workoutLogSingleExercise.GetNextSetOrder()));
+        var order = WorkoutLog.GetNextLogExerciseOrder();
+        var container = new LogExerciseContainer(order, true);
+
+        WorkoutLog.LogExerciseContainers.Add(container);
+        //logMultiExercise.MultiExerciseSets.Add(new LogMultiExerciseSet(logMultiExercise.GetNextExerciseSetOrder()));
+    }
+
+    private async Task AddNewMultiExerciseSets(LogExerciseContainer logExerciseContainer)
+    {
+        //await DialogHelper.OpenNewLogMultiExerciseSetAsync(logExerciseContainer);
+        var logMultiExerciseSet = await DialogHelper.OpenNewLogMultiExerciseSetAsync();
+        if (logMultiExerciseSet != null)
+        {
+            foreach (var logMultiExercise in logExerciseContainer.LogMultiExercises)
+            {
+                logMultiExercise.MultiExerciseSets.Add(logMultiExerciseSet);
+            }
+        }
+    }
+
+    private async Task DuplicateMultiExercise(LogExerciseContainer logExerciseContainer)
+    {
+        var logMultiExercise = await DialogHelper.OpenDuplicateLogMultiExerciseAsync(logExerciseContainer);
+        if (logMultiExercise != null)
+        {
+            logExerciseContainer.LogMultiExercises.Add(logMultiExercise);
+        }
+    }
+
+    public void DeleteLogExercise(LogExerciseContainer logExerciseContainer)
+    {
+        WorkoutLog.LogExerciseContainers.Remove(logExerciseContainer);
     }
 
     public async Task StartWorkout(WorkoutTemplate? workoutTemplate = null)
@@ -132,6 +223,7 @@
         else
         {
             WorkoutLog = new WorkoutLog(workoutTemplate);
+            Console.WriteLine(JsonSerializer.Serialize(WorkoutLog, _options));
         }
         _workoutStarted = true;
         _showTemplateSelector = false;
@@ -140,7 +232,11 @@
     public async Task ChooseFromTemplate()
     {
         _showTemplateSelector = true;
-        WorkoutTemplates = await WorkoutTemplateRepository.GetWorkoutTemplatesAsync();
+        while (WorkoutTemplates.Count == 0)
+        {
+            WorkoutTemplates = await WorkoutTemplateRepository.GetWorkoutTemplatesAsync();
+            await Task.Delay(1000);
+        }
     }
 
     public void Dispose()
@@ -169,6 +265,7 @@
         _drawerHeader = "Stopwatch";
         ToggleDrawer();
     }
+
     void ToggleDrawer()
     {
         open = !open;

@@ -5,45 +5,49 @@
     {
       "Name": "Push Day 1",
       "Order": 1,
-      "WorkoutTemplateSingleExercises": [
+      "TemplateExerciseContainers": [
         {
-          "Note": "Test",
           "Order": 1,
-          "ExerciseId": 1,
-          "TemplateSets": [
-            {
-              "Repetition": 10,
-              "Rest": 10,
-              "Order": 1,
-              "Weight": 10,
-              "Note": "rpe10"
-            },
-            {
-              "Repetition": 10,
-              "Rest": 10,
-              "Order": 2,
-              "Weight": 10,
-              "Note": "rpe10"
-            },
-            {
-              "Repetition": 10,
-              "Rest": 10,
-              "Order": 3,
-              "Weight": 10,
-              "Note": "rpe10"
-            }
-          ]
-        }
-      ],
-      "WorkoutTemplateMultiExercises": [
+          "IsMultiExercise": false,
+          "TemplateSingleExercise": 
+          {
+            "Note": "Test",
+            "Order": 1,
+            "ExerciseId": 1,
+            "TemplateSets": [
+              {
+                "Repetition": 10,
+                "Rest": 10,
+                "Order": 1,
+                "Weight": 10,
+                "Note": "rpe10"
+              },
+              {
+                "Repetition": 10,
+                "Rest": 10,
+                "Order": 2,
+                "Weight": 10,
+                "Note": "rpe10"
+              },
+              {
+                "Repetition": 10,
+                "Rest": 10,
+                "Order": 3,
+                "Weight": 10,
+                "Note": "rpe10"
+              }
+            ]
+          }
+          
+        },
         {
-          "Note": "Test",
-          "Order": 1,
-          "MultiExerciseSets": [
+          "Order": 2,
+          "IsMultiExercise": true,
+          "TemplateMultiExercises": [
             {
-              "Note": "test2",
+              "Note": "Test",
               "Order": 1,
-              "ExerciseSets": [
+              "MultiExerciseSets": [
                 {
                   "ExerciseId": 1,
                   "Weight": 10,
@@ -55,20 +59,21 @@
                   "ExerciseId": 2,
                   "Weight": 10,
                   "Repetition": 1,
-                  "Order": 1
+                  "Order": 2
                 },
                 {
                   "ExerciseId": 3,
                   "Weight": 10,
                   "Repetition": 1,
-                  "Order": 1
+                  "Order": 3
                 }
               ]
             },
+
             {
               "Note": "test2",
-              "Order": 1,
-              "ExerciseSets": [
+              "Order":2,
+              "MultiExerciseSets": [
                 {
                   "ExerciseId": 1,
                   "Weight": 10,
@@ -80,20 +85,20 @@
                   "ExerciseId": 2,
                   "Weight": 10,
                   "Repetition": 1,
-                  "Order": 1
+                  "Order": 2
                 },
                 {
                   "ExerciseId": 3,
                   "Weight": 10,
                   "Repetition": 1,
-                  "Order": 1
+                  "Order": 3
                 }
               ]
             },
             {
-              "Note": "test2",
-              "Order": 1,
-              "ExerciseSets": [
+              "Note": "test3",
+              "Order":3,
+              "MultiExerciseSets": [
                 {
                   "ExerciseId": 1,
                   "Weight": 10,
@@ -105,37 +110,13 @@
                   "ExerciseId": 2,
                   "Weight": 10,
                   "Repetition": 1,
-                  "Order": 1
+                  "Order": 2
                 },
                 {
                   "ExerciseId": 3,
                   "Weight": 10,
                   "Repetition": 1,
-                  "Order": 1
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "Name": "Pull Day 1",
-      "Order": 2,
-      "WorkoutTemplateMultiExercises": [
-        {
-          "Note": "Test",
-          "Order": 1,
-          "MultiExerciseSets": [
-            {
-              "Note": "test2",
-              "Order": 1,
-              "ExerciseSets": [
-                {
-                  "ExerciseId": 1,
-                  "Weight": 10,
-                  "Repetition": 1,
-                  "Order": 1
+                  "Order": 3
                 }
               ]
             }
