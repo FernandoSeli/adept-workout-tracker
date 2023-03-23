@@ -20,6 +20,33 @@ namespace Adept.Blazor.Helper
             _dialogService = dialogService;
         }
 
+        public async Task<LogMultiExerciseSet?> OpenNewLogMultiExerciseSetAsync()
+        {
+            //var parameters = new DialogParameters();
+            //parameters.Add("LogExerciseContainer", logExerciseContainer);
+            var dialog = _dialogService.Show<NewLogMultiExerciseSet>("");
+            var result = await dialog.Result;
+
+            if (!result.Cancelled)
+            {
+                return await dialog.GetReturnValueAsync<LogMultiExerciseSet>();
+            }
+            return default;
+        }
+
+        public async Task<LogMultiExercise?> OpenDuplicateLogMultiExerciseAsync(LogExerciseContainer logExerciseContainer)
+        {
+            var parameters = new DialogParameters();
+            parameters.Add("LogExerciseContainer", logExerciseContainer);
+            var dialog = _dialogService.Show<DuplicateLogMultiExercise>("", parameters);
+            var result = await dialog.Result;
+
+            if (!result.Cancelled)
+            {
+                return await dialog.GetReturnValueAsync<LogMultiExercise>();
+            }
+            return default;
+        }
         public async Task<(Routine? Routine, bool Deleted)> OpenRoutineDialogAsync(Routine routine)
         {
             var parameters = new DialogParameters();

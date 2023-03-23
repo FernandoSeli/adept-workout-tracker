@@ -59,20 +59,20 @@
                   "ExerciseId": 2,
                   "Weight": 10,
                   "Repetition": 1,
-                  "Order": 1
+                  "Order": 2
                 },
                 {
                   "ExerciseId": 3,
                   "Weight": 10,
                   "Repetition": 1,
-                  "Order": 1
+                  "Order": 3
                 }
               ]
             },
 
             {
               "Note": "test2",
-              "Order": 1,
+              "Order":2,
               "MultiExerciseSets": [
                 {
                   "ExerciseId": 1,
@@ -85,19 +85,19 @@
                   "ExerciseId": 2,
                   "Weight": 10,
                   "Repetition": 1,
-                  "Order": 1
+                  "Order": 2
                 },
                 {
                   "ExerciseId": 3,
                   "Weight": 10,
                   "Repetition": 1,
-                  "Order": 1
+                  "Order": 3
                 }
               ]
             },
             {
               "Note": "test3",
-              "Order": 1,
+              "Order":3,
               "MultiExerciseSets": [
                 {
                   "ExerciseId": 1,
@@ -110,13 +110,13 @@
                   "ExerciseId": 2,
                   "Weight": 10,
                   "Repetition": 1,
-                  "Order": 1
+                  "Order": 2
                 },
                 {
                   "ExerciseId": 3,
                   "Weight": 10,
                   "Repetition": 1,
-                  "Order": 1
+                  "Order": 3
                 }
               ]
             }

@@ -13,20 +13,25 @@ namespace Adept.Data.Model
 
         public string? Note { get; set; }
 
-        public int? ExerciseId { get; set; }
-        public Exercise? Exercise { get; set; }
-
         public int WorkoutLogId { get; set; }
         public WorkoutLog WorkoutLog { get; set; }
 
-        public LogMultiExercise()
-        { }
+        
 
         public List<LogMultiExerciseSet> MultiExerciseSets { get; set; }
             = new List<LogMultiExerciseSet>();
-
+        public LogMultiExercise()
+        { }
+        public LogMultiExercise(int order)
+        {
+            Order = order;
+            MultiExerciseSets = new List<LogMultiExerciseSet> { new LogMultiExerciseSet { Order = 1, Weight = 1, WeightAchieved = 1, 
+                Repetition = 1, RepsAchieved = 1, ExerciseId = 1} };
+        }
         public LogMultiExercise(TemplateMultiExercise templateMultiExercise)
         {
+            Order = templateMultiExercise.Order;
+            Note = templateMultiExercise.Note;
             MultiExerciseSets = templateMultiExercise.MultiExerciseSets
                 .Select(x => new LogMultiExerciseSet(x)).ToList();
             //SetPropertiesFromWorkoutTemplate(workoutTemplateMultiExercise);

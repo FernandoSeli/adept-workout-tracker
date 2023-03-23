@@ -19,6 +19,21 @@ namespace Adept.Data.Model
         public TemplateSingleExercise? TemplateSingleExercise { get; set; } = new TemplateSingleExercise();
         public List<TemplateMultiExercise>? TemplateMultiExercises { get; set; } = new List<TemplateMultiExercise>();
 
+        public string GetExerciseName()
+        {
+            if (IsMultiExercise)
+            {
+                switch (TemplateMultiExercises.Count())
+                {
+                    case 0:
+                        return string.Empty;
+                    default:
+                        return $"Superset {Order}";
+                }
+            }
+            return TemplateSingleExercise?.Exercise.Name;
+        }
+
         //public int GetNextTemplateExerciseOrder() => GetTemplateExerciseOrders().GetFirstAvailableInt();
     }
 }

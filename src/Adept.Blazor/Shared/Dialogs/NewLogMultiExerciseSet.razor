@@ -1,0 +1,54 @@
+﻿@inject IRoutineRepository RoutineRepository;
+@using DialogOptions = MudBlazor.DialogOptions
+
+<MudDialog>
+    <DialogContent>
+        <MudContainer Style="max-height:85h; overflow-y: auto">
+            <MudGrid>
+                <MudItem>
+                    <ExerciseAutocomplete Exercise="@logMultiExerciseSet.Exercise"></ExerciseAutocomplete>
+                </MudItem>
+                <MudItem>
+                    <MudNumericField Min="1" Label="Weight" @bind-Value="@logMultiExerciseSet.Weight" Required />
+                </MudItem>
+                <MudItem>
+                    <MudNumericField Min="1" Label="Reps" @bind-Value="@logMultiExerciseSet.Repetition" Required />
+                </MudItem>
+            </MudGrid>
+        </MudContainer>
+
+    </DialogContent>
+    <DialogActions>
+        <MudButton  OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="SaveRoutine">Save Changes</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    //[Parameter] public Routine Routine{ get; set; }
+    private string _title => "New Set";
+    private DialogOptions _dialogOptions = new DialogOptions() {   FullScreen = true };
+    void Cancel() => MudDialog.Cancel();
+    public LogMultiExerciseSet logMultiExerciseSet = new LogMultiExerciseSet();
+
+    protected override async Task OnInitializedAsync()
+    {
+        base.OnInitializedAsync();
+        MudDialog.SetTitle(_title);
+        MudDialog.Options.FullWidth = true;
+        MudDialog.Options.CloseButton = true;
+        MudDialog.SetOptions(MudDialog.Options);
+    }
+
+
+    private async Task SaveRoutine()
+    {
+        logMultiExerciseSet.WeightAchieved = logMultiExerciseSet.Weight;
+        logMultiExerciseSet.RepsAchieved = logMultiExerciseSet.Repetition;
+        //var deleted = false;
+        //await RoutineRepository.AddOrUpdateAsync(Routine);
+        MudDialog.Close(DialogResult.Ok(logMultiExerciseSet));
+    }
+
+}

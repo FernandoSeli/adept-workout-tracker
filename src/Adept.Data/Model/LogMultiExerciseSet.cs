@@ -18,6 +18,13 @@ namespace Adept.Data.Model
         [NotMapped]
         public string Name => "Exercise " + Order;
 
+        public int RepsAchieved { get; set; }
+        public double WeightAchieved { get; set; }
+
+        public int LogMultiExerciseId { get; set; }
+        public LogMultiExercise LogMultiExercise { get; set; }
+        [NotMapped]
+        public bool Done { get; set; }
         public LogMultiExerciseSet() { }
 
         public LogMultiExerciseSet(int order)
@@ -26,15 +33,6 @@ namespace Adept.Data.Model
             Exercise = new Exercise();
             Exercise.Name = "";
         }
-        public int RepsAchieved { get; set; }
-        public double WeightAchieved { get; set; }
-
-        public int LogMultiExerciseId { get; set; }
-        public LogMultiExercise LogMultiExercise { get; set; }
-        [NotMapped]
-        public bool Done { get; set; }
-
-
         public LogMultiExerciseSet(TemplateMultiExerciseSet workoutTemplateExerciseSet)
         {
             Repetition = workoutTemplateExerciseSet.Repetition;
